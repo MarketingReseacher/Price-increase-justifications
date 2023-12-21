@@ -18,7 +18,7 @@ from stanza.server import CoreNLPClient
 import dictionary_funcs
 import project_config as cfg
 
-w2v_model = Word2Vec.load(/ "w2v.mod")
+w2v_model = Word2Vec.load(/"w2v.mod")
 
 # Add a selectbox for tab selection
 Selected_tab = st.sidebar.selectbox("Select a tab", ["Temporal feature estimator", "Brand Avoidance Predictor based on Future Focus"])
