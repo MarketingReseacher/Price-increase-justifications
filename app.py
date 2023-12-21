@@ -1,8 +1,3 @@
-pip install numpy
-pip install pandas
-pip install streamlit
-
-
 # Import necessary packages
 import numpy as np
 import pandas as pd
