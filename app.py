@@ -13,8 +13,8 @@ import functools
 import stanza
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
-from stanza.server import CoreNLPClient
-from stanza.server.ud_enhancer import UniversalEnhancer
+#from stanza.server import CoreNLPClient
+#from stanza.server.ud_enhancer import UniversalEnhancer
 
 import dictionary_funcs
 import project_config as cfg
