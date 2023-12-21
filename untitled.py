@@ -1,0 +1,1 @@
+Key to this ecosystem is the network approach, which leverages cloud networks and information networks to support a wide range of services
