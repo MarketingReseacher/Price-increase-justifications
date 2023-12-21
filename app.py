@@ -3,6 +3,26 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+
+
+from __future__ import annotations
+
+import json
+import pickle
+import re
+from pathlib import Path
+import functools
+
+import numpy as np
+import stanza
+from gensim.models import Word2Vec
+from gensim.models.phrases import Phraser
+from stanza.server import CoreNLPClient
+from stanza.server.ud_enhancer import UniversalEnhancer
+
+import dictionary_funcs
+import project_config as cfg
+
 # Add a selectbox for tab selection
 Selected_tab = st.sidebar.selectbox("Select a tab", ["Temporal feature estimator", "Brand Avoidance Predictor based on Future Focus"])
 
