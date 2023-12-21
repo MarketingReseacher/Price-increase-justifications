@@ -1,3 +1,5 @@
+pip install -r requirements.txt -t /path/to/directory
+
 # Import necessary packages
 import numpy as np
 import pandas as pd
