@@ -14,10 +14,11 @@ import stanza
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
 from stanza.server import CoreNLPClient
-from stanza.server.ud_enhancer import UniversalEnhancer
 
 import dictionary_funcs
 import project_config as cfg
+
+w2v_model = Word2Vec.load(/ "w2v.mod")
 
 # Add a selectbox for tab selection
 Selected_tab = st.sidebar.selectbox("Select a tab", ["Temporal feature estimator", "Brand Avoidance Predictor based on Future Focus"])
