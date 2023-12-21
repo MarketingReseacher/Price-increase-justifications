@@ -1,5 +1,3 @@
-java -mx4g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9002 -timeout 120000000
-
 # Import necessary packages
 import numpy as np
 import pandas as pd
