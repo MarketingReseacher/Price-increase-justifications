@@ -1,13 +1,8 @@
-pip install -r requirements.txt -t /path/to/directory
-
 # Import necessary packages
 import numpy as np
 import pandas as pd
 import streamlit as st
 
-
-
-from __future__ import annotations
 
 import json
 import pickle
@@ -15,7 +10,6 @@ import re
 from pathlib import Path
 import functools
 
-import numpy as np
 import stanza
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
