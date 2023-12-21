@@ -18,11 +18,11 @@ import project_config as cfg
 
 doc = st.text_input("Enter chief officer's response:")
 
-bigram_model = Phraser.load("Documents/Ivey/Python/ECT/bi_phrase.mod")
-trigram_model = Phraser.load("Documents/Ivey/Python/ECT/tri_phrase.mod")
-w2v_model = Word2Vec.load("Documents/Ivey/Python/ECT/w2v.mod")
+bigram_model = Phraser.load("bi_phrase.mod")
+trigram_model = Phraser.load("tri_phrase.mod")
+w2v_model = Word2Vec.load("w2v.mod")
 # read document-freq
-with open("Documents/Ivey/Python/ECT/df_dict.pkl", "rb") as f:
+with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
 
 client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://localhost:9002", start_server=stanza.server.StartServer.TRY_START,
@@ -217,7 +217,7 @@ def dims(aspect):
 
 
 def full(aspect):
-    dict_path = f'Documents/Ivey/Python/ECT/{aspect}_expanded_dict.csv'
+    dict_path = f'{aspect}_expanded_dict.csv'
     expanded_dict = dictionary_funcs.read_dict_from_csv(dict_path)[0]
     expanded_dict_vectors = {}
     for dim in expanded_dict:
