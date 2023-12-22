@@ -6,6 +6,9 @@ from pathlib import Path
 import functools
 import streamlit as st
 
+
+import stanza
+
 import CoreNLPClient
 
 import numpy as np
