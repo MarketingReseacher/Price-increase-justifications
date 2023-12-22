@@ -6,6 +6,11 @@ from pathlib import Path
 import functools
 import streamlit as st
 
+from stanza.pipeline.core import Pipeline
+from stanza.pipeline.constituency_processor import ConstituencyProcessor
+import stanza.models.constituency.trainer as trainer
+from stanza.server.parser_eval import EvaluateParser
+from stanza.protobuf import to_text
 
 import stanza
 
