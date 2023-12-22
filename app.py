@@ -23,4 +23,6 @@ doc = st.text_input("Enter chief officer's response:")
 
 a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
 #bigram_model = Phraser.load("bi_phrase.mod")
-w2v_model = Word2Vec.load("w2v.mod")
+
+with open("w2v.mod", "r") as f:
+  w2v_model = Word2Vec.load(f)
