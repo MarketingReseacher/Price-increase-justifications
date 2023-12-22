@@ -3,7 +3,6 @@ import json
 import pickle
 import re
 import numpy as np
-from pathlib import Path
 import functools
 import streamlit as st
 from urllib.request import urlretrieve
@@ -39,22 +38,19 @@ def remove_NER(line):
     line = re.sub(NERs, r"\1", line)
     return line
 
-
 def remove_puct_num(line):
     tokens = line.strip().lower().split()
     tokens = [re.sub("\[pos:.*?\]", "", t) for t in tokens]
     # these are tagged bracket and parenthesises
     if cfg.options.REMOVE_STOPWORDS:
         puncts_stops = (
-            set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"]) | cfg.options.STOPWORDS
-        )
+            set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"]) | cfg.options.STOPWORDS)
     else:
         puncts_stops = set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"])
     # filter out numerics and 1-letter words as recommend by https://sraf.nd.edu/textual-analysis/resources/#StopWords
     tokens = filter(
         lambda t: any(c.isalpha() for c in t) and t not in puncts_stops and len(t) > 1,
-        tokens,
-    )
+        tokens,)
     return " ".join(tokens)
 
 
