@@ -30,6 +30,7 @@ b, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wf
 bigram_model = Phraser.load("bi_phrase.mod")
 trigram_model = Phraser.load("tri_phrase.mod")
 w2v_model = Word2Vec.load("w2v.mod")
+
 # read document-freq
 with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
