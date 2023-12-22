@@ -30,11 +30,11 @@ else:
 @st.cache_data(ttl=1000)
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
-    bi_phrase.mod = conn.open("ectcalculator/bi_phrase.mod")
-    tri_phrase.mod = conn.open("ectcalculator/tri_phrase.mod")
-    w2v.mod = conn.open("ectcalculator/w2v.mod")
-    w2v.mod.wv.vectors.npy = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
-    w2v.mod.syn1neg.npy = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
+    bi_phrase = conn.open("ectcalculator/bi_phrase.mod")
+    tri_phrase = conn.open("ectcalculator/tri_phrase.mod")
+    #w2v = conn.open("ectcalculator/w2v.mod")
+    #w2v.mod.wv.vectors.npy = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
+    #w2v.mod.syn1neg.npy = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
 
 getfiles()
 
