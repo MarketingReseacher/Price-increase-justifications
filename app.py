@@ -8,6 +8,7 @@ import streamlit as st
 
 import numpy as np
 import stanza
+
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
 from stanza.server import CoreNLPClient
@@ -18,12 +19,12 @@ import project_config as cfg
 
 doc = st.text_input("Enter chief officer's response:")
 
-bigram_model = Phraser.load("bi_phrase.mod")
-trigram_model = Phraser.load("tri_phrase.mod")
-w2v_model = Word2Vec.load("w2v.mod")
+#bigram_model = Phraser.load("bi_phrase.mod")
+#trigram_model = Phraser.load("tri_phrase.mod")
+#w2v_model = Word2Vec.load("w2v.mod")
 # read document-freq
-with open("df_dict.pkl", "rb") as f:
-    df_dict = pickle.load(f)
+#with open("df_dict.pkl", "rb") as f:
+    #df_dict = pickle.load(f)
 
 client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://localhost:9002", start_server=stanza.server.StartServer.TRY_START,
             timeout=120000000,be_quiet=True,)
