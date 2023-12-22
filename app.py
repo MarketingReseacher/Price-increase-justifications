@@ -20,7 +20,10 @@ from nltk.stem import WordNetLemmatizer
 
 doc = st.text_input("Enter chief officer's response:")
 
-
+if len(doc) == 0: 
+    doc = "Key to this ecosystem is the network approach, which leverages cloud networks and information networks to support a wide range of services. This approach enables businesses to offer services and support solutions more effectively. By utilizing application expertise and a diverse skill set, companies can co-engineer and join together multiple modalities to create comprehensive business process solutions. These solutions often include video content management and BPM (Business Process Management) solutions, which are essential in today's digital landscape."
+else: 
+    pass
 
 a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/tz8gd9s1wlp3af8oajbih/w2v.mod.wv.vectors.npy?rlkey=t6yx9cweowuz73gpnr8a7rq13&dl=1", "w2v.mod.wv.vectors.npy")
 a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/3ygttjde6wj8m5glg9tfd/w2v.mod.syn1neg.npy?rlkey=y2utzsl7styx61ouvdz4ls7jj&dl=1", "w2v.mod.syn1neg.npy")
