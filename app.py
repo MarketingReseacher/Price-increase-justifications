@@ -8,8 +8,6 @@ import streamlit as st
 import numpy as np
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
-
-
 import dictionary_funcs
 import project_config as cfg
 
