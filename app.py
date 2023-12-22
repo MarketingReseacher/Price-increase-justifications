@@ -25,8 +25,8 @@ if len(doc) == 0:
 else: 
     pass
 
-a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/tz8gd9s1wlp3af8oajbih/w2v.mod.wv.vectors.npy?rlkey=t6yx9cweowuz73gpnr8a7rq13&dl=1", "w2v.mod.wv.vectors.npy")
-a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/3ygttjde6wj8m5glg9tfd/w2v.mod.syn1neg.npy?rlkey=y2utzsl7styx61ouvdz4ls7jj&dl=1", "w2v.mod.syn1neg.npy")
+a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
+a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
 
 w2v_model = gensim.models.Word2Vec.load("w2v.mod")
 
