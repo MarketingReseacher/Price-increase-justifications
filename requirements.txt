@@ -6,5 +6,5 @@ pandas
 scikit_learn
 tqdm
 zca
-nltk
+nltk==3.6.2
 urllib
