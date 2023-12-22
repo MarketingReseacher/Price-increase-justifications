@@ -10,6 +10,7 @@ from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
 import dictionary_funcs
 import project_config as cfg
+from urllib.request import urlretrieve
 
 doc = st.text_input("Enter chief officer's response:")
 
