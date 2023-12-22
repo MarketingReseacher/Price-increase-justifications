@@ -6,7 +6,6 @@ import numpy as np
 import functools
 import streamlit as st
 from urllib.request import urlretrieve
-from st_files_connection import FilesConnection
 
 import gensim
 import dictionary_funcs
@@ -30,7 +29,7 @@ else:
 
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
-    word2vec = conn.read("ectcalculator/w2v.mod.syn1neg.npy")
+    word2vec = conn.get("ectcalculator/w2v.mod.syn1neg.npy")
 
 getfiles()
 
