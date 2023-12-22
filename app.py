@@ -24,7 +24,7 @@ a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw
 #bigram_model = gensim.models.Phraser.load("bi_phrase.mod")
 
 b, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
-trigram_model = Phraser.load("tri_phrase.mod")
+trigram_model = gensim.models.Phraser.load("tri_phrase.mod")
 
 
 # read document-freq
