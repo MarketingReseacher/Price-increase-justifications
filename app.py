@@ -21,14 +21,12 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 
-
 doc = st.text_input("Enter chief officer's response:")
 
 if len(doc) == 0: 
     doc = "Key to this ecosystem is the network approach, which leverages cloud networks and information networks to support a wide range of services. This approach enables businesses to offer services and support solutions more effectively. By utilizing application expertise and a diverse skill set, companies can co-engineer and join together multiple modalities to create comprehensive business process solutions. These solutions often include video content management and BPM (Business Process Management) solutions, which are essential in today's digital landscape."
 else: 
     pass
-
 
 #@st.cache_data
 def getfiles():
@@ -47,9 +45,11 @@ class Make:
 
 w2v = Make()
 
-bi_phrase, tri_phrase, w2v, vectors, syn1neg = getfiles()
+bi_phrase, tri_phrase, w, vectors, syn1neg = getfiles()
+
 w2v.mod.wv.vectors.npy = vectors
 w2v.mod.syn1neg.npy = syn1neg
+w2v.mod = w
 
 #@st.cache_data
 def loadfiles(bi_phrase, tri_phrase):
