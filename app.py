@@ -20,8 +20,15 @@ from nltk.stem import WordNetLemmatizer
 
 doc = st.text_input("Enter chief officer's response:")
 
+
+
+a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/tz8gd9s1wlp3af8oajbih/w2v.mod.wv.vectors.npy?rlkey=t6yx9cweowuz73gpnr8a7rq13&dl=1", "w2v.mod.wv.vectors.npy")
+a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/3ygttjde6wj8m5glg9tfd/w2v.mod.syn1neg.npy?rlkey=y2utzsl7styx61ouvdz4ls7jj&dl=1", "w2v.mod.syn1neg.npy")
+
+w2v_model = gensim.models.Word2Vec.load("w2v.mod")
+
 a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
-#bigram_model = gensim.models.Phraser.load("bi_phrase.mod")
+bigram_model = gensim.models.Phraser.load("bi_phrase.mod")
 
 b, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
 trigram_model = gensim.models.Phraser.load("tri_phrase.mod")
@@ -252,8 +259,3 @@ if Selected_tab == "Marketing Concepts\' Dimensions":
 elif Selected_tab == "Marketing Conceps":
     st.write("Marketing Concepts", Aspects)
 
-
-a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/tz8gd9s1wlp3af8oajbih/w2v.mod.wv.vectors.npy?rlkey=t6yx9cweowuz73gpnr8a7rq13&dl=1", "w2v.mod.wv.vectors.npy")
-a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/3ygttjde6wj8m5glg9tfd/w2v.mod.syn1neg.npy?rlkey=y2utzsl7styx61ouvdz4ls7jj&dl=1", "w2v.mod.syn1neg.npy")
-
-w2v_model = gensim.models.Word2Vec.load("w2v.mod")
