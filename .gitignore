@@ -3,9 +3,9 @@
 
 [connections.gcs]
 type = "service_account"
-project_id = "phrasal-waters-406620"
-private_key_id = "105136574133920339502"
-private_key = "b9fba4ad9d2cc2bbf8d352f410d7e91766acc82a"
+project_id = "My First Project"
+private_key_id = "399677204127"
+private_key = "phrasal-waters-406620"
 client_email = "marketingresearcher@phrasal-waters-406620.iam.gserviceaccount.com"
 client_id = "marketingresearcher"
 auth_uri = "https://accounts.google.com/o/oauth2/auth"
