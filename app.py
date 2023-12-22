@@ -55,10 +55,10 @@ w2v.mod = w
 def loadfiles(bi, tri):
     bi_phrase = Make()
     bi_phrase.mod = bi 
-    bigram_model = gensim.models.phrases.Phraser.load("bi_phrase.mod")
+    bigram_model = gensim.models.phrases.Phraser.load(bi_phrase.mod)
     tri_phrase = Make()
     tri_phrase.mod = tri
-    trigram_model = gensim.models.phrases.Phraser.load("tri_phrase.mod")
+    trigram_model = gensim.models.phrases.Phraser.load(tri_phrase.mod)
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
     return bigram_model, trigram_model, df_dict
