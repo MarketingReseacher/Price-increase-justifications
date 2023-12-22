@@ -40,7 +40,7 @@ def getfiles():
     #w2v.mod.syn1neg.npy = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
     return bi_phrase, tri_phrase
 
-getfiles()
+bi_phrase, tri_phrase = getfiles()
 
 #@st.cache_data
 def loadfiles(bi_phrase, tri_phrase):
@@ -50,7 +50,7 @@ def loadfiles(bi_phrase, tri_phrase):
         df_dict = pickle.load(f)
     return bigram_model, trigram_model, df_dict
 
-loadfiles(bi_phrase, tri_phrase)
+bigram_model, trigram_model, df_dict = loadfiles(bi_phrase, tri_phrase)
 
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
