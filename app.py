@@ -56,10 +56,10 @@ w2v.mod = w
 def loadfiles(bi, tri):
     #bi_phrase = Make()
     #bi_phrase.mod = bi 
-    bigram_model = Phraser.load(bi)
+    bigram_model = Phraser(bi)
     #tri_phrase = Make()
     #tri_phrase.mod = tri
-    trigram_model = Phraser.load(tri)
+    trigram_model = Phraser(tri)
     return bigram_model, trigram_model, df_dict
 
 bigram_model, trigram_model, df_dict = loadfiles(bi, tri)
