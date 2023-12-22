@@ -38,6 +38,7 @@ def getfiles():
     #w2v = conn.open("ectcalculator/w2v.mod")
     #w2v.mod.wv.vectors.npy = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
     #w2v.mod.syn1neg.npy = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
+    return bi_phrase, tri_phrase
 
 getfiles()
 
