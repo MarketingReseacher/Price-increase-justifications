@@ -13,7 +13,6 @@ import dictionary_funcs
 import project_config as cfg
 
 import nltk
-nltk.download('wordnet')
 
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import wordnet
