@@ -11,10 +11,6 @@ from gensim.models.phrases import Phraser
 import dictionary_funcs
 import project_config as cfg
 
-import stanza
-from stanza.server import CoreNLPClient
-
-
 doc = st.text_input("Enter chief officer's response:")
 
 #bigram_model = Phraser.load("bi_phrase.mod")
@@ -24,7 +20,7 @@ doc = st.text_input("Enter chief officer's response:")
 #with open("df_dict.pkl", "rb") as f:
     #df_dict = pickle.load(f)
 
-client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://localhost:9002", start_server=stanza.server.StartServer.TRY_START,
+client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://99.242.123.104:9002", start_server=stanza.server.StartServer.DONT_START,
             timeout=120000000,be_quiet=True,)
 client.start()
 
