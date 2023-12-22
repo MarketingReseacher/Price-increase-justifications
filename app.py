@@ -23,5 +23,7 @@ doc = st.text_input("Enter chief officer's response:")
 a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
 #bigram_model = gensim.models.Phraser.load("bi_phrase.mod")
 
+w2vfile = urlretrieve("https://www.dropbox.com/scl/fi/tz8gd9s1wlp3af8oajbih/w2v.mod.wv.vectors.npy?rlkey=t6yx9cweowuz73gpnr8a7rq13&dl=1", "w2v.mod.wv.vectors.npy")
+
 with open("w2v.mod", "r") as f:
   w2v_model = gensim.models.Word2Vec.load(f)
