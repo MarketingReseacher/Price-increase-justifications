@@ -10,6 +10,6 @@ class coreNLP_cfg:
 class options:
     REMOVE_STOPWORDS = True
     STOPWORDS = set(
-        Path("\StopWords_Generic.txt").read_text().lower().split()
+        Path("/StopWords_Generic.txt").read_text().lower().split()
     )
     N_WORDS_DIM: int = 500  # max number of words in each dimension of the dictionary
