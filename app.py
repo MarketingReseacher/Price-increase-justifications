@@ -13,8 +13,8 @@ import project_config as cfg
 
 doc = st.text_input("Enter chief officer's response:")
 
-client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://64.71.255.204:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
-client.start()
+#client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://64.71.255.204:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
+#client.start()
 
 #bigram_model = Phraser.load("bi_phrase.mod")
 #trigram_model = Phraser.load("tri_phrase.mod")
@@ -24,29 +24,21 @@ client.start()
     #df_dict = pickle.load(f)
 
 
-
-
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
     line = re.sub(NERs, r"\1", line)
     return line
-
 
 def remove_puct_num(line):
     tokens = line.strip().lower().split()
     tokens = [re.sub("\[pos:.*?\]", "", t) for t in tokens]
     # these are tagged bracket and parenthesises
     if cfg.options.REMOVE_STOPWORDS:
-        puncts_stops = (
-            set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"]) | cfg.options.STOPWORDS
-        )
+        puncts_stops = (set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"]) | cfg.options.STOPWORDS)
     else:
         puncts_stops = set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"])
     # filter out numerics and 1-letter words as recommend by https://sraf.nd.edu/textual-analysis/resources/#StopWords
-    tokens = filter(
-        lambda t: any(c.isalpha() for c in t) and t not in puncts_stops and len(t) > 1,
-        tokens,
-    )
+    tokens = filter(lambda t: any(c.isalpha() for c in t) and t not in puncts_stops and len(t) > 1,tokens,)
     return " ".join(tokens)
 
 
@@ -55,7 +47,6 @@ def clean(doc):
     lines = doc.split("\n")
     cleaned = [functools.reduce(lambda obj, func: func(obj), [remove_NER, remove_puct_num], line,) for line in lines]
     return "\n".join(cleaned)
-
 
 def sentence_mwe_finder(
     sentence_ann, dep_types=set(["mwe", "compound", "compound:prt", "fixed"])):
@@ -127,19 +118,10 @@ def process_sentence(sentence_ann):
         sentence_parsed.append(token_lemma)
     return "".join(sentence_parsed)
 
-# Preprocess text using CoreNLP parsing.
-def preprocess_text(text, client):
-    annotated_text = client.annotate(text)
-    # Process with CoreNLP and return processed text
-    return process_sentence(annotated_text)
-
-
 # Concatenates must-have phrases in the text.
 def concat_must_have_phrases(text):
     all_seeds = []  # Load your must-have phrases here
-    pattern = "|".join(
-        map(re.escape, [phrase.replace("_", " ") for phrase in all_seeds])
-    )
+    pattern = "|".join(map(re.escape, [phrase.replace("_", " ") for phrase in all_seeds]))
     text = re.sub(pattern, lambda match: match.group().replace(" ", "_"), text)
     return text
 
@@ -150,7 +132,6 @@ def apply_phrase_models(text):
     # Apply trigram model
     text_trigram = trigram_model[text_bigram]
     return " ".join(text_trigram)
-
 
 # Vectorize text using the trained Word2Vec model.
 def vectorize_text(text):
@@ -182,10 +163,6 @@ def clean_and_vectorize(doc_processed):
 
 doc_processed = process_document(doc)
 vectorized_new_text = clean_and_vectorize(doc_processed)[1]
-
-
-
-
 
 Selected_tab = st.sidebar.selectbox("Select a tab", ["Marketing Concepts\' Dimensions", "Marketing Concepts"])
 
