@@ -1,5 +1,3 @@
-pip -r requirements.txt
-
 # Import necessary packages
 import json
 import pickle
