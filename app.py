@@ -20,8 +20,7 @@ doc = st.text_input("Enter chief officer's response:")
 #with open("df_dict.pkl", "rb") as f:
     #df_dict = pickle.load(f)
 
-client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://99.242.123.104:9002", start_server=stanza.server.StartServer.DONT_START,
-            timeout=120000000,be_quiet=True,)
+client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://99.242.123.104:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
 client.start()
 
 
