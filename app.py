@@ -6,7 +6,7 @@ from pathlib import Path
 import functools
 import streamlit as st
 
-import coreNLPClient
+import CoreNLPClient
 
 import numpy as np
 from gensim.models import Word2Vec
