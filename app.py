@@ -5,17 +5,17 @@ import re
 from pathlib import Path
 import functools
 import streamlit as st
-
 import numpy as np
-import stanza
-
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
-#from stanza.server import CoreNLPClient
-#from stanza.server.ud_enhancer import UniversalEnhancer
+
 
 import dictionary_funcs
 import project_config as cfg
+
+import stanza
+from stanza.server import CoreNLPClient
+
 
 doc = st.text_input("Enter chief officer's response:")
 
