@@ -124,7 +124,7 @@ def read_dict_from_csv(file_name):
         expanded_dict {dict{str: set(str)}} -- an expanded dict, dim name as key, set of expanded words as value
         all_dict_words {set(str)} -- a set of all words in the dict
     """
-    print("Importing dict: {}".format(file_name))
+    #print("Importing dict: {}".format(file_name))
     expanded_dict_df = pd.read_csv(file_name, index_col=None)
     expanded_dict = expanded_dict_df.to_dict("list")
     for k in expanded_dict.keys():
@@ -134,8 +134,8 @@ def read_dict_from_csv(file_name):
     for key in expanded_dict:
         all_dict_words |= expanded_dict[key]
 
-    for dim in expanded_dict.keys():
-        print("Number of words in {} dimension: {}".format(dim, len(expanded_dict[dim])))
+    #for dim in expanded_dict.keys():
+        #print("Number of words in {} dimension: {}".format(dim, len(expanded_dict[dim])))
 
     return expanded_dict, all_dict_words
 
