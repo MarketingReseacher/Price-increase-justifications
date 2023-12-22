@@ -1,3 +1,4 @@
+import stanza
 stanza.install_corenlp()
 
 # Import necessary packages
