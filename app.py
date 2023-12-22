@@ -29,6 +29,15 @@ if len(doc) == 0:
 else: 
     pass
 
+class Make:
+    def __getattr__(self, name):
+        self.__dict__[name] = Make()
+        return self.__dict__[name]
+
+w2v = Make()
+
+make.a.dot.separated.name = 666
+make.anything.i.want = 777
 
 #@st.cache_data
 def getfiles():
@@ -40,17 +49,17 @@ def getfiles():
     syn1neg = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
     return bi_phrase, tri_phrase, w2v, vectors, syn1neg
 
-bi_phrase, tri_phrase, w2v, vectors, syn1neg = getfiles()
+bi_phrase, tri_phrase, w2v.mod, w2v.mod.wv.vectors.npy, w2v.mod.syn1neg.npy = getfiles()
 
 #@st.cache_data
-def loadfiles(bi_phrase, tri_phrase, vectors, syn1neg):
+def loadfiles(bi_phrase, tri_phrase):
     bigram_model = gensim.models.phrases.Phraser.load(bi_phrase)
     trigram_model = gensim.models.phrases.Phraser.load(tri_phrase)
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
     return bigram_model, trigram_model, df_dict
 
-bigram_model, trigram_model, df_dict = loadfiles(bi_phrase, tri_phrase, vectors, syn1neg)
+bigram_model, trigram_model, df_dict = loadfiles(bi_phrase, tri_phrase)
 
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
