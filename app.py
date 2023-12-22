@@ -30,7 +30,7 @@ else:
 
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
-    word2vec = conn.read("ectcalculator/w2v.mod", input_format = str = None, ttl=3600)
+    word2vec = conn.read("ectcalculator/w2v.mod", input_format = "", ttl=3600)
 
 getfiles()
 
