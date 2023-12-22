@@ -1,5 +1,4 @@
-pip:
-    -r requirements.txt
+pip -r requirements.txt
 
 # Import necessary packages
 import json
