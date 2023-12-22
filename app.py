@@ -7,6 +7,7 @@ import functools
 import streamlit as st
 from urllib.request import urlretrieve
 from st_files_connection import FilesConnection
+from gensim.models.phrases import Phraser
 
 import gensim
 import dictionary_funcs
@@ -31,21 +32,21 @@ else:
 #@st.cache_data
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
-    bi_phrase = conn.open("ectcalculator/bi_phrase.mod")
-    tri_phrase = conn.open("ectcalculator/tri_phrase.mod")
+    bi = conn.open("ectcalculator/bi_phrase.mod")
+    tri = conn.open("ectcalculator/tri_phrase.mod")
     w2v = conn.open("ectcalculator/w2v.mod")
     vectors = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
     syn1neg = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
-    return bi_phrase, tri_phrase, w2v, vectors, syn1neg
+    return bi, tri, w2v, vectors, syn1neg
 
 class Make:
     def __getattr__(self, name):
         self.__dict__[name] = Make()
         return self.__dict__[name]
 
-w2v = Make()
+w2v, bi_phrase, tri_phrase = Make()
 
-bi_phrase, tri_phrase, w, vectors, syn1neg = getfiles()
+bi, tri, w, vectors, syn1neg = getfiles()
 
 w2v.mod.wv.vectors.npy = vectors
 w2v.mod.syn1neg.npy = syn1neg
@@ -53,17 +54,18 @@ w2v.mod = w
 
 #@st.cache_data
 def loadfiles(bi, tri):
-    bi_phrase = Make()
-    bi_phrase.mod = bi 
-    bigram_model = gensim.models.phrases.Phraser.load(bi_phrase.mod)
-    tri_phrase = Make()
-    tri_phrase.mod = tri
-    trigram_model = gensim.models.phrases.Phraser.load(tri_phrase.mod)
-    with open("df_dict.pkl", "rb") as f:
-        df_dict = pickle.load(f)
+    #bi_phrase = Make()
+    #bi_phrase.mod = bi 
+    bigram_model = Phraser.load(bi)
+    #tri_phrase = Make()
+    #tri_phrase.mod = tri
+    trigram_model = Phraser.load(tri)
     return bigram_model, trigram_model, df_dict
 
-bigram_model, trigram_model, df_dict = loadfiles(bi_phrase, tri_phrase)
+bigram_model, trigram_model, df_dict = loadfiles(bi, tri)
+
+with open("df_dict.pkl", "rb") as f:
+    df_dict = pickle.load(f)
 
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
