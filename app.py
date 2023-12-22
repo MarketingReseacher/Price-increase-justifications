@@ -25,27 +25,27 @@ if len(doc) == 0:
 else: 
     pass
 
-a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
-a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
-
-w2v_model = gensim.models.Word2Vec.load("w2v.mod")
-
-a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
-bigram_model = gensim.models.phrases.Phraser.load("bi_phrase.mod")
-
-b, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
-trigram_model = gensim.models.phrases.Phraser.load("tri_phrase.mod")
+@st.cache_data
+def getfiles():
+    a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
+    b, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
+    w2v_model = gensim.models.Word2Vec.load("w2v.mod")
+    c, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
+    d, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
 
 
-# read document-freq
-with open("df_dict.pkl", "rb") as f:
-    df_dict = pickle.load(f)
+@st.cache_data
+def loadfiles():
+    bigram_model = gensim.models.phrases.Phraser.load("bi_phrase.mod")
+    trigram_model = gensim.models.phrases.Phraser.load("tri_phrase.mod")
+    with open("df_dict.pkl", "rb") as f:
+        df_dict = pickle.load(f)
 
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
     line = re.sub(NERs, r"\1", line)
     return line
-
+    
 def remove_puct_num(line):
     tokens = line.strip().lower().split()
     tokens = [re.sub("\[pos:.*?\]", "", t) for t in tokens]
@@ -56,18 +56,14 @@ def remove_puct_num(line):
     else:
         puncts_stops = set(["-lrb-", "-rrb-", "-lsb-", "-rsb-", "'s"])
     # filter out numerics and 1-letter words as recommend by https://sraf.nd.edu/textual-analysis/resources/#StopWords
-    tokens = filter(
-        lambda t: any(c.isalpha() for c in t) and t not in puncts_stops and len(t) > 1,
-        tokens,)
+    tokens = filter(lambda t: any(c.isalpha() for c in t) and t not in puncts_stops and len(t) > 1, tokens,)
     return " ".join(tokens)
-
 
 # Main function that chains all filters together and applies to a string.
 def clean(doc):
     lines = doc.split("\n")
     cleaned = [functools.reduce(lambda obj, func: func(obj), [remove_NER, remove_puct_num], line,) for line in lines]
     return "\n".join(cleaned)
-
 
 def Annotate(doc):
     doc = doc.lower()
@@ -81,16 +77,12 @@ def Annotate(doc):
     sentences = nltk.sent_tokenize(tokenized)
     Sents = []
     Annotated = {'sentence' : "", 'token' : ""}
-    
     for sentence in sentences:
         Sents.append(sentence)
-        
         def POS(text): 
             tagged = nltk.pos_tag(text.split())
             return tagged
-
         tags = POS(sentence)
-
         def WordNet(pos):
             if pos.startswith('J'):
                 return wordnet.ADJ
@@ -133,7 +125,6 @@ def Annotate(doc):
         lemmatized, Annotations = POSLEM(Wordnet) 
     Annotated['sentence'] = Sents
     Annotated['token'] = Annotations
-        
     return Annotated
 
 
@@ -183,8 +174,6 @@ def clean_and_vectorize(doc_processed):
     vectorized_text = np.mean(vectorized_text, axis=0)
     vectorized_text = vectorized_text / np.linalg.norm(vectorized_text)
 
-    # ver2.0: weighted average using tf-idf
-    # compute the tf-idf weighted average of all vectors
     doc_weighted = []
     for word in phrase_applied_text.split():
         if word in w2v_model.wv:
@@ -192,9 +181,7 @@ def clean_and_vectorize(doc_processed):
             word_weight = np.log(1 + df_dict[word])
             doc_weighted.append(word_vector * word_weight)
     vectorized_text_weighted = np.mean(doc_weighted, axis=0)
-    # normalize the vector length
-    vectorized_text_weighted = vectorized_text_weighted / np.linalg.norm(
-        vectorized_text_weighted)
+    vectorized_text_weighted = vectorized_text_weighted / np.linalg.norm(vectorized_text_weighted)
     return vectorized_text, vectorized_text_weighted
 
 doc_processed = process_document(doc)
@@ -242,20 +229,14 @@ def full(aspect):
 a = 0
 Aspects = {'capabilities': a, 'excellence':a, 'orientation':a}
 
-Dimensions = {'capabilities': {'Marketing Ecosystem': a, 'End User': a, 'Marketing Agility': a}, 'excellence' : {'Marketing Information Managament': a, 
-              'Marketing Planning Capabilities': a, 'Marketing Implementation Capabilities': a, 'Pricing Capabilities': a, 
-               'Product Development Capabilities': a, 'Channel Management':a, 'Marketing Communication Capabilities': a}, 'orientation' : {'Selling Capabilities': a, 'Customer Orientation': a, 'Competitor Orientation':a,
-               'Interfunctional Coordination':a, 'Long-term Focus':a, 'Profit Focus':a, 'Intelligence Generation':a, 'Intelligence Dissemination' :a,
-                'Responsiveness': a}}
+Dimensions = {'capabilities': {'Marketing Ecosystem': a, 'End User': a, 'Marketing Agility': a}, 'excellence' : {'Marketing Information Managament': a, 'Marketing Planning Capabilities': a, 'Marketing Implementation Capabilities': a, 'Pricing Capabilities': a, 'Product Development Capabilities': a, 'Channel Management':a, 'Marketing Communication Capabilities': a}, 'orientation' : {'Selling Capabilities': a, 'Customer Orientation': a, 'Competitor Orientation':a, 'Interfunctional Coordination':a, 'Long-term Focus':a, 'Profit Focus':a, 'Intelligence Generation':a, 'Intelligence Dissemination' :a, 'Responsiveness': a}}
 
 for aspect in Aspects:
     Aspects[aspect] = full(aspect)
 
 for aspect in Dimensions:
     Dimensions[aspect] = dims(aspect)
-
-
-    
+  
 if Selected_tab == "Marketing Concepts\' Dimensions":
     st.write("Marketing Capabilities Dimensions", Dimensions)
     
