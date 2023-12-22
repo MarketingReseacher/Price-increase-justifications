@@ -7,8 +7,7 @@ import functools
 import streamlit as st
 from urllib.request import urlretrieve
 
-from gensim.models import Word2Vec
-from gensim.models.phrases import Phraser
+import gensim
 import dictionary_funcs
 import project_config as cfg
 
@@ -22,7 +21,7 @@ from nltk.stem import WordNetLemmatizer
 doc = st.text_input("Enter chief officer's response:")
 
 a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
-#bigram_model = Phraser.load("bi_phrase.mod")
+#bigram_model = gensim.models.Phraser.load("bi_phrase.mod")
 
 with open("w2v.mod", "r") as f:
-  w2v_model = Word2Vec.load(f)
+  w2v_model = gensim.models.Word2Vec.load(f)
