@@ -29,8 +29,8 @@ else:
 
 
 def getfiles():
-    conn = st.connection('gcs', type=FilesConnection)
-    word2vec = conn.load("ectcalculator/w2v.mod.syn1neg.npy")
+    conn = st.experimental_connection('gcs', type=FilesConnection)
+    word2vec = conn.read("ectcalculator/w2v.mod.syn1neg.npy")
 
 getfiles()
 
