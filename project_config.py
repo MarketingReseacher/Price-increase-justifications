@@ -4,8 +4,6 @@ from pathlib import Path
 
 
 class DIR:
-    data = Path("C:/Users/hdamavandi.phd/Documents/Ivey/Python/ECT/Clone/data")
-    project_dir = Path("C:/Users/hdamavandi.phd/Documents/Ivey/Python/ECT/Clone")
     raw_data = Path(data, "raw_xml")
     dfs = Path(data, "dfs")
     text_files = Path(data, "text_files")
@@ -31,6 +29,6 @@ class coreNLP_cfg:
 class options:
     REMOVE_STOPWORDS = True
     STOPWORDS = set(
-        Path("StopWords_Generic.txt").read_text().lower().split()
+        Path("\StopWords_Generic.txt").read_text().lower().split()
     )
     N_WORDS_DIM: int = 500  # max number of words in each dimension of the dictionary
