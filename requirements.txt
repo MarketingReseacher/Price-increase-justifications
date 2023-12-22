@@ -8,3 +8,4 @@ stanza==1.4.0
 corenlp
 tqdm==4.65.0
 zca==0.1.1
+nltk
