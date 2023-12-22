@@ -44,7 +44,7 @@ class Make:
         self.__dict__[name] = Make()
         return self.__dict__[name]
 
-w2v, bi_phrase, tri_phrase = Make()
+w2v = Make()
 
 bi, tri, w, vectors, syn1neg = getfiles()
 
