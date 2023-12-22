@@ -8,6 +8,7 @@ import streamlit as st
 
 import numpy as np
 import stanza
+stanza.install_corenlp()
 
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
