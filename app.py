@@ -52,9 +52,13 @@ w2v.mod.syn1neg.npy = syn1neg
 w2v.mod = w
 
 #@st.cache_data
-def loadfiles(bi_phrase, tri_phrase):
-    bigram_model = gensim.models.phrases.Phraser.load(bi_phrase)
-    trigram_model = gensim.models.phrases.Phraser.load(tri_phrase)
+def loadfiles(bi, tri):
+    bi_phrase = Make()
+    bi_phrase.mod = bi 
+    bigram_model = gensim.models.phrases.Phraser.load("bi_phrase.mod")
+    tri_phrase = Make()
+    tri_phrase.mod = tri
+    trigram_model = gensim.models.phrases.Phraser.load("tri_phrase.mod")
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
     return bigram_model, trigram_model, df_dict
