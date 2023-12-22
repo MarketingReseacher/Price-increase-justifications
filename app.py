@@ -28,12 +28,9 @@ else:
 
 conn = st.connection('gcs', type=FilesConnection)
 
-
-
-
 @st.cache_data
 def getfiles():
-    bi_phrase = conn.read("ectcalculator/bi_phrase.mod", input_format=".mod", ttl=600)
+    bi_phrase = conn.read("ectcalculator/bi_phrase.mod", input_format=".mod")
 
 getfiles()
 
