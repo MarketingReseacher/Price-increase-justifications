@@ -28,10 +28,10 @@ a, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/3ygttjde6wj8m5glg9tfd/
 w2v_model = gensim.models.Word2Vec.load("w2v.mod")
 
 a, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
-bigram_model = gensim.models.Phraser.load("bi_phrase.mod")
+bigram_model = gensim.models.phrases.Phraser.load("bi_phrase.mod")
 
 b, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
-trigram_model = gensim.models.Phraser.load("tri_phrase.mod")
+trigram_model = gensim.models.phrases.Phraser.load("tri_phrase.mod")
 
 
 # read document-freq
