@@ -6,6 +6,7 @@ import numpy as np
 import functools
 import streamlit as st
 from urllib.request import urlretrieve
+from st_files_connection import FilesConnection
 
 import gensim
 import dictionary_funcs
@@ -25,19 +26,21 @@ if len(doc) == 0:
 else: 
     pass
 
+conn = st.connection('gcs', type=FilesConnection)
+
+
+
+
 @st.cache_data
 def getfiles():
-    a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
-    b, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
-    w2v_model = gensim.models.Word2Vec.load("w2v.mod")
-    c, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
-    d, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
+    bi_phrase = conn.read("ectcalculator/bi_phrase.mod", input_format=".mod", ttl=600)
 
+getfiles()
 
 @st.cache_data
 def loadfiles():
-    bigram_model = gensim.models.phrases.Phraser.load("bi_phrase.mod")
-    trigram_model = gensim.models.phrases.Phraser.load("tri_phrase.mod")
+    bigram_model = gensim.models.phrases.Phraser.load("bi_phrase")
+    trigram_model = gensim.models.phrases.Phraser.load("tri_phrase")
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
 
@@ -242,4 +245,20 @@ if Selected_tab == "Marketing Concepts\' Dimensions":
     
 elif Selected_tab == "Marketing Conceps":
     st.write("Marketing Concepts", Aspects)
+
+
+
+
+
+
+
+'''
+    a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
+    b, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
+    w2v_model = gensim.models.Word2Vec.load("w2v.mod")
+    c, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
+    d, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
+'''
+
+
 
