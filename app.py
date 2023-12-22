@@ -30,7 +30,7 @@ else:
     pass
 
 
-@st.cache_data(ttl=1000)
+#@st.cache_data
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
     bi_phrase = conn.open("ectcalculator/bi_phrase.mod")
@@ -41,14 +41,15 @@ def getfiles():
 
 getfiles()
 
-@st.cache_data
-def loadfiles():
-    bigram_model = gensim.models.phrases.Phraser.load("bi_phrase")
-    trigram_model = gensim.models.phrases.Phraser.load("tri_phrase")
+#@st.cache_data
+def loadfiles(bi_phrase, tri_phrase):
+    bigram_model = gensim.models.phrases.Phraser.load(bi_phrase)
+    trigram_model = gensim.models.phrases.Phraser.load(tri_phrase)
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
+    return bigram_model, trigram_model, df_dict
 
-loadfiles()
+loadfiles(bi_phrase, tri_phrase)
 
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
