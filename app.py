@@ -13,7 +13,7 @@ import project_config as cfg
 
 doc = st.text_input("Enter chief officer's response:")
 
-client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://99.242.123.104:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
+client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://64.71.255.204:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
 client.start()
 
 #bigram_model = Phraser.load("bi_phrase.mod")
@@ -91,8 +91,7 @@ def edge_simplifier(edges):
     return edge_sources
 
 def process_document(doc):
-    with CoreNLPClient(endpoint="http://localhost:9002", start_server=stanza.server.StartServer.DONT_START,timeout=120000000,be_quiet=True,) as client:
-        doc_ann = client.annotate(doc)
+    doc_ann = client.annotate(doc)
     sentences_processed = []
     for i, sentence in enumerate(doc_ann.sentence):
         sentences_processed.append(process_sentence(sentence))
