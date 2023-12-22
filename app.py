@@ -48,6 +48,8 @@ def loadfiles():
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
 
+loadfiles()
+
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
     line = re.sub(NERs, r"\1", line)
