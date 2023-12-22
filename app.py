@@ -2,15 +2,22 @@
 import json
 import pickle
 import re
+import numpy as np
 from pathlib import Path
 import functools
 import streamlit as st
-import numpy as np
+from urllib.request import urlretrieve
+
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
 import dictionary_funcs
 import project_config as cfg
-from urllib.request import urlretrieve
+
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk.corpus import wordnet
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import sent_tokenize
 
 doc = st.text_input("Enter chief officer's response:")
 
