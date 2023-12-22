@@ -15,6 +15,7 @@ import project_config as cfg
 import nltk
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
 
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import wordnet
