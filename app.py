@@ -30,7 +30,7 @@ conn = st.connection('gcs', type=FilesConnection)
 
 @st.cache_data
 def getfiles():
-    bi_phrase = conn.read("ectcalculator/bi_phrase.mod", input_format=".mod")
+    word2vec = conn.read("ectcalculator/w2v.mod", input_format=".mod")
 
 getfiles()
 
