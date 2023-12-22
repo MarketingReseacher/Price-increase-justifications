@@ -13,6 +13,9 @@ import project_config as cfg
 
 doc = st.text_input("Enter chief officer's response:")
 
+client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://99.242.123.104:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
+client.start()
+
 #bigram_model = Phraser.load("bi_phrase.mod")
 #trigram_model = Phraser.load("tri_phrase.mod")
 #w2v_model = Word2Vec.load("w2v.mod")
@@ -20,8 +23,7 @@ doc = st.text_input("Enter chief officer's response:")
 #with open("df_dict.pkl", "rb") as f:
     #df_dict = pickle.load(f)
 
-client = CoreNLPClient(properties={"ner.applyFineGrained": "false", "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",}, endpoint="http://99.242.123.104:9002", start_server=stanza.server.StartServer.DONT_START, timeout=120000000,be_quiet=True,)
-client.start()
+
 
 
 def remove_NER(line):
