@@ -48,6 +48,8 @@ w2v = Make()
 
 bi, tri, w, vectors, syn1neg = getfiles()
 
+st.write(type(bi))
+
 w2v.mod.wv.vectors.npy = vectors
 w2v.mod.syn1neg.npy = syn1neg
 w2v.mod = w
