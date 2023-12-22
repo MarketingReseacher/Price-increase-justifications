@@ -14,10 +14,12 @@ import dictionary_funcs
 import project_config as cfg
 
 import nltk
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import sent_tokenize
 
 doc = st.text_input("Enter chief officer's response:")
 
