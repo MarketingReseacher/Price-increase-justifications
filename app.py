@@ -26,10 +26,10 @@ if len(doc) == 0:
 else: 
     pass
 
-conn = st.connection('gcs', type=FilesConnection)
 
-@st.cache_data
+
 def getfiles():
+    conn = st.connection('gcs', type=FilesConnection)
     word2vec = conn.read("ectcalculator/w2v.mod", input_format=".mod")
 
 getfiles()
