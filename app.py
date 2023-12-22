@@ -6,6 +6,7 @@ import numpy as np
 import functools
 import streamlit as st
 from urllib.request import urlretrieve
+from st_files_connection import FilesConnection
 
 import gensim
 import dictionary_funcs
