@@ -4,3 +4,4 @@ backgroundColor="#FFFFFF"
 secondaryBackgroundColor="#e4f4f7"
 textColor="#1F3B65"
 font="sans serif"
+maxUploadSize=40000
