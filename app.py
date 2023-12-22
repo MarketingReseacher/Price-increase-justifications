@@ -35,22 +35,22 @@ def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
     bi_phrase = conn.open("ectcalculator/bi_phrase.mod")
     tri_phrase = conn.open("ectcalculator/tri_phrase.mod")
-    #w2v = conn.open("ectcalculator/w2v.mod")
-    #w2v.mod.wv.vectors.npy = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
-    #w2v.mod.syn1neg.npy = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
-    return bi_phrase, tri_phrase
+    w2v = conn.open("ectcalculator/w2v.mod")
+    vectors = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
+    syn1neg = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
+    return bi_phrase, tri_phrase, w2v, vectors, syn1neg
 
-bi_phrase, tri_phrase = getfiles()
+bi_phrase, tri_phrase, w2v, vectors, syn1neg = getfiles()
 
 #@st.cache_data
-def loadfiles(bi_phrase, tri_phrase):
+def loadfiles(bi_phrase, tri_phrase, vectors, syn1neg):
     bigram_model = gensim.models.phrases.Phraser.load(bi_phrase)
     trigram_model = gensim.models.phrases.Phraser.load(tri_phrase)
     with open("df_dict.pkl", "rb") as f:
         df_dict = pickle.load(f)
     return bigram_model, trigram_model, df_dict
 
-bigram_model, trigram_model, df_dict = loadfiles(bi_phrase, tri_phrase)
+bigram_model, trigram_model, df_dict = loadfiles(bi_phrase, tri_phrase, vectors, syn1neg)
 
 def remove_NER(line):
     NERs = re.compile("(\[NER:\w+\])(\S+)")
