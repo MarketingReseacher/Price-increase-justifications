@@ -30,7 +30,11 @@ else:
 
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
-    word2vec = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
+    bi_phrase.mod = conn.open("ectcalculator/bi_phrase.mod")
+    tri_phrase.mod = conn.open("ectcalculator/tri_phrase.mod")
+    w2v.mod = conn.open("ectcalculator/w2v.mod")
+    w2v.mod.wv.vectors.npy = conn.open("ectcalculator/w2v.mod.wv.vectors.npy"")
+    w2v.mod.syn1neg.npy = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
 
 getfiles()
 
