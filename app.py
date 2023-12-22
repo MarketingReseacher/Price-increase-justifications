@@ -36,9 +36,6 @@ class Make:
 
 w2v = Make()
 
-make.a.dot.separated.name = 666
-make.anything.i.want = 777
-
 #@st.cache_data
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
