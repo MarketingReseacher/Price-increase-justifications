@@ -48,23 +48,20 @@ w2v = Make()
 
 bi, tri, w, vectors, syn1neg = getfiles()
 
-st.write(type(bi))
+bi.save('bi_phrase.mod')
+tri.save('tri_phrase.mod')
 
 w2v.mod.wv.vectors.npy = vectors
 w2v.mod.syn1neg.npy = syn1neg
 w2v.mod = w
 
 #@st.cache_data
-def loadfiles(bi, tri):
-    #bi_phrase = Make()
-    #bi_phrase.mod = bi 
-    bigram_model = Phraser(bi)
-    #tri_phrase = Make()
-    #tri_phrase.mod = tri
-    trigram_model = Phraser(tri)
-    return bigram_model, trigram_model, df_dict
+def loadfiles():
+    bigram_model = Phraser.load("./bi_phrase.mod")
+    trigram_model = Phraser.load("./tri_phrase.mod")
+    return bigram_model, trigram_model
 
-bigram_model, trigram_model, df_dict = loadfiles(bi, tri)
+bigram_model, trigram_model = loadfiles()
 
 with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
