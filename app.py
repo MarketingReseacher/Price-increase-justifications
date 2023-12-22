@@ -17,7 +17,7 @@ import nltk
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 
-from nltk.tokenize import sent_tokenize
+from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 
