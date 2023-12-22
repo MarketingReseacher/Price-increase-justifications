@@ -29,12 +29,6 @@ if len(doc) == 0:
 else: 
     pass
 
-class Make:
-    def __getattr__(self, name):
-        self.__dict__[name] = Make()
-        return self.__dict__[name]
-
-w2v = Make()
 
 #@st.cache_data
 def getfiles():
@@ -46,7 +40,16 @@ def getfiles():
     syn1neg = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
     return bi_phrase, tri_phrase, w2v, vectors, syn1neg
 
-bi_phrase, tri_phrase, w2v.mod, w2v.mod.wv.vectors.npy, w2v.mod.syn1neg.npy = getfiles()
+class Make:
+    def __getattr__(self, name):
+        self.__dict__[name] = Make()
+        return self.__dict__[name]
+
+w2v = Make()
+
+bi_phrase, tri_phrase, w2v, vectors, syn1neg = getfiles()
+w2v.mod.wv.vectors.npy = vectors
+w2v.mod.syn1neg.npy = syn1neg
 
 #@st.cache_data
 def loadfiles(bi_phrase, tri_phrase):
