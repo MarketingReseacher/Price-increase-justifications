@@ -9,3 +9,9 @@ corenlp
 tqdm==4.65.0
 zca==0.1.1
 
+from stanza.pipeline.core import Pipeline
+from stanza.pipeline.constituency_processor import ConstituencyProcessor
+import stanza.models.constituency.trainer as trainer
+from stanza.server.parser_eval import EvaluateParser
+from stanza.protobuf import to_text
+
