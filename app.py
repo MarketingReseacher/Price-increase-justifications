@@ -32,7 +32,7 @@ else:
 #@st.cache_data
 def getfiles():
     conn = st.connection('gcs', type=FilesConnection)
-    bi = conn.open("ectcalculator/bi_phrase.mod")
+    bi = conn.open("ectcalculator/bi_phrase.mod", input_format = "mod")
     tri = conn.open("ectcalculator/tri_phrase.mod")
     w2v = conn.open("ectcalculator/w2v.mod")
     vectors = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
