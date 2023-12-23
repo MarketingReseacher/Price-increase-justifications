@@ -59,8 +59,8 @@ tri_phrase.mod = tri
 
 #@st.cache_data
 def loadfiles(bi, tri):
-    bigram_model = Phraser.load(bi_phrase.mod)
-    trigram_model = Phraser.load(tri_phrase.mod)
+    bigram_model = Phraser.load(str(bi_phrase.mod))
+    trigram_model = Phraser.load(str(tri_phrase.mod))
     return bigram_model, trigram_model
 
 bigram_model, trigram_model = loadfiles(bi, tri)
