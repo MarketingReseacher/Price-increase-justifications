@@ -31,39 +31,16 @@ else:
 
 #@st.cache_data
 def getfiles():
-    conn = st.connection('gcs', type=FilesConnection)
-    bi = conn.open("ectcalculator/bi_phrase.mod", input_format = "mod")
-    tri = conn.open("ectcalculator/tri_phrase.mod")
-    w2v = conn.open("ectcalculator/w2v.mod")
-    vectors = conn.open("ectcalculator/w2v.mod.wv.vectors.npy")
-    syn1neg = conn.open("ectcalculator/w2v.mod.syn1neg.npy")
-    return bi, tri, w2v, vectors, syn1neg
+    a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
+    b, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
+    w2v_model = gensim.models.Word2Vec.load("w2v.mod")
+    c, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
+    d, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
 
-class Make:
-    def __getattr__(self, name):
-        self.__dict__[name] = Make()
-        return self.__dict__[name]
+getfiles()
 
-
-
-bi, tri, w, vectors, syn1neg = getfiles()
-
-bi_phrase = Make()
-bi_phrase.mod = bi
-tri_phrase = Make()
-tri_phrase.mod = tri
-
-#@st.cache_data
-def loadfiles(bi, tri, w, vectors, syn1neg):
-    w2v = Make() 
-    w2v.mod.wv.vectors.npy = vectors
-    w2v.mod.syn1neg.npy = syn1neg
-    w2v.mod = w
-    bigram_model = Phraser.load(bi_phrase.mod)
-    trigram_model = Phraser.load(tri_phrase.mod)
-    return bigram_model, trigram_model
-
-bigram_model, trigram_model = loadfiles(bi_phrase.mod, tri_phrase.mod, w, vectors, syn1neg)
+bigram_model = Phraser.load("bi_phrase.mod")
+trigram_model = Phraser.load("tri_phrase.mod")
 
 with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
@@ -277,11 +254,7 @@ elif Selected_tab == "Marketing Conceps":
 
 
 '''
-    a, w2vfile1 = urlretrieve("https://www.dropbox.com/scl/fi/ttasq9f18w4sxf96408j0/w2v.mod.syn1neg.npy?rlkey=ym29m97vbpel2s2pbhjbs69bp&dl=1", "w2v.mod.wv.vectors.npy")
-    b, w2vfile2 = urlretrieve("https://www.dropbox.com/scl/fi/qvc4ro8jgocd65nozl47l/w2v.mod.wv.vectors.npy?rlkey=09t1mjh6se0nke3693zgf7g6m&dl=1", "w2v.mod.syn1neg.npy")
-    w2v_model = gensim.models.Word2Vec.load("w2v.mod")
-    c, bi_phrase = urlretrieve("https://www.dropbox.com/scl/fi/ke1dk8kquwau2igkylvjw/bi_phrase.mod?rlkey=stmh2h26bv5wkunqiw8nh0kww&dl=1", "bi_phrase.mod")
-    d, tri_phrase = urlretrieve("https://www.dropbox.com/scl/fi/nvxsx2a9uaj474jh83wfz/tri_phrase.mod?rlkey=ogxenfkeuqy9lulumdktjvnrp&dl=1", "tri_phrase.mod")
+
 '''
 
 
