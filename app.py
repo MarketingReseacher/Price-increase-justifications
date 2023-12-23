@@ -52,13 +52,18 @@ w2v.mod.wv.vectors.npy = vectors
 w2v.mod.syn1neg.npy = syn1neg
 w2v.mod = w
 
+bi_phrase = Make()
+bi_phrase.mod = bi
+tri_phrase = Make()
+tri_phrase.mod = tri
+
 #@st.cache_data
-def loadfiles():
-    bigram_model = Phraser.load("./bi_phrase.mod")
-    trigram_model = Phraser.load("./tri_phrase.mod")
+def loadfiles(bi, tri):
+    bigram_model = Phraser.load(bi_phrase.mod)
+    trigram_model = Phraser.load(tri_phrase.mod)
     return bigram_model, trigram_model
 
-bigram_model, trigram_model = loadfiles()
+bigram_model, trigram_model = loadfiles(bi, tri)
 
 with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
