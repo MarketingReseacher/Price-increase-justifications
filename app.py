@@ -44,13 +44,9 @@ class Make:
         self.__dict__[name] = Make()
         return self.__dict__[name]
 
-w2v = Make()
+
 
 bi, tri, w, vectors, syn1neg = getfiles()
-
-w2v.mod.wv.vectors.npy = vectors
-w2v.mod.syn1neg.npy = syn1neg
-w2v.mod = w
 
 bi_phrase = Make()
 bi_phrase.mod = bi
@@ -58,12 +54,16 @@ tri_phrase = Make()
 tri_phrase.mod = tri
 
 #@st.cache_data
-def loadfiles(bi, tri):
+def loadfiles(bi, tri, w, vectors, syn1neg):
+    w2v = Make() 
+    w2v.mod.wv.vectors.npy = vectors
+    w2v.mod.syn1neg.npy = syn1neg
+    w2v.mod = w
     bigram_model = Phraser.load(bi_phrase.mod)
     trigram_model = Phraser.load(tri_phrase.mod)
     return bigram_model, trigram_model
 
-bigram_model, trigram_model = loadfiles(bi_phrase.mod, tri_phrase.mod)
+bigram_model, trigram_model = loadfiles(bi_phrase.mod, tri_phrase.mod, w, vectors, syn1neg)
 
 with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
