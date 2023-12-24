@@ -7,5 +7,5 @@ scikit_learn
 tqdm
 zca
 nltk==3.6.2
-gcsfs
-st-files-connection
+stanza
+os
