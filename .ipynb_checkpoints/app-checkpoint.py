@@ -1,33 +1,23 @@
-# Import necessary packages
+# Import packages
 import json
 import pickle
 import re
 import numpy as np
 import functools
 import streamlit as st
-from urllib.request import urlretrieve
 import gensim
 import stanza
 from gensim.models import Word2Vec
 from gensim.models.phrases import Phraser
 from stanza.server import CoreNLPClient
 from stanza.server.ud_enhancer import UniversalEnhancer
-
 import dictionary_funcs
 import project_config as cfg
-import os
 
-os.chdir("C:/Users/Administrator/ECT")
-
-
-
-doc = st.text_area("Enter text:")
+doc = st.text_area("Enter text:", help = "If you don't enter any text, the following text is used as default:  \n\nKey to this ecosystem is the network approach, which leverages cloud networks and information networks to support a wide range of services. This approach enables businesses to offer services and support solutions more effectively. By utilizing application expertise and a diverse skill set, companies can co-engineer and join together multiple modalities to create comprehensive business process solutions. These solutions often include video content management and BPM (Business Process Management) solutions, which are essential in today's digital landscape.")
 
 if len(doc.split()) == 0: 
-    st.write("You have not entered any CEO or analyst responses yet.")
-    st.write("Sample text used: Key to this ecosystem is the network approach, which leverages cloud networks and information networks to support a wide range of services. This approach enables businesses to offer services and support solutions more effectively. By utilizing application expertise and a diverse skill set, companies can co-engineer and join together multiple modalities to create comprehensive business process solutions. These solutions often include video content management and BPM (Business Process Management) solutions, which are essential in today's digital landscape.")
     doc = "Key to this ecosystem is the network approach, which leverages cloud networks and information networks to support a wide range of services. This approach enables businesses to offer services and support solutions more effectively. By utilizing application expertise and a diverse skill set, companies can co-engineer and join together multiple modalities to create comprehensive business process solutions. These solutions often include video content management and BPM (Business Process Management) solutions, which are essential in today's digital landscape."   
-
 
 @st.cache_resource
 def bigram():
@@ -43,14 +33,12 @@ def trigram():
     
 trigram_model = trigram()
 
-
 @st.cache_resource
 def w2v():
     w2v_model = gensim.models.Word2Vec.load("w2v.mod")
     return w2v_model
     
 w2v_model = w2v()
-
 
 with open("df_dict.pkl", "rb") as f:
     df_dict = pickle.load(f)
@@ -77,8 +65,6 @@ def clean(doc):
     lines = doc.split("\n")
     cleaned = [functools.reduce(lambda obj, func: func(obj), [remove_NER, remove_puct_num], line,) for line in lines]
     return "\n".join(cleaned)
-
-
 def sentence_mwe_finder(
     sentence_ann, dep_types=set(["mwe", "compound", "compound:prt", "fixed"])):
     WMEs = [x for x in sentence_ann.enhancedPlusPlusDependencies.edge if x.dep in dep_types]
@@ -90,7 +76,6 @@ def sentence_mwe_finder(
         # the edges indices are for current sentence, whereas tokenBeginIndex are for the document.
         wme_edges.append([end - 1 + sentence_ann.token[0].tokenBeginIndex for end in edge])
     return wme_edges
-
 def sentence_NE_finder(sentence_ann):
     NE_edges = []
     NE_types = []
@@ -100,8 +85,6 @@ def sentence_NE_finder(sentence_ann):
         NE_edges.append([edge[0], edge[1] - 1])
         NE_types.append(m.entityType)
     return NE_edges, NE_types
-
-
 def edge_simplifier(edges):
     edge_sources = set([])  # edge that connects next token
     for e in edges:
@@ -141,8 +124,6 @@ def process_sentence(sentence_ann):
                 NE_j += 1
         sentence_parsed.append(token_lemma)
     return "".join(sentence_parsed)
-
-
 def process_document(doc):
     with CoreNLPClient(endpoint = "http://52.45.216.132:7862", start_server=False) as client:
         doc_ann = client.annotate(doc, username="jom_submission", password="jom_sub_pass3210")
@@ -158,7 +139,6 @@ def concat_must_have_phrases(text):
         map(re.escape, [phrase.replace("_", " ") for phrase in all_seeds]))
     text = re.sub(pattern, lambda match: match.group().replace(" ", "_"), text)
     return text
-
 # Apply trained phrase models to text.
 def apply_phrase_models(text):
     # Apply bigram model
@@ -166,7 +146,6 @@ def apply_phrase_models(text):
     # Apply trigram model
     text_trigram = trigram_model[text_bigram]
     return " ".join(text_trigram)
-
 # Vectorize text using the trained Word2Vec model.
 def vectorize_text(text):
     vectorized = [w2v_model.wv[word] for word in text.split() if word in w2v_model.wv]
@@ -190,8 +169,7 @@ def clean_and_vectorize(doc_processed):
     vectorized_text_weighted = np.mean(doc_weighted, axis=0)
     vectorized_text_weighted = vectorized_text_weighted / np.linalg.norm(vectorized_text_weighted)
     return vectorized_text, vectorized_text_weighted
-
-
+    
 doc_processed = process_document(doc)
 vectorized_new_text = clean_and_vectorize(doc_processed)[1]
 
@@ -237,83 +215,86 @@ AspectList = ['Capabilities', 'Excellence', 'Orientation']
 
 Dimensions = {'Capabilities': {'Marketing Ecosystem': a, 'End User': a, 'Marketing Agility': a}, 'Excellence' : {'Marketing Information Managament': a, 'Marketing Planning Capabilities': a, 'Marketing Implementation Capabilities': a, 'Pricing Capabilities': a, 'Product Development Capabilities': a, 'Channel Management':a, 'Marketing Communication Capabilities': a}, 'Orientation' : {'Selling Capabilities': a, 'Customer Orientation': a, 'Competitor Orientation':a, 'Interfunctional Coordination':a, 'Long-term Focus':a, 'Profit Focus':a, 'Intelligence Generation':a, 'Intelligence Dissemination' :a, 'Responsiveness': a}}
 
-
-Dimensions = {'Capabilities': {'Marketing Ecosystem': a, 'End User': a, 'Marketing Agility': a}, 'Excellence' : {'Marketing Information Managament': a, 'Marketing Planning Capabilities': a, 'Marketing Implementation Capabilities': a, 'Pricing Capabilities': a, 'Product Development Capabilities': a, 'Channel Management':a, 'Marketing Communication Capabilities': a}, 'Orientation' : {'Selling Capabilities': a, 'Customer Orientation': a, 'Competitor Orientation':a, 'Interfunctional Coordination':a, 'Long-term Focus':a, 'Profit Focus':a, 'Intelligence Generation':a, 'Intelligence Dissemination' :a, 'Responsiveness': a}}
-
-
-DimensionList = ['Marketing Ecosystem', 'End User', 'Marketing Agility', 'Marketing Information Managament', 'Marketing Planning Capabilities', 'Marketing Implementation Capabilities', 'Pricing Capabilities', 'Product Development Capabilities', 'Channel Management', 'Marketing Communication Capabilities', 'Selling Capabilities', 'Customer Orientation', 'Competitor Orientation', 'Interfunctional Coordination', 'Long-term Focus', 'Profit Focus', 'Intelligence Generation', 'Intelligence Dissemination' , 'Responsiveness']
-
 for aspect in AspectList:
     Aspects[aspect] = full(aspect)
 
 for aspect in AspectList:
     Dimensions[aspect] = dims(aspect)
 
-CEOOrAnalyst = st.sidebar.selectbox("CEO or analyst text", ["CEO", "Analyst"])
+CEOOrAnalyst = st.sidebar.selectbox("Select text source", ["CEO or Firm", "Financial analyst"], help = 'Choose "CEO or Firm" if the source of the text is CEO\'s words (e.g., response to analyst questions, excerpts in media interviews, social media posts) or firm documents (e.g., 10-k reports).  \n\nChoose "Financial analyst" if the source of the text is a financial analyst\'s words (e.g., analyst questions in earning calls).')
 
 
-if CEOOrAnalyst == "CEO":
-    Selected_tab = st.sidebar.selectbox("Select desired output", ["Marketing Concepts", "Dimensions"])
-    if Selected_tab == "Dimensions":
-        Select = st.sidebar.selectbox("Select marketing concept", ['Marketing Capabilities', 'Marketing Excellence', 'Marketing Orientation'])
-        if Select == 'Marketing Capabilities' and st.button("Calculate Measures"):
-            st.write("#### Marketing Capabilities")
-                    
-            response1 = round(Dimensions["Capabilities"]['Marketing Ecosystem'], 2)
-            st.write("Marketing Ecosystem Capabilities: ", response1)
-            response2 = round(Dimensions["Capabilities"]['End User'], 2)
-            st.write("End User Capabilities: ", response2)
-            response3 = round(Dimensions["Capabilities"]['Marketing Agility'], 2)
-            st.write("Marketing Agibility: ", response3) 
-        elif Select == "Marketing Excellence" and st.button("Calculate Measures"):
-            st.write("#### Marketing Excellence")
-        
-            response1 = round(Dimensions["Excellence"]['Marketing Information Management'], 2)
-            st.write('Marketing Information Management: ', response1)
-            response2 = round(Dimensions["Excellence"]['Marketing Planning Capabilities'], 2)
-            st.write('Marketing Planning Capabilities: ', response2)
-            response3 = round(Dimensions["Excellence"]['Marketing Implementation Capabilities'], 2)
-            st.write('Marketing Implementation Capabilities: ', response3) 
-            response4 = round(Dimensions["Excellence"]['Pricing Capabilities'], 2)
-            st.write('Pricing Capabilities: ', response4)
-            response6 = round(Dimensions["Excellence"]['Product Development Capabilities'], 2)
-            st.write('Product Development Capabilities: ', response6) 
-            response5 = round(Dimensions["Excellence"]['Channel Management'], 2)
-            st.write('Channel Management: ', response5)
-            response7 = round(Dimensions["Excellence"]['Selling Capabilities'], 2)
-            st.write('Selling Capabilities: ', response7)
-            response8 = round(Dimensions["Excellence"]['Marketing Communication Capabilities'], 2)
-            st.write('Marketing Communication Capabilities: ', response8)
-        
-        elif Select == "Marketing Orientation" and st.button("Calculate Measures"):
-            st.write("#### Marketing Orientation")
+if CEOOrAnalyst == "CEO or Firm":
+    Selected_tab = st.sidebar.selectbox("Select desired output", ["Marketing concept", "Marketing concept\'s lower-order components"], help = 'Choose "Marketing concept" to see the average Market orientation, Marketing capabilities, and Marketing excellence scores.  \n\nChoose "Marketing concept\'s lower-order components" to see the scores for individual components of each Marketing concept. There are 8 components for Market orientation, 8 for Marketing capabilities, and 3 for Marketing excellence, for a total of 19 distinct components.')
+    
+    if Selected_tab == "Marketing concept\'s lower-order components":
+        Select = st.sidebar.selectbox("Select Marketing concept higher-order construct", ['Market orientation', 'Marketing capabilities', 'Marketing excellence'], help = "Market orientation\'s 8 components: Customer orientation, Competitor orientation, Interfunctional coordination, Long-term focus, Profit focus, Intelligence generation, Intelligence dissemination, and Responsiveness.  \n\nMarketing capabilities\' 8 components: Marketing information management, marketing planning, marketing implementation, pricing, Product development, Channel management, Marketing communication, and Selling.   \n\nMarketing excellence's 3 components: Marketing-ecosystem priority, End-user priority, and Marketing-agility priority.")
+
+        if Select == "Market orientation" and st.button("Calculate Market orientation's 8 components"):
+            st.write("Note: values of each component range from -1 to 1.")
                     
             response1 = round(Dimensions['Orientation']['Customer Orientation'], 2)
-            st.write('Customer Orientation: ', response1)
+            st.write(' - Customer orientation: ', response1)
             response2 = round(Dimensions['Orientation']['Competitor Orientation'], 2)
-            st.write('Competitor Orientation: ', response2)
+            st.write(' - Competitor orientation: ', response2)
             response3 = round(Dimensions['Orientation']['Interfunctional Coordination'], 2)
-            st.write('Interfunctional Coordination: ', response3) 
+            st.write(' - Interfunctional coordination: ', response3) 
             response4 = round(Dimensions['Orientation']['Long-term Focus'], 2)
-            st.write('Long-term Focus: ', response4)
+            st.write(' - Long-term focus: ', response4)
             response5 = round(Dimensions['Orientation']['Profit Focus'], 2)
-            st.write('Profit Focus: ', response5)
+            st.write(' - Profit focus: ', response5)
             response6 = round(Dimensions['Orientation']['Intelligence Generation'], 2)
-            st.write('Intelligence Generation: ', response6) 
+            st.write(' - Intelligence generation: ', response6) 
             response7 = round(Dimensions['Orientation']['Intelligence Dissemination'], 2)
-            st.write('Intelligence Dissemination: ', response7)
+            st.write(' - Intelligence dissemination: ', response7)
             response8 = round(Dimensions['Orientation']['Responsiveness'], 2)
-            st.write('Responsiveness: ', response8)
-        elif Selected_tab == "Marketing Concepts" and st.button("Calculate Measures"):
-            response1 = round(Aspects["Capabilities"], 2)
-            st.write("Marketing Capabilities: ", response1)
-            response2 = round(Aspects['Excellence'], 2)
-            st.write("Marketing Excellence: ", response2)
-            response3 = round(Aspects['Orientation'], 2)
-            st.write("Marketing Excellence: ", response3)    
-    elif CEOOrAnalyst == "Analyst" and st.button("Calculate Measures"):
-        response = round(Dimensions["Orientation"]["Customer Orientation"], 2)
-        st.write("Analyst's customer orientation", response)
+            st.write(' - Responsiveness: ', response8)
+            
+        elif Select == 'Marketing capabilities' and st.button("Calculate Marketing capabilities' 8 components"):
+            st.write("Note: values of each component range from -1 to 1.")
+
+            response1 = round(Dimensions["Excellence"]['Marketing Information Management'], 2)
+            st.write(' - Marketing information management: ', response1)
+            response2 = round(Dimensions["Excellence"]['Marketing Planning Capabilities'], 2)
+            st.write(' - Marketing planning: ', response2)
+            response3 = round(Dimensions["Excellence"]['Marketing Implementation Capabilities'], 2)
+            st.write(' - Marketing implementation: ', response3) 
+            response4 = round(Dimensions["Excellence"]['Pricing Capabilities'], 2)
+            st.write(' - Pricing: ', response4)
+            response6 = round(Dimensions["Excellence"]['Product Development Capabilities'], 2)
+            st.write(' - Product development: ', response6) 
+            response5 = round(Dimensions["Excellence"]['Channel Management'], 2)
+            st.write(' - Channel management: ', response5)
+            response7 = round(Dimensions["Excellence"]['Marketing Communication Capabilities'], 2)
+            st.write(' - Marketing communication: ', response7)
+            response8 = round(Dimensions["Excellence"]['Selling Capabilities'], 2)
+            st.write(' - Selling: ', response8)
+                    
+        elif Select == "Marketing excellence" and st.button("Calculate Marketing excellence's 3 components"):
+            st.write("Note: values of each component range from -1 to 1.")
+            
+            response1 = round(Dimensions["Capabilities"]['Marketing Ecosystem'], 2)
+            st.write(" - Marketing-ecosystem priority: ", response1)
+            response2 = round(Dimensions["Capabilities"]['End User'], 2)
+            st.write(" - End-user priority: ", response2)
+            response3 = round(Dimensions["Capabilities"]['Marketing Agility'], 2)
+            st.write(" - Marketing-agibility priority: ", response3) 
+            
+    elif Selected_tab == "Marketing concept" and st.button("Calculate Market orientation, Marketing capabilities, and Marketing excellence"):
+        st.write("Note: values range from -1 to 1.")
+        
+        response1 = round(Aspects['Orientation'], 2)
+        st.write(" - Market orientation: ", response1)    
+        response2 = round(Aspects['Excellence'], 2)
+        st.write(" - Marketing capabilities: ", response2)
+        response3 = round(Aspects["Capabilities"], 2)
+        st.write(" - Marketing excellence: ", response3)
+        
+elif CEOOrAnalyst == "Financial analyst" and st.button("Calculate analyst's Customer orientation"):
+    st.write("Note: values range from -1 to 1.")
+    
+    response = round(Dimensions["Orientation"]["Customer Orientation"], 2)
+    st.write("Customer orientation", response)
 
 
 
