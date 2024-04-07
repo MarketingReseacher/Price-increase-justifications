@@ -48,7 +48,7 @@ def PlotHist(x, var):
     fig.set_figheight(10)
     fig.set_figwidth(12)
     plt.show()
-    return plt
+
 
 
 def PlotBox(x, var):
@@ -62,7 +62,8 @@ def PlotBox(x, var):
     plt.ylabel(Label, size=12, style= "italic")
     fig.set_figheight(10)
     fig.set_figwidth(12)
-    return plt
+    plt.show()
+
 
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Recall to Owner Notification Date"])
@@ -70,13 +71,14 @@ Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"]
 
 if Selected_graph == "Histogram":
   if Selected_var == "First Complaint to Investigation Opening":
-    st.pyplot(PlotHist(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening'))
+    plt = PlotHist(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
   elif Selected_var == "Investigation Opening to Closing":
-    st.pyplot(PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing'))
+    plt = pyplot(PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
   elif Selected_var == "Investigation Closing to Recall":
-    st.pyplot(PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall'))
+    plt = PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
-    st.pyplot(PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification'))
+    plt = PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
+  st.pyplot(plt)  
 
 else:
   if Selected_var == "First Complaint to Investigation Opening":
