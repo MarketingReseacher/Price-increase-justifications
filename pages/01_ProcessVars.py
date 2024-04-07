@@ -48,6 +48,7 @@ def PlotHist(x, var):
     fig.set_figheight(10)
     fig.set_figwidth(12)
     plt.show()
+    return plt
 
 
 def PlotBox(x, var):
@@ -61,7 +62,7 @@ def PlotBox(x, var):
     plt.ylabel(Label, size=12, style= "italic")
     fig.set_figheight(10)
     fig.set_figwidth(12)
-    plt.show()
+    return plt
 
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Recall to Owner Notification Date"])
@@ -69,21 +70,21 @@ Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"]
 
 if Selected_graph == "Histogram":
   if Selected_var == "First Complaint to Investigation Opening":
-    PlotHist(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
+    st.pyplot(PlotHist(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening'))
   elif Selected_var == "Investigation Opening to Closing":
-    PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
+    st.pyplot(PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing'))
   elif Selected_var == "Investigation Closing to Recall":
-    PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall')
+    st.pyplot(PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall'))
   else:
-    PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
+    st.pyplot(PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification'))
 
 else:
   if Selected_var == "First Complaint to Investigation Opening":
-    PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
+    st.pyplot(PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening'))
   elif Selected_var == "Investigation Opening to Closing":
-    PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
+    st.pyplot(PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing'))
   elif Selected_var == "Investigation Closing to Recall":
-    PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
+    st.pyplot(PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall'))
   else:
-    PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
+    st.pyplot(PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification'))
 
