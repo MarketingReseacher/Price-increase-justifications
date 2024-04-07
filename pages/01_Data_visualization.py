@@ -9,7 +9,7 @@ st.sidebar.markdown("# Data Visualization")
 @st.cache_resource
 def ReadData():
   Data = pd.read_csv('Outcomes.csv')
-  Data.head()
   return Data
 
-ReadData()
+Data = ReadData()
+Data.head()
