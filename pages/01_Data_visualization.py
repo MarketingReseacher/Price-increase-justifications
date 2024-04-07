@@ -12,4 +12,4 @@ def ReadData():
   return Data
 
 Data = ReadData()
-Data.head()
+st.write(Data.head())
