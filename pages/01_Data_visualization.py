@@ -10,6 +10,6 @@ st.sidebar.markdown("# Data Visualization")
 def ReadData():
   Data = pd.read_csv('Outcomes.csv')
   Data.head()
-  Return Data
+  return Data
 
 ReadData()
