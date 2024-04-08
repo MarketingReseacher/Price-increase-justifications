@@ -60,9 +60,11 @@ def PlotBox(x, var):
     plt.boxplot(x,  patch_artist=True)
     plt.title(f'Boxplot of {Label}', size=12)
     plt.ylabel(Label, size=12, style= "italic")
-    fig.set_figheight(10)
-    fig.set_figwidth(12)
-    plt.show()
+    fig.set_figheight(6)
+    fig.set_figwidth(8)
+
+    return fig
+    
 
 
 
@@ -82,11 +84,11 @@ if Selected_graph == "Histogram":
 
 else:
   if Selected_var == "First Complaint to Investigation Opening":
-    st.pyplot(PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening'))
+  plt = PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
   elif Selected_var == "Investigation Opening to Closing":
-    st.pyplot(PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing'))
+  plt = PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
   elif Selected_var == "Investigation Closing to Recall":
-    st.pyplot(PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall'))
+  plt = PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
-    st.pyplot(PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification'))
+  plt = PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
 
