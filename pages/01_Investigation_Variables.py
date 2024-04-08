@@ -43,4 +43,6 @@ if Selected_graph == "Pie":
       plt = PlotPie(Closed, 'InvestigationType')
     else:
       plt = PlotPie(Data, 'InvestigationType')
-  st.pyplot(plt) 
+    st.pyplot(plt) 
+  else:
+    pass
