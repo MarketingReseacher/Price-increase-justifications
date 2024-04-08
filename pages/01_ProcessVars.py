@@ -47,7 +47,7 @@ def PlotHist(x, var):
     plt.ylabel("Frequency", size=12)
     fig.set_figheight(10)
     fig.set_figwidth(12)
-    plt.show()
+    return fig
 
 
 
