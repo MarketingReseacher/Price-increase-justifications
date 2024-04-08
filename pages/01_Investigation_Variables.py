@@ -58,7 +58,7 @@ if Selected_graph == "Pie":
 
 if Selected_graph == "Histogram":
     if Selected_var == "InvestigationType":
-       st.write("For a histogram or boxplot, please choose a numerical variable.")     
+        st.write("For a histogram or boxplot, please choose a numerical variable.")     
     elif Selected_var == "No. Complaints Reported to NHTSA":
         plt = PlotHist(MyDF["NoComplaintsReportedNHTSA"], Labels["NoComplaintsReportedNHTSA"])
     elif Selected_var == "No. Crashes and Fires Reported to NHTSA":
@@ -119,6 +119,66 @@ if Selected_graph == "Histogram":
 
 
 
+if Selected_graph == "Boxplot":
+    if Selected_var == "InvestigationType":
+        st.write("For a histogram or boxplot, please choose a numerical variable.")     
+    elif Selected_var == "No. Complaints Reported to NHTSA":
+        plt = PlotBox(MyDF["NoComplaintsReportedNHTSA"], Labels["NoComplaintsReportedNHTSA"])
+    elif Selected_var == "No. Crashes and Fires Reported to NHTSA":
+        plt = PlotBox(MyDF["NoCrashesFiresReportedNHTSA"], Labels["NoCrashesFiresReportedNHTSA"])
+    elif Selected_var == "No. Injury Incidents Reported to NHTSA":
+        plt = PlotBox(MyDF["NoInjuryIncidentsReportedNHTSA"], Labels["NoInjuryIncidentsReportedNHTSA"])   
+    elif Selected_var == "No. Injuries Reported to NHTSA": 
+        plt = PlotBox(MyDF["NoInjuriesReportedNHTSA"], Labels["NoInjuriesReportedNHTSA"]) 
+    elif Selected_var == "No Fatality Incidents Reported to NHTSA":
+        plt = PlotBox(MyDF["NoFatalityIncidentsReportedNHTSA"], Labels["NoFatalityIncidentsReportedNHTSA"])
+    elif Selected_var == "No. Fatalities Reported to NHTSA":
+        plt = PlotBox(MyDF["NoFatalitiesReportedNHTSA"], Labels["NoFatalitiesReportedNHTSA"])
+    elif Selected_var == "No. Other Types Failures Reported to NHTSA":
+        plt = PlotBox(MyDF["NoOtherFailuresReportedNHTSA"], Labels["NoOtherFailuresReportedNHTSA"]) 
+    elif Selected_var == "No. Complaints Reported to the Manufacturer" :
+        plt = PlotBox(MyDF["NoComplaintsReportedMfr"], Labels[ "NoComplaintsReportedMfr"])
+    elif Selected_var == "No. Crashes and Fires Reported to the Manufacturer":
+        plt = PlotBox(MyDF["NoCrashesFiresReportedMfr"], Labels["NoCrashesFiresReportedMfr"])
+    elif Selected_var == "No. Injury Incidents Reported to the Manufacturer":
+        plt = PlotBox(MyDF["NoInjuryIncidentsReportedMfr"], Labels["NoInjuryIncidentsReportedMfr"])
+    elif Selected_var == "No. Injuries Reported to the Manufacturer":
+        plt = PlotBox(MyDF["NoInjuriesReportedMfr"], Labels["NoInjuriesReportedMfr"])
+    elif Selected_var == "No Fatality Incidents Reported to the Manufacturer":
+        plt = PlotBox(MyDF["NoFatalityIncidentsReportedMfr"], Labels["NoFatalityIncidentsReportedMfr"])
+    elif Selected_var ==  "No. Fatalities Reported to the Manufacturer":
+        plt = PlotBox(MyDF["NoFatalitiesReportedMfr"], Labels["NoFatalitiesReportedMfr"])
+    elif Selected_var == "No. Other Types Failures Reported to the Manufacturer":
+        plt = PlotBox(MyDF["NoOtherFailuresReportedMfr"], Labels["NoOtherFailuresReportedMfr"])
+    elif Selected_var == "No. Complaints Reported":
+        plt = PlotBox(MyDF["NoComplaintsReported"], Labels["NoComplaintsReported"])
+    elif Selected_var == "No. Crashes and Fires Reported":
+        plt = PlotBox(MyDF["NoCrashesFiresReported"], Labels["NoCrashesFiresReported"])
+    elif Selected_var == "No. Injury Incidents Reported":
+        plt = PlotBox(MyDF["NoInjuryIncidentsReported"], Labels["NoInjuryIncidentsReported"])
+    elif Selected_var == "No. Injuries Reported":
+        plt = PlotBox(MyDF["NoInjuriesReported"], Labels["NoInjuriesReported"])
+    elif Selected_var == "No Fatality Incidents Reported":
+        plt = PlotBox(MyDF["NoFatalityIncidentsReported"], Labels["NoFatalityIncidentsReported"])
+    elif Selected_var == "No. Fatalities Reported":
+        plt = PlotBox(MyDF["NoFatalitiesReported"], Labels["NoFatalitiesReported"])
+    elif Selected_var == "No. Other Types Failures Reported":
+        plt = PlotBox(MyDF["NoOtherFailuresReported"], Labels["NoOtherFailuresReported"])
+    elif Selected_var == "Population":
+        plt = PlotBox(MyDF["Population"], Labels["Population"])
+    elif Selected_var == "Problem Definition Sentiment":
+        plt = PlotBox(MyDF["PDSentiment"], Labels["PDSentiment"])
+    elif Selected_var == "Summary Sentiment":
+        plt = PlotBox(MyDF["SummarySentiment"], Labels["SummarySentiment"])
+    elif Selected_var == "No. Product Damage Reports Up to Quarter Investigation":
+        plt = PlotBox(MyDF["NoPDUptoQuarter"], Labels["NoPDUptoQuarter"])
+    elif Selected_var == "No. Deaths Up to Quarter Investigation":
+        plt = PlotBox(MyDF["NoDIUptoQuarter"], Labels["NoDIUptoQuarter"])
+    elif Selected_var == "No. Injuries Up to Quarter Investigation":
+        plt = PlotBox(MyDF["NoIIUptoQuarter"], Labels["NoIIUptoQuarter"])
+    else:
+        plt = PlotBox(MyDF["NoIDUptoQuarter"], Labels["NoIDUptoQuarter"])
+    st.pyplot(plt)
 
 
 
