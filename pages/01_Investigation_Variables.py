@@ -59,18 +59,18 @@ if Selected_graph == "Pie":
 if Selected_graph == "Histogram":
     if Selected_var == "InvestigationType":
        st.write("For a histogram or boxplot, please choose a numerical variable.")     
-    elif Selected_var == "NoComplaintsReportedNHTSA":
+    elif Selected_var == "No. Complaints Reported to NHTSA":
         plt = PlotHist(MyDF["NoComplaintsReportedNHTSA"], Labels["NoComplaintsReportedNHTSA"]
+    elif Selected_var == "No. Crashes and Fires Reported to NHTSA":
+        plt = PlotHist(MyDF["NoCrashesFiresReportedNHTSA"], Labels["NoCrashesFiresReportedNHTSA"]
+    elif Selected_var == "No. of Injury Incidents Reported to NHTSA":
+        plt = PlotHist(MyDF["NoInjuryIncidentsReportedNHTSA"], Labels["NoInjuryIncidentsReportedNHTSA"]   
+    elif Selected_var == "No. of Injuries Reported to NHTSA": 
+        plt = PlotHist(MyDF["NoInjuriesReportedNHTSA"], Labels["NoInjuriesReportedNHTSA"] 
+    elif Selected_var == "No of Fatality Incidents Reported to NHTSA":
+        plt = PlotHist(MyDF["NoFatalityIncidentsReportedNHTSA"], Labels["NoFatalityIncidentsReportedNHTSA"]
 
-                 
-    elif Selected_var == "NoCrashesFiresReportedNHTSA":
-        Label = "No. Crashes and Fires Reported to NHTSA"
-    elif Selected_var == "NoInjuryIncidentsReportedNHTSA":
-        Label = "No. of Injury Incidents Reported to NHTSA"
-    elif Selected_var == "NoInjuriesReportedNHTSA":
-        Label = "No. of Injuries Reported to NHTSA"
-    elif Selected_var == "NoFatalityIncidentsReportedNHTSA":
-        Label = "No of Fatality Incidents Reported to NHTSA"
+                       
     elif Selected_var == "NoFatalitiesReportedNHTSA":
         Label = "No. of Fatalities Reported to NHTSA"
     elif Selected_var == "NoOtherFailuresReportedNHTSA":
