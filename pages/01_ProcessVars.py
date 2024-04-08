@@ -45,8 +45,8 @@ def PlotHist(x, var):
     plt.title(f'Histogram of {Label}', size=12)
     plt.xlabel(Label, size=10, style= "italic")
     plt.ylabel("Frequency", size=12)
-    fig.set_figheight(4)
-    fig.set_figwidth(5)
+    fig.set_figheight(6)
+    fig.set_figwidth(8)
     return fig
 
 
