@@ -7,7 +7,7 @@ st.sidebar.markdown("# Dictionary")
 
 @st.cache_resource
 def ReadData():
-  Data = pd.read_csv('Dictionary.csv')
+  Data = pd.read_csv('Dictionary.csv', encoding="ANSI")
   return Data
 
 Data = ReadData()
