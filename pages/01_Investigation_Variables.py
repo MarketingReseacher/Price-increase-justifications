@@ -62,7 +62,7 @@ if Selected_graph == "Histogram":
     elif Selected_var == "NoComplaintsReportedNHTSA":
         plt = PlotHist(MyDF["NoComplaintsReportedNHTSA"], Labels["NoComplaintsReportedNHTSA"]
 
- '''                      
+                 
     elif Selected_var == "NoCrashesFiresReportedNHTSA":
         Label = "No. Crashes and Fires Reported to NHTSA"
     elif Selected_var == "NoInjuryIncidentsReportedNHTSA":
@@ -104,7 +104,6 @@ if Selected_graph == "Histogram":
     elif Selected_var == "NoOtherFailuresReported":
         Label = "No. of Other Types of Failures Reported"
 
-  '''
 
 
 
