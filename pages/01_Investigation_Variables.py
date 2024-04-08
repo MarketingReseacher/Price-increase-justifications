@@ -19,8 +19,48 @@ Closed = Data.query("Data != 'Opened'")
 def GetLabels(x):  
     if x == "InvestigationType":
         Label = "Investigation Type"
-    elif x == "RecallSize":
-        Label = "Recall Size"
+    elif x == "NoComplaintsReportedNHTSA":
+        Label = "No. Complaints Reported to NHTSA"
+    elif x == "NoCrashesFiresReportedNHTSA":
+        Label = "No. Crashes and Fires Reported to NHTSA"
+    elif x == "NoInjuryIncidentsReportedNHTSA":
+        Label = "No. of Injury Incidents Reported to NHTSA"
+    elif x == "NoInjuriesReportedNHTSA":
+        Label = "No. of Injuries Reported to NHTSA"
+    elif x == "NoFatalityIncidentsReportedNHTSA":
+        Label = "No of Fatality Incidents Reported to NHTSA"
+    elif x == "NoFatalitiesReportedNHTSA":
+        Label = "No. of Fatalities Reported to NHTSA"
+    elif x == "NoOtherFailuresReportedNHTSA":
+        Label = "No. of Other Types of Failures Reported to NHTSA"
+    elif x == "NoComplaintsReportedMfr":
+        Label = "No. Complaints Reported to the Manufacturer"
+    elif x == "NoCrashesFiresReportedMfr":
+        Label = "No. Crashes and Fires Reported to the Manufacturer"
+    elif x == "NoInjuryIncidentsReportedMfr":
+        Label = "No. of Injury Incidents Reported to the Manufacturer"
+    elif x == "NoInjuriesReportedMfr":
+        Label = "No. of Injuries Reported to the Manufacturer"
+    elif x == "NoFatalityIncidentsReportedMfr":
+        Label = "No of Fatality Incidents Reported to the Manufacturer"
+    elif x == "NoFatalitiesReportedMfr":
+        Label = "No. of Fatalities Reported to the Manufacturer"
+    elif x == "NoOtherFailuresReportedMfr":
+        Label = "No. of Other Types of Failures Reported to the Manufacturer"
+    elif x == "NoComplaintsReported":
+        Label = "No. Complaints Reported"
+    elif x == "NoCrashesFiresReported":
+        Label = "No. Crashes and Fires Reported"
+    elif x == "NoInjuryIncidentsReported":
+        Label = "No. of Injury Incidents Reported"
+    elif x == "NoInjuriesReported":
+        Label = "No. of Injuries Reported"
+    elif x == "NoFatalityIncidentsReported":
+        Label = "No of Fatality Incidents Reported"
+    elif x == "NoFatalitiesReported":
+        Label = "No. of Fatalities Reported"
+    elif x == "NoOtherFailuresReported":
+        Label = "No. of Other Types of Failures Reported"
     else:
         Label = "No. of Death and Injury Reports Up to Quarter of Recall"
     return Label
@@ -39,14 +79,16 @@ Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", 
 Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"])
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie", "Histogram", "Boxplot"])
 
+if Selected_Data == "Opened Investigations":
+      MyDF = Opened
+    elif Selected_Data == "Closed Investigations":
+      MyDF = Closed
+    else:
+      MyDF = Data
+
 if Selected_var == "Investigation Type":
   if Selected_graph == "Pie":
-    if Selected_Data == "Opened Investigations":
-      plt = PlotPie(Opened, 'InvestigationType')
-    elif Selected_Data == "Closed Investigations":
-      plt = PlotPie(Closed, 'InvestigationType')
-    else:
-      plt = PlotPie(Data, 'InvestigationType')
+    plt = PlotPie(MyDF)
     st.pyplot(plt) 
   elif Selected_graph == "Histogram":
     st.write("For a histogram, please choose a numerical variable.") 
