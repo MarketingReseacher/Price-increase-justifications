@@ -35,7 +35,7 @@ def PlotHist(x, var):
     fig.set_figwidth(8)
     return fig
 
-Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. of Injury Incidents Reported to NHTSA", "No. of Injuries Reported to NHTSA", "No of Fatality Incidents Reported to NHTSA", "No. of Fatalities Reported to NHTSA", "No. of Other Types of Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. of Injury Incidents Reported to Manufacturer",  "No. of Injuries Reported to the Manufacturer", "No of Fatality Incidents Reported to the Manufacturer", "No. of Fatalities Reported to the Manufacturer", "No. of Other Types of Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. of Injury Incidents Reported",  "No. of Injuries Reported", "No of Fatality Incidents Reported", "No. of Fatalities Reported", "No. of Other Types of Failures Reported"])
+Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. of Injury Incidents Reported to NHTSA", "No. of Injuries Reported to NHTSA", "No of Fatality Incidents Reported to NHTSA", "No. of Fatalities Reported to NHTSA", "No. of Other Types of Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. of Injury Incidents Reported to Manufacturer",  "No. of Injuries Reported to the Manufacturer", "No of Fatality Incidents Reported to the Manufacturer", "No. of Fatalities Reported to the Manufacturer", "No. of Other Types of Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. of Injury Incidents Reported",  "No. of Injuries Reported", "No of Fatality Incidents Reported", "No. of Fatalities Reported", "No. of Other Types of Failures Reported", "Problem Definition Sentiment", "Summary Sentiment", "No. Product Damage Reports Up to Quarter of Investigation", "No. Deaths Up to Quarter of Investigation", "No. Injuries Up to Quarter of Investigation", "No. Injury and Death Reports Up to Quarter of Investigation"])
 Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"])
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie", "Histogram", "Boxplot"])
 
@@ -101,6 +101,20 @@ if Selected_graph == "Histogram":
         plt = PlotHist(MyDF["NoFatalitiesReported"], Labels["NoFatalitiesReported"])
     elif Selected_var == "No. of Other Types of Failures Reported":
         plt = PlotHist(MyDF["NoOtherFailuresReported"], Labels["NoOtherFailuresReported"])
+    elif Selected_var == "Population":
+        plt = PlotHist(MyDF["Population"], Labels["Population"])
+    elif Selected_var == "Problem Definition Sentiment":
+        plt = PlotHist(MyDF["PDSentiment"], Labels["PDSentiment"])
+    elif Selected_var == "Summary Sentiment":
+        plt = PlotHist(MyDF["SummarySentiment"], Labels["SummarySentiment"])
+    elif Selected_var == "No. Product Damage Reports Up to Quarter of Investigation":
+        plt = PlotHist(MyDF["NoPDUptoQuarter"], Labels["NoPDUptoQuarter"])
+    elif Selected_var == "No. Deaths Up to Quarter of Investigation":
+        plt = PlotHist(MyDF["NoDIUptoQuarter"], Labels["NoDIUptoQuarter"])
+    elif Selected_var == "No. Injuries Up to Quarter of Investigation":
+        plt = PlotHist(MyDF["NoIIUptoQuarter"], Labels["NoIIUptoQuarter"])
+    else:
+        plt = PlotHist(MyDF["NoIDUptoQuarter"], Labels["NoIDUptoQuarter"])
     st.pyplot(plt) 
 
 
