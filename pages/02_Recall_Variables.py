@@ -20,7 +20,7 @@ def GetLabels(x):
         Label = "Recall Scope"
     elif x == "NoManufacturers":
         Label = "No. of Distinct Manufacturers of Recalled Products"
-      elif x == "NoPDUptoQuarterOfRcl":
+    elif x == "NoPDUptoQuarterOfRcl":
         Label = "No. of Product Damage Reports Up to Quarter of Recall"
     elif x == "NoDIUptoQuarterOfRcl":
         Label = "No. of Deaths Up to Quarter of Recall"
