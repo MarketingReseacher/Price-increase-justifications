@@ -88,7 +88,7 @@ else:
 
 if Selected_var == "Investigation Type":
   if Selected_graph == "Pie":
-    plt = PlotPie(MyDF)
+    plt = PlotPie(MyDF, 'InvestigationType')
     st.pyplot(plt) 
   elif Selected_graph == "Histogram":
     st.write("For a histogram, please choose a numerical variable.") 
