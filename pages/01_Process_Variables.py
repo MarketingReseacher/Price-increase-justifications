@@ -20,6 +20,8 @@ def GetColors(x):
         Color = "#7030A0"
     elif x == "InvClosingToRecall":
         Color = "#C00000"
+    elif x == "MfrAwarenessToRecall":
+        Color = "#3b8254"  
     else:
         Color = "#FFC000"
     return Color
@@ -31,6 +33,8 @@ def GetLabels(x):
         Label = "Investigation Opening to Closing"
     elif x == "InvClosingToRecall":
         Label = "Investigation Closing to Recall"
+    elif x == "MfrAwarenessToRecall":
+        Label = "Manufacturer Awareness to Recall"
     else:
         Label = "Recall to Owner Notification Date"
     return Label
@@ -68,7 +72,7 @@ def PlotBox(x, var):
 
 
 
-Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Recall to Owner Notification Date"])
+Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"])
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"])
 
 if Selected_graph == "Histogram":
@@ -78,6 +82,8 @@ if Selected_graph == "Histogram":
     plt = PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
   elif Selected_var == "Investigation Closing to Recall":
     plt = PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall')
+  elif Selected_var == "Manufacturer Awareness to Recall":
+    plt = PlotHist(Data['MfrAwarenessToRecall'], 'MfrAwarenessToRecall')
   else:
     plt = PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
   st.pyplot(plt)  
