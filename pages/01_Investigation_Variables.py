@@ -80,11 +80,11 @@ Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "C
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie", "Histogram", "Boxplot"])
 
 if Selected_Data == "Opened Investigations":
-      MyDF = Opened
-    elif Selected_Data == "Closed Investigations":
-      MyDF = Closed
-    else:
-      MyDF = Data
+  MyDF = Opened
+elif Selected_Data == "Closed Investigations":
+  MyDF = Closed
+else:
+  MyDF = Data
 
 if Selected_var == "Investigation Type":
   if Selected_graph == "Pie":
