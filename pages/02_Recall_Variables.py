@@ -18,6 +18,8 @@ def GetLabels(x):
         Label = "Recall Size"
     elif x == "RecallScope":
         Label = "Recall Scope"
+    elif x == "NoNHTSACampaignNumbers":
+        Label = "No. of NHTSA Campaign Numbers"  
     elif x == "NoManufacturers":
         Label = "No. of Distinct Manufacturers of Recalled Products"
     elif x == "NoPDUptoQuarterOfRcl":
@@ -58,7 +60,7 @@ def PlotBox(x, var):
 
 
 
-Selected_var = st.sidebar.selectbox("Select a recall variable", ["Recall Size", "Recall Scope", "No. of Distinct Manufacturers of Recalled Products", "No. of Product Damage Reports Up to Quarter of Recall", "No. of Deaths Up to Quarter of Recall", "No. of Injuries Up to Quarter of Recall", "No. of Death and Injury Reports Up to Quarter of Recall"])
+Selected_var = st.sidebar.selectbox("Select a recall variable", ["Recall Size", "Recall Scope", "No. of NHTSA Campaign Numbers", "No. of Distinct Manufacturers of Recalled Products", "No. of Product Damage Reports Up to Quarter of Recall", "No. of Deaths Up to Quarter of Recall", "No. of Injuries Up to Quarter of Recall", "No. of Death and Injury Reports Up to Quarter of Recall"])
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"])
 
 if Selected_graph == "Histogram":
@@ -66,6 +68,8 @@ if Selected_graph == "Histogram":
     plt = PlotHist(Data['RecallSize'], 'RecallSize')
   elif Selected_var == "Recall Scope":
     plt = PlotHist(Data['RecallScope'], 'RecallScope')
+  elif Selected_var == "No. of NHTSA Campaign Numbers":
+    plt = PlotHist(Data['NoNHTSACampaignNumbers'], 'NoNHTSACampaignNumbers')
   elif Selected_var == "No. of Distinct Manufacturers of Recalled Products":
     plt = PlotHist(Data['NoManufacturers'], 'NoManufacturers')
   elif Selected_var == "No. of Product Damage Reports Up to Quarter of Recall":
@@ -83,6 +87,8 @@ else:
     plt = PlotBox(Data['RecallSize'], 'RecallSize')
   elif Selected_var == "Recall Scope":
     plt = PlotBox(Data['RecallScope'], 'RecallScope')
+  elif Selected_var == "No. of NHTSA Campaign Numbers":
+    plt = PlotBox(Data['NoNHTSACampaignNumbers'], 'NoNHTSACampaignNumbers')
   elif Selected_var == "No. of Distinct Manufacturers of Recalled Products":
     plt = PlotBox(Data['NoManufacturers'], 'NoManufacturers')
   elif Selected_var == "No. of Product Damage Reports Up to Quarter of Recall":
