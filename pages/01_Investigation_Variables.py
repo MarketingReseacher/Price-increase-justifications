@@ -13,6 +13,9 @@ def ReadData():
 
 Data = ReadData()
 
+Opened = Data.query("Data == 'Opened'")
+Closed = Data.query("Data != 'Opened'")
+
 def GetLabels(x):  
     if x == "InvestigationType":
         Label = "Investigation Type"
@@ -28,10 +31,16 @@ def PlotPie(Data, var):
     ax1.set_title(f'Pie Chart of {var}')
     return fig
 
-Selected_var = st.sidebar.selectbox("Select an investigations variable", ["InvestigationType"])
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot", "Pie"])
+Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type"])
+Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"])
+Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie", "Histogram", "Boxplot"])
 
 if Selected_graph == "Pie":
-  if Selected_var == "InvestigationType":
-    PlotPie(Data, 'InvestigationType')
+  if Selected_var == "Investigation Type":
+    if selected_Data == "Opened Investigations":
+      plt = PlotPie(Opened, 'InvestigationType')
+    elif selected_Data == "Closed Investigations":
+      plt = PlotPie(Closed, 'InvestigationType')
+    else:
+      plt = PlotPie(Data, 'InvestigationType')
   st.pyplot(plt) 
