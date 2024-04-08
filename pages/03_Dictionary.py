@@ -12,4 +12,5 @@ def ReadData():
 
 Data = ReadData()
 st.write(Data.head(10))
-st.download_button('Download dictionary', Data)
+Dic = Data.to_csv(encoding='utf-8', index=False)
+st.download_button('Download dictionary', Dic, file_name='Dictionary.csv')
