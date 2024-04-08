@@ -24,7 +24,7 @@ def labeling(val):
 def PlotPie(Data, var):
     label = GetLabels(var)
     fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
-    Data.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 10}, ax=ax1)
+    Data.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 8}, ax=ax1)
     ax1.set_title(f'Pie Chart of {var}')
     return fig
 
