@@ -38,8 +38,8 @@ Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type"])
 Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"])
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie", "Histogram", "Boxplot"])
 
-if Selected_graph == "Pie":
-  if Selected_var == "Investigation Type":
+if Selected_var == "Investigation Type":
+  if Selected_graph == "Pie":
     if Selected_Data == "Opened Investigations":
       plt = PlotPie(Opened, 'InvestigationType')
     elif Selected_Data == "Closed Investigations":
@@ -47,5 +47,8 @@ if Selected_graph == "Pie":
     else:
       plt = PlotPie(Data, 'InvestigationType')
     st.pyplot(plt) 
+  elif Selected_graph == "Histogram":
+    st.write("For a histogram, please choose a numerical variable") 
   else:
-    pass
+    st.write("For a boxplot, please choose a numerical variable")
+    
