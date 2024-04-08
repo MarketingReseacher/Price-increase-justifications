@@ -73,7 +73,7 @@ if Selected_graph == "Histogram":
   if Selected_var == "First Complaint to Investigation Opening":
     plt = PlotHist(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
   elif Selected_var == "Investigation Opening to Closing":
-    plt = pyplot(PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
+    plt = PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
   elif Selected_var == "Investigation Closing to Recall":
     plt = PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
