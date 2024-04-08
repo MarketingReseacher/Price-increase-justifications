@@ -74,33 +74,35 @@ if Selected_graph == "Histogram":
     elif Selected_var == "No. of Other Types of Failures Reported to NHTSA":
         plt = PlotHist(MyDF["NoOtherFailuresReportedNHTSA"], Labels["NoOtherFailuresReportedNHTSA"]) 
     elif Selected_var == "No. Complaints Reported to the Manufacturer" :
-        plt = PlotHist(MyDF[ "NoComplaintsReportedMfr"], Labels[ "NoComplaintsReportedMfr"])
-    elif Selected_var == "NoCrashesFiresReportedMfr":
-        Label = "No. Crashes and Fires Reported to the Manufacturer"
-    elif Selected_var == "NoInjuryIncidentsReportedMfr":
-        Label = "No. of Injury Incidents Reported to the Manufacturer"
-    elif Selected_var == "NoInjuriesReportedMfr":
-        Label = "No. of Injuries Reported to the Manufacturer"
-    elif Selected_var == "NoFatalityIncidentsReportedMfr":
-        Label = "No of Fatality Incidents Reported to the Manufacturer"
-    elif Selected_var == "NoFatalitiesReportedMfr":
-        Label = "No. of Fatalities Reported to the Manufacturer"
-    elif Selected_var == "NoOtherFailuresReportedMfr":
-        Label = "No. of Other Types of Failures Reported to the Manufacturer"
-    elif Selected_var == "NoComplaintsReported":
-        Label = "No. Complaints Reported"
-    elif Selected_var == "NoCrashesFiresReported":
-        Label = "No. Crashes and Fires Reported"
-    elif Selected_var == "NoInjuryIncidentsReported":
-        Label = "No. of Injury Incidents Reported"
-    elif Selected_var == "NoInjuriesReported":
-        Label = "No. of Injuries Reported"
-    elif Selected_var == "NoFatalityIncidentsReported":
-        Label = "No of Fatality Incidents Reported"
-    elif Selected_var == "NoFatalitiesReported":
-        Label = "No. of Fatalities Reported"
-    elif Selected_var == "NoOtherFailuresReported":
-        Label = "No. of Other Types of Failures Reported"
+        plt = PlotHist(MyDF["NoComplaintsReportedMfr"], Labels[ "NoComplaintsReportedMfr"])
+    elif Selected_var == "No. Crashes and Fires Reported to the Manufacturer":
+        plt = PlotHist(MyDF["NoCrashesFiresReportedMfr"], Labels["NoCrashesFiresReportedMfr"])
+    elif Selected_var == "No. of Injury Incidents Reported to the Manufacturer":
+        plt = PlotHist(MyDF["NoInjuryIncidentsReportedMfr"], Labels["NoInjuryIncidentsReportedMfr"])
+    elif Selected_var == "No. of Injuries Reported to the Manufacturer":
+        plt = PlotHist(MyDF["NoInjuriesReportedMfr"], Labels["NoInjuriesReportedMfr"])
+    elif Selected_var == "No of Fatality Incidents Reported to the Manufacturer":
+        plt = PlotHist(MyDF["NoFatalityIncidentsReportedMfr"], Labels["NoFatalityIncidentsReportedMfr"])
+    elif Selected_var ==  "No. of Fatalities Reported to the Manufacturer":
+        plt = PlotHist(MyDF["NoFatalitiesReportedMfr"], Labels["NoFatalitiesReportedMfr"])
+    elif Selected_var == "No. of Other Types of Failures Reported to the Manufacturer":
+        plt = PlotHist(MyDF["NoOtherFailuresReportedMfr"], Labels["NoOtherFailuresReportedMfr"])
+    elif Selected_var == "No. Complaints Reported":
+        plt = PlotHist(MyDF["NoComplaintsReported"], Labels["NoComplaintsReported"])
+    elif Selected_var == "No. Crashes and Fires Reported":
+        plt = PlotHist(MyDF["NoCrashesFiresReported"], Labels["NoCrashesFiresReported"])
+    elif Selected_var == "No. of Injury Incidents Reported":
+        plt = PlotHist(MyDF["NoInjuryIncidentsReported"], Labels["NoInjuryIncidentsReported"])
+    elif Selected_var == "No. of Injuries Reported":
+        plt = PlotHist(MyDF["NoInjuriesReported"], Labels["NoInjuriesReported"])
+    elif Selected_var == "No of Fatality Incidents Reported":
+        plt = PlotHist(MyDF["NoFatalityIncidentsReported"], Labels["NoFatalityIncidentsReported"])
+    elif Selected_var == "No. of Fatalities Reported":
+        plt = PlotHist(MyDF["NoFatalitiesReported"], Labels["NoFatalitiesReported"])
+    elif Selected_var == "No. of Other Types of Failures Reported":
+        plt = PlotHist(MyDF["NoOtherFailuresReported"], Labels["NoOtherFailuresReported"])
+    st.pyplot(plt) 
+
 
 
 
