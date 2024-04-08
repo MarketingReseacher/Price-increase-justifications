@@ -60,8 +60,8 @@ def PlotBox(x, var):
     plt.boxplot(x,  patch_artist=True)
     plt.title(f'Boxplot of {Label}', size=12)
     plt.ylabel(Label, size=12, style= "italic")
-    fig.set_figheight(3)
-    fig.set_figwidth(4)
+    fig.set_figheight(6)
+    fig.set_figwidth(8)
 
     return fig
     
