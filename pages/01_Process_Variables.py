@@ -80,7 +80,7 @@ if Selected_graph == "Histogram":
     plt = PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
     plt = PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
-  st.pyplot(plt)  
+  st.pyplot(plt, use_container_width=False)  
 
 else:
   if Selected_var == "First Complaint to Investigation Opening":
@@ -91,5 +91,5 @@ else:
     plt = PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
     plt = PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
-  st.pyplot(plt)  
+  st.pyplot(plt, use_container_width=False)  
 
