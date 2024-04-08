@@ -37,9 +37,9 @@ Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie", "Histogram", "Bo
 
 if Selected_graph == "Pie":
   if Selected_var == "Investigation Type":
-    if selected_Data == "Opened Investigations":
+    if Selected_Data == "Opened Investigations":
       plt = PlotPie(Opened, 'InvestigationType')
-    elif selected_Data == "Closed Investigations":
+    elif Selected_Data == "Closed Investigations":
       plt = PlotPie(Closed, 'InvestigationType')
     else:
       plt = PlotPie(Data, 'InvestigationType')
