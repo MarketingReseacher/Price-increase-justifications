@@ -84,11 +84,12 @@ if Selected_graph == "Histogram":
 
 else:
   if Selected_var == "First Complaint to Investigation Opening":
-  plt = PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
+    plt = PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
   elif Selected_var == "Investigation Opening to Closing":
-  plt = PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
+    plt = PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
   elif Selected_var == "Investigation Closing to Recall":
-  plt = PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
+    plt = PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
-  plt = PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
+    plt = PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
+  st.pyplot(plt)  
 
