@@ -91,5 +91,5 @@ else:
     plt = PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
   else:
     plt = PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
-  st.pyplot(plt, use_container_width=False)  
+  st.pyplot(plt, use_container_width=False, width=10)  
 
