@@ -11,5 +11,5 @@ def ReadData():
   return Data
 
 Data = ReadData()
-Data.head()
+st.write(Data.head())
 #st.download_button('Download dictionary', Data, file_name='DataDictionary.csv')
