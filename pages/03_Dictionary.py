@@ -12,4 +12,4 @@ def ReadData():
 
 Data = ReadData()
 st.write(Data.head(10))
-st.download_button('Download dictionary', Data, file_name='DataDictionary.csv')
+st.download_button('Download dictionary', Data)
