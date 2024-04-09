@@ -14,23 +14,21 @@ def ReadData():
 Data = ReadData()
 
 def PlotHist(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     plt.hist(x)
     plt.title(f'Histogram of {var}', size=12)
     plt.xlabel(var, size=10, style= "italic")
     plt.ylabel("Frequency", size=12)
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
+    ax.tick_params(axis='y', labelsize=6)
+    ax.tick_params(axis='x', labelsize=6)
     return fig
 
 def PlotBox(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     x = x.dropna()
     plt.boxplot(x,  patch_artist=True)
     plt.title(f'Boxplot of {var}', size=12)
     plt.ylabel(var, size=12, style= "italic")
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
     quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
     ax.set_yticks(quantiles)
     ax.tick_params(axis='y', labelsize=6)
@@ -49,6 +47,8 @@ def PlotPie(df, var):
 Labels = {'RecallType': 'Recall Type', 'InfluencedBy': 'Influenced By', 'RecallSize': "Recall Size", 'RecallScope': "Recall Scope", 'NoNHTSACampaignNumbers': "No. NHTSA Campaign Numbers", 'NoManufacturers': "No. Distinct Manufacturers of Recalled Products", 'NoPDUptoQuarterOfRcl': "No. Product Damage Reports Up to Quarter of Recall", 'NoDIUptoQuarterOfRcl': "No. Deaths Up to Quarter of Recall", 'NoIIUptoQuarterOfRcl': "No. of Injuries Up to Quarter of Recall", 'NoIDUptoQuarterOfRcl': "No. Death and Injury Reports Up to Quarter of Recall"}
 
 Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 'Influenced By', "Recall Size", "Recall Scope", "No. NHTSA Campaign Numbers", "No. Distinct Manufacturers of Recalled Products", "No. Product Damage Reports Up to Quarter of Recall", "No. Deaths Up to Quarter of Recall", "No. Injuries Up to Quarter of Recall", "No. Death and Injury Reports Up to Quarter of Recall"], help = "Select the variable you want to see a visual representation of")
+height = st.slider("Graph height", 1, 10, 3)
+width = st.slider("Graph width", 1, 10, 5)
 
 if Selected_var == "Recall Type" or Selected_var == "Influenced By":
     for variable, label in Labels.items():
