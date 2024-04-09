@@ -61,14 +61,20 @@ if Selected_graph == "Pie Chart":
     st.write("For numerical variables, please choose histogram or boxplot as graph type.") 
 
 elif Selected_graph == "Histogram":
-  for variable, label in Labels.items():
-    if label == Selected_var:
-      plt = PlotHist(Data[variable], Labels[variable])
-  st.pyplot(plt)
+  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
+    st.write("For a histogram or boxplot, please choose a numerical variable.")
+  else:
+    for variable, label in Labels.items():
+      if label == Selected_var:
+        plt = PlotHist(Data[variable], Labels[variable])
+    st.pyplot(plt)
 
 else:
-  for variable, label in Labels.items():
-    if label == Selected_var:
-      plt = PlotBox(Data[variable], Labels[variable])
-  st.pyplot(plt)
+  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
+    st.write("For a histogram or boxplot, please choose a numerical variable.")
+  else:
+    for variable, label in Labels.items():
+      if label == Selected_var:
+        plt = PlotBox(Data[variable], Labels[variable])
+    st.pyplot(plt)
 
