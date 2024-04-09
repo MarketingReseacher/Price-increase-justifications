@@ -69,7 +69,7 @@ if Selected_var != "Investigation Type":
          columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
          Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
          table = Sum.to_html(index=False, justify="center")
-         st.write(####"Table of Summary Statistics")
+         st.markdown("####Table of Summary Statistics")
          st.markdown(table, unsafe_allow_html=True)
          st.write("  \n\n  \n\n")
          Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
