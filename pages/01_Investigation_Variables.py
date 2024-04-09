@@ -74,7 +74,7 @@ if Selected_graph == "Histogram":
     elif Selected_var in Numerics:
       for variable, label in Labels.items():
         if label == Selected_var:
-        plt = PlotHist(MyDF[variable], Labels[variable])
+          plt = PlotHist(MyDF[variable], Labels[variable])
 
     st.pyplot(plt)
 
