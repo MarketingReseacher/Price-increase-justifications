@@ -57,17 +57,14 @@ def PlotBox(x, var):
 Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Opening",  'InvOpeningToClosing': "Investigation Opening to Closing", 'InvClosingToRecall': "Investigation Closing to Recall", 'MfrAwarenessToRecall': "Manufacturer Awareness to Recall", 'RecallToOwnerNotification': "Recall to Owner Notification Date"}
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
 
-if Selected_graph == "Histogram":
-  for variable, label in Labels.items():
-    if label == Selected_var:
-      plt = PlotHist(Data[variable], Labels[variable])
-  st.pyplot(plt)
+for variable, label in Labels.items():
+  if label == Selected_var:
+     if Selected_graph == "Histogram":
+           plt = PlotHist(Data[variable], Labels[variable])
+           st.pyplot(plt)
+         elif Selected_graph == "Boxplot":
+           plt = PlotBox(Data[variable], Labels[variable])
+           st.pyplot(plt)
 
-
-else:
-  for variable, label in Labels.items():
-    if label == Selected_var:
-      plt = PlotBox(Data[variable], Labels[variable])
-  st.pyplot(plt)
