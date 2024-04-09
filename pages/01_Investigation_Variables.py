@@ -68,9 +68,10 @@ if Selected_var != "Investigation Type":
     Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
     for variable, label in Labels.items():
       if label == Selected_var:
+         columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
+         Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
+         st.write(Sum[columns].head())
          if Selected_graph == "Histogram":
-           Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max'])
-           st.write(Sum.head())
            plt = PlotHist(MyDF[variable], Labels[variable])
            st.pyplot(plt)
          elif Selected_graph == "Boxplot":
