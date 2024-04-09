@@ -51,10 +51,6 @@ def PlotBox(x, var):
 
 Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. Injury Incidents Reported to NHTSA", "No. Injuries Reported to NHTSA", "No Fatality Incidents Reported to NHTSA", "No. Fatalities Reported to NHTSA", "No. Other Types Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. Injury Incidents Reported to Manufacturer",  "No. Injuries Reported to the Manufacturer", "No Fatality Incidents Reported to the Manufacturer", "No. Fatalities Reported to the Manufacturer", "No. Other Types Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. Injury Incidents Reported",  "No. Injuries Reported", "No Fatality Incidents Reported", "No. Fatalities Reported", "No. Other Types Failures Reported", "Problem Definition Sentiment", "Summary Sentiment", "No. Product Damage Reports Up to Quarter Investigation", "No. Deaths Up to Quarter Investigation", "No. Injuries Up to Quarter Investigation", "No. Injury and Death Reports Up to Quarter Investigation"], help = "Select the variable you want to see a visual representation of")
 Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"], help = "Select the data source.")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie Chart", "Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
-
-Numerics = ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. Injury Incidents Reported to NHTSA", "No. Injuries Reported to NHTSA", "No Fatality Incidents Reported to NHTSA", "No. Fatalities Reported to NHTSA", "No. Other Types Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. Injury Incidents Reported to Manufacturer",  "No. Injuries Reported to the Manufacturer", "No Fatality Incidents Reported to the Manufacturer", "No. Fatalities Reported to the Manufacturer", "No. Other Types Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. Injury Incidents Reported",  "No. Injuries Reported", "No Fatality Incidents Reported", "No. Fatalities Reported", "No. Other Types Failures Reported", "Problem Definition Sentiment", "Summary Sentiment", "No. Product Damage Reports Up to Quarter Investigation", "No. Deaths Up to Quarter Investigation", "No. Injuries Up to Quarter Investigation", "No. Injury and Death Reports Up to Quarter Investigation"]
-Labels = {"InvestigationType": "Investigation Type", "Population": "Population", "NoComplaintsReportedNHTSA": "No. Complaints Reported to NHTSA", "NoCrashesFiresReportedNHTSA": "No. Crashes and Fires Reported to NHTSA", "NoInjuryIncidentsReportedNHTSA": "No. Injury Incidents Reported to NHTSA", "NoInjuriesReportedNHTSA": "No. Injuries Reported to NHTSA", "NoFatalityIncidentsReportedNHTSA": "No Fatality Incidents Reported to NHTSA", "NoFatalitiesReportedNHTSA": "No. Fatalities Reported to NHTSA", "NoOtherFailuresReportedNHTSA": "No. Other Types Failures Reported to NHTSA", "NoComplaintsReportedMfr": "No. Complaints Reported to the Manufacturer", "NoCrashesFiresReportedMfr": "No. Crashes and Fires Reported to the Manufacturer", "NoInjuryIncidentsReportedMfr": "No. Injury Incidents Reported to the Manufacturer", "NoInjuriesReportedMfr": "No. Injuries Reported to the Manufacturer", "NoFatalityIncidentsReportedMfr": "No Fatality Incidents Reported to the Manufacturer", "NoFatalitiesReportedMfr": "No. Fatalities Reported to the Manufacturer", "NoOtherFailuresReportedMfr": "No. Other Types Failures Reported to the Manufacturer", "NoComplaintsReported": "No. Complaints Reported", "NoCrashesFiresReported": "No. Crashes and Fires Reported", "NoInjuryIncidentsReported": "No. Injury Incidents Reported", "NoInjuriesReported": "No. Injuries Reported", "NoFatalityIncidentsReported": "No Fatality Incidents Reported", "NoFatalitiesReported": "No. Fatalities Reported", "NoOtherFailuresReported": "No. Other Types Failures Reported", "PDSentiment": "Problem Definition Sentiment", "SummarySentiment": "Summary Sentiment", "NoPDUptoQuarter": "No. Product Damage Reports Up to Quarter Investigation", "NoDIUptoQuarter": "No. Deaths Up to Quarter Investigation", "NoIIUptoQuarter": "No. Injuries Up to Quarter Investigation", "NoIDUptoQuarter": "No. Injury and Death Reports Up to Quarter Investigation" }
 
 
 if Selected_Data == "Opened Investigations":
@@ -64,33 +60,24 @@ elif Selected_Data == "Closed Investigations":
 else:
   MyDF = Data
   
-if Selected_graph == "Pie Chart":
-  if Selected_var == "Investigation Type":
-    plt = PlotPie(MyDF, 'InvestigationType')
-    st.pyplot(plt) 
-  else:
-    st.write("Pie Chart works for categorical (and not numeric) variables. Histograms and Boxplots work for numeric (and not categorical) variables.")  
-
-if Selected_graph == "Histogram":
-    if Selected_var == "Investigation Type":
-      st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")    
-    else:
-      for variable, label in Labels.items():
-        if label == Selected_var:
-          plt = PlotHist(MyDF[variable], Labels[variable])
-    st.pyplot(plt)
+Labels = {"InvestigationType": "Investigation Type", "Population": "Population", "NoComplaintsReportedNHTSA": "No. Complaints Reported to NHTSA", "NoCrashesFiresReportedNHTSA": "No. Crashes and Fires Reported to NHTSA", "NoInjuryIncidentsReportedNHTSA": "No. Injury Incidents Reported to NHTSA", "NoInjuriesReportedNHTSA": "No. Injuries Reported to NHTSA", "NoFatalityIncidentsReportedNHTSA": "No Fatality Incidents Reported to NHTSA", "NoFatalitiesReportedNHTSA": "No. Fatalities Reported to NHTSA", "NoOtherFailuresReportedNHTSA": "No. Other Types Failures Reported to NHTSA", "NoComplaintsReportedMfr": "No. Complaints Reported to the Manufacturer", "NoCrashesFiresReportedMfr": "No. Crashes and Fires Reported to the Manufacturer", "NoInjuryIncidentsReportedMfr": "No. Injury Incidents Reported to the Manufacturer", "NoInjuriesReportedMfr": "No. Injuries Reported to the Manufacturer", "NoFatalityIncidentsReportedMfr": "No Fatality Incidents Reported to the Manufacturer", "NoFatalitiesReportedMfr": "No. Fatalities Reported to the Manufacturer", "NoOtherFailuresReportedMfr": "No. Other Types Failures Reported to the Manufacturer", "NoComplaintsReported": "No. Complaints Reported", "NoCrashesFiresReported": "No. Crashes and Fires Reported", "NoInjuryIncidentsReported": "No. Injury Incidents Reported", "NoInjuriesReported": "No. Injuries Reported", "NoFatalityIncidentsReported": "No Fatality Incidents Reported", "NoFatalitiesReported": "No. Fatalities Reported", "NoOtherFailuresReported": "No. Other Types Failures Reported", "PDSentiment": "Problem Definition Sentiment", "SummarySentiment": "Summary Sentiment", "NoPDUptoQuarter": "No. Product Damage Reports Up to Quarter Investigation", "NoDIUptoQuarter": "No. Deaths Up to Quarter Investigation", "NoIIUptoQuarter": "No. Injuries Up to Quarter Investigation", "NoIDUptoQuarter": "No. Injury and Death Reports Up to Quarter Investigation" }
 
 
+  
 
-if Selected_graph == "Boxplot":
-    if Selected_var == "Investigation Type":
-        st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")    
-    else:
-      for variable, label in Labels.items():
-        if label == Selected_var:
-          plt = PlotBox(MyDF[variable], Labels[variable])
-    st.pyplot(plt)
-
+if Selected_var == "Investigation Type":
+  plt = PlotPie(MyDF, 'InvestigationType')
+  st.pyplot(plt) 
+if Selected_var != "Investigation Type":
+    Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+    for variable, label in Labels.items():
+      if label == Selected_var:
+         if Selected_graph == "Histogram":
+           plt = PlotHist(MyDF[variable], Labels[variable])
+           st.pyplot(plt)
+         elif if Selected_graph == "Boxplot":
+           plt = PlotBox(MyDF[variable], Labels[variable])
+           st.pyplot(plt)
 
 
     
