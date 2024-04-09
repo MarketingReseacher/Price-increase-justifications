@@ -48,9 +48,8 @@ def PlotBox(x, var):
 Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. Injury Incidents Reported to NHTSA", "No. Injuries Reported to NHTSA", "No Fatality Incidents Reported to NHTSA", "No. Fatalities Reported to NHTSA", "No. Other Types Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. Injury Incidents Reported to Manufacturer",  "No. Injuries Reported to the Manufacturer", "No Fatality Incidents Reported to the Manufacturer", "No. Fatalities Reported to the Manufacturer", "No. Other Types Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. Injury Incidents Reported",  "No. Injuries Reported", "No Fatality Incidents Reported", "No. Fatalities Reported", "No. Other Types Failures Reported", "Problem Definition Sentiment", "Summary Sentiment", "No. Product Damage Reports Up to Quarter Investigation", "No. Deaths Up to Quarter Investigation", "No. Injuries Up to Quarter Investigation", "No. Injury and Death Reports Up to Quarter Investigation"], help = "Select the variable you want to see a visual representation of")
 Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"], help = "Select the data source.")
 
-
-width = st.slider("plot width", 1, 25, 3)
-height = st.slider("plot height", 1, 25, 1)
+height = st.slider("Graph height", 1, 10, 3)
+width = st.slider("Graph width", 1, 10, 5)
 
 if Selected_Data == "Opened Investigations":
   MyDF = Opened
