@@ -123,7 +123,7 @@ if Selected_graph == "Histogram":
         plt = PlotHist(MyDF["NoDIUptoQuarter"], Labels["NoDIUptoQuarter"])
     elif Selected_var == "No. Injuries Up to Quarter Investigation":
         plt = PlotHist(MyDF["NoIIUptoQuarter"], Labels["NoIIUptoQuarter"])
-    else:
+    elif Selected_var == "No. Injury and Death Reports Up to Quarter Investigation":
         plt = PlotHist(MyDF["NoIDUptoQuarter"], Labels["NoIDUptoQuarter"])
     st.pyplot(plt)
 
@@ -186,9 +186,9 @@ if Selected_graph == "Boxplot":
         plt = PlotBox(MyDF["NoDIUptoQuarter"], Labels["NoDIUptoQuarter"])
     elif Selected_var == "No. Injuries Up to Quarter Investigation":
         plt = PlotBox(MyDF["NoIIUptoQuarter"], Labels["NoIIUptoQuarter"])
-    else:
+    elif Selected_var == "No. Injury and Death Reports Up to Quarter Investigation":
         plt = PlotBox(MyDF["NoIDUptoQuarter"], Labels["NoIDUptoQuarter"])
-        st.pyplot(plt)
+    st.pyplot(plt)
 
 
 
