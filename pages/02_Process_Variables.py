@@ -34,6 +34,8 @@ def PlotHist(x, var):
     plt.title(f'Histogram of {var}', size=8)
     plt.xlabel(var, size=6, style= "italic")
     plt.ylabel("Frequency", size=6)
+    ax.tick_params(axis='y', labelsize=6)
+    ax.tick_params(axis='x', labelsize=6)
     return fig
 
 
