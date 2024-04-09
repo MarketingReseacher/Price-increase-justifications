@@ -22,7 +22,8 @@ def PlotPie(df, var):
       return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
     df.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 8}, ax=ax1)
-    ax1.set_title(f'Pie Chart of {var}')
+    label = Labels[var]
+    ax1.set_title(f'Pie Chart of {label}')
     return fig
 
 def PlotHist(x, var):
@@ -38,9 +39,8 @@ def PlotHist(x, var):
 def PlotBox(x, var):
     fig, ax = plt.subplots()
     x = x.dropna()
-    label = Labels[var]
     plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {label}', size=12)
+    plt.title(f'Boxplot of {var}', size=12)
     plt.ylabel(var, size=12, style= "italic")
     fig.set_figheight(6)
     fig.set_figwidth(8)
