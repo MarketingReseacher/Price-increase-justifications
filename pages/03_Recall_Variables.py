@@ -31,6 +31,9 @@ def PlotBox(x, var):
     plt.ylabel(var, size=12, style= "italic")
     fig.set_figheight(6)
     fig.set_figwidth(8)
+    quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
+    ax.set_yticks(quantiles)
+    ax.tick_params(axis='y', labelsize=6)
     return fig
 
 def PlotPie(df, var):
