@@ -188,7 +188,7 @@ if Selected_graph == "Boxplot":
         plt = PlotBox(MyDF["NoIIUptoQuarter"], Labels["NoIIUptoQuarter"])
     else:
         plt = PlotBox(MyDF["NoIDUptoQuarter"], Labels["NoIDUptoQuarter"])
-    st.pyplot(plt)
+        st.pyplot(plt)
 
 
 
