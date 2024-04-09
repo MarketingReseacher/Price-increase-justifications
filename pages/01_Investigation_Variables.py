@@ -70,7 +70,8 @@ if Selected_var != "Investigation Type":
       if label == Selected_var:
          columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
          Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
-         st.write(Sum[columns].head(index=False))
+         Sum.style.hide()
+         st.write(Sum[columns].head())
          if Selected_graph == "Histogram":
            plt = PlotHist(MyDF[variable], Labels[variable])
            st.pyplot(plt)
