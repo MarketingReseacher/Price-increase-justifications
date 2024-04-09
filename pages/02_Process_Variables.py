@@ -31,9 +31,9 @@ def PlotHist(x, var):
     fig, ax = plt.subplots(figsize=(width, height))
     Color = GetColors(var)    
     plt.hist(x,  color=Color)
-    plt.title(f'Histogram of {var}', size=12)
-    plt.xlabel(var, size=10, style= "italic")
-    plt.ylabel("Frequency", size=12)
+    plt.title(f'Histogram of {var}', size=8)
+    plt.xlabel(var, size=6, style= "italic")
+    plt.ylabel("Frequency", size=6)
     return fig
 
 
@@ -42,8 +42,8 @@ def PlotBox(x, var):
     fig, ax = plt.subplots(figsize=(width, height))
     x = x.dropna()
     plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {var}', size=12)
-    plt.ylabel(var, size=12, style= "italic")
+    plt.title(f'Boxplot of {var}', size=8)
+    plt.ylabel(var, size=6, style= "italic")
     quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
     ax.set_yticks(quantiles)
     ax.tick_params(axis='y', labelsize=6)
