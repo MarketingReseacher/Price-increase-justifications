@@ -61,7 +61,7 @@ def PlotBox(x, var):
 
 
 Selected_var = st.sidebar.selectbox("Select a recall variable", ["Recall Size", "Recall Scope", "No. of NHTSA Campaign Numbers", "No. of Distinct Manufacturers of Recalled Products", "No. of Product Damage Reports Up to Quarter of Recall", "No. of Deaths Up to Quarter of Recall", "No. of Injuries Up to Quarter of Recall", "No. of Death and Injury Reports Up to Quarter of Recall"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"])
+Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
 
 if Selected_graph == "Histogram":
   if Selected_var == "Recall Size":
