@@ -60,7 +60,7 @@ if Selected_var != "Recall Type" and Selected_var != "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
          if Selected_graph == "Histogram":
-           plt = PlotHist(Daya[variable], Labels[variable])
+           plt = PlotHist(Data[variable], Labels[variable])
            st.pyplot(plt)
          elif Selected_graph == "Boxplot":
            plt = PlotBox(Data[variable], Labels[variable])
