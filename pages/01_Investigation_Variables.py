@@ -22,13 +22,13 @@ def PlotPie(df, var):
       return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
     df.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 8}, ax=ax1)
-    ax1.set_title(f'Pie Chart {var}')
+    ax1.set_title(f'Pie Chart of {var}')
     return fig
 
 def PlotHist(x, var):
     fig, ax = plt.subplots()
     plt.hist(x)
-    plt.title(f'Histogram {var}', size=12)
+    plt.title(f'Histogram of {var}', size=12)
     plt.xlabel(var, size=10, style= "italic")
     plt.ylabel("Frequency", size=12)
     fig.set_figheight(6)
@@ -61,7 +61,7 @@ else:
   
 if Selected_graph == "Pie":
   if Selected_var == "Investigation Type":
-    plt = PlotPie(MyDF, 'InvestigationType')
+    plt = PlotPie(MyDF, 'Investigation Type')
     st.pyplot(plt) 
   else:
     st.write("For numerical variables, please choose histogram or boxplot as graph type.") 
