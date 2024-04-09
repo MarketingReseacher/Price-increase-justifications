@@ -71,11 +71,10 @@ if Selected_graph == "Pie Chart":
 if Selected_graph == "Histogram":
     if Selected_var == "Investigation Type":
         st.write("For a histogram or boxplot, please choose a numerical variable.")     
-    elif Selected_var in Numerics:
+    else:
       for variable, label in Labels.items():
         if label == Selected_var:
           plt = PlotHist(MyDF[variable], Labels[variable])
-
     st.pyplot(plt)
 
 
