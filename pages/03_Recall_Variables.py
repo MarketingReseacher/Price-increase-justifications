@@ -14,23 +14,21 @@ def ReadData():
 Data = ReadData()
 
 def PlotHist(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     plt.hist(x)
-    plt.title(f'Histogram of {var}', size=12)
-    plt.xlabel(var, size=10, style= "italic")
-    plt.ylabel("Frequency", size=12)
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
+    plt.title(f'Histogram of {var}', size=8)
+    plt.xlabel(var, size=6, style= "italic")
+    plt.ylabel("Frequency", size=6)
+    ax.tick_params(axis='y', labelsize=6)
+    ax.tick_params(axis='x', labelsize=6)
     return fig
 
 def PlotBox(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     x = x.dropna()
     plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {var}', size=12)
-    plt.ylabel(var, size=12, style= "italic")
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
+    plt.title(f'Boxplot of {var}', size=8)
+    plt.ylabel(var, size=6, style= "italic")
     quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
     ax.set_yticks(quantiles)
     ax.tick_params(axis='y', labelsize=6)
@@ -39,42 +37,32 @@ def PlotBox(x, var):
 def PlotPie(df, var):
     def labeling(val):
       return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
-    fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
-    df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 5}, colors=['#49D845', "#C00000", '#FF9999', '#00CCCC'], ax=ax1, labeldistance =1.4, pctdistance=1.7)
+    fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
+    df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 4}, colors=['#49D845', "#C00000", '#FF9999', '#00CCCC'], ax=ax1, labeldistance =1.3, pctdistance=1.7)
     label = Labels[var]
-    ax1.set_title(f'Pie Chart of {label}')
+    ax1.set_title(f'Pie Chart of {label}', size=8)
     return fig
     
 
 Labels = {'RecallType': 'Recall Type', 'InfluencedBy': 'Influenced By', 'RecallSize': "Recall Size", 'RecallScope': "Recall Scope", 'NoNHTSACampaignNumbers': "No. NHTSA Campaign Numbers", 'NoManufacturers': "No. Distinct Manufacturers of Recalled Products", 'NoPDUptoQuarterOfRcl': "No. Product Damage Reports Up to Quarter of Recall", 'NoDIUptoQuarterOfRcl': "No. Deaths Up to Quarter of Recall", 'NoIIUptoQuarterOfRcl': "No. of Injuries Up to Quarter of Recall", 'NoIDUptoQuarterOfRcl': "No. Death and Injury Reports Up to Quarter of Recall"}
 
 Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 'Influenced By', "Recall Size", "Recall Scope", "No. NHTSA Campaign Numbers", "No. Distinct Manufacturers of Recalled Products", "No. Product Damage Reports Up to Quarter of Recall", "No. Deaths Up to Quarter of Recall", "No. Injuries Up to Quarter of Recall", "No. Death and Injury Reports Up to Quarter of Recall"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie Chart", "Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
+height = st.slider("Graph height", 1, 10, 4)
+width = st.slider("Graph width", 1, 10, 6)
 
-if Selected_graph == "Pie Chart":
-  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
+if Selected_var == "Recall Type" or Selected_var == "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
         plt = PlotPie(Data, variable)
-    st.pyplot(plt) 
-  else:
-    st.write("Pie Chart works for categorical (and not numeric) variables. Histograms and Boxplots work for numeric (and not categorical) variables.")  
-
-elif Selected_graph == "Histogram":
-  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
-    st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")
-  else:
+        st.pyplot(plt)
+if Selected_var != "Recall Type" and Selected_var != "Influenced By":
+    Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
     for variable, label in Labels.items():
       if label == Selected_var:
-        plt = PlotHist(Data[variable], Labels[variable])
-    st.pyplot(plt)
-
-else:
-  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
-    st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")
-  else:
-    for variable, label in Labels.items():
-      if label == Selected_var:
-        plt = PlotBox(Data[variable], Labels[variable])
-    st.pyplot(plt)
+         if Selected_graph == "Histogram":
+           plt = PlotHist(Data[variable], Labels[variable])
+           st.pyplot(plt)
+         elif Selected_graph == "Boxplot":
+           plt = PlotBox(Data[variable], Labels[variable])
+           st.pyplot(plt)
 

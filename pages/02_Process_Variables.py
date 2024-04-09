@@ -28,26 +28,24 @@ def GetColors(x):
 
 
 def PlotHist(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     Color = GetColors(var)    
     plt.hist(x,  color=Color)
-    plt.title(f'Histogram of {var}', size=12)
-    plt.xlabel(var, size=10, style= "italic")
-    plt.ylabel("Frequency", size=12)
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
+    plt.title(f'Histogram of {var}', size=8)
+    plt.xlabel(var, size=6, style= "italic")
+    plt.ylabel("Frequency", size=6)
+    ax.tick_params(axis='y', labelsize=6)
+    ax.tick_params(axis='x', labelsize=6)
     return fig
 
 
 
 def PlotBox(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     x = x.dropna()
     plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {var}', size=12)
-    plt.ylabel(var, size=12, style= "italic")
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
+    plt.title(f'Boxplot of {var}', size=8)
+    plt.ylabel(var, size=6, style= "italic")
     quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
     ax.set_yticks(quantiles)
     ax.tick_params(axis='y', labelsize=6)
@@ -57,17 +55,17 @@ def PlotBox(x, var):
 Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Opening",  'InvOpeningToClosing': "Investigation Opening to Closing", 'InvClosingToRecall': "Investigation Closing to Recall", 'MfrAwarenessToRecall': "Manufacturer Awareness to Recall", 'RecallToOwnerNotification': "Recall to Owner Notification Date"}
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
-
-if Selected_graph == "Histogram":
-  for variable, label in Labels.items():
-    if label == Selected_var:
-      plt = PlotHist(Data[variable], Labels[variable])
-  st.pyplot(plt)
+Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+height = st.slider("Graph height", 1, 10, 3)
+width = st.slider("Graph width", 1, 10, 5)
 
 
-else:
-  for variable, label in Labels.items():
-    if label == Selected_var:
-      plt = PlotBox(Data[variable], Labels[variable])
-  st.pyplot(plt)
+for variable, label in Labels.items():
+  if label == Selected_var:
+     if Selected_graph == "Histogram":
+        plt = PlotHist(Data[variable], Labels[variable])
+        st.pyplot(plt)
+     elif Selected_graph == "Boxplot":
+        plt = PlotBox(Data[variable], Labels[variable])
+        st.pyplot(plt)
+
