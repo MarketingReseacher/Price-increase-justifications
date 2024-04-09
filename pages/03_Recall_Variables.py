@@ -49,32 +49,20 @@ def PlotPie(df, var):
 Labels = {'RecallType': 'Recall Type', 'InfluencedBy': 'Influenced By', 'RecallSize': "Recall Size", 'RecallScope': "Recall Scope", 'NoNHTSACampaignNumbers': "No. NHTSA Campaign Numbers", 'NoManufacturers': "No. Distinct Manufacturers of Recalled Products", 'NoPDUptoQuarterOfRcl': "No. Product Damage Reports Up to Quarter of Recall", 'NoDIUptoQuarterOfRcl': "No. Deaths Up to Quarter of Recall", 'NoIIUptoQuarterOfRcl': "No. of Injuries Up to Quarter of Recall", 'NoIDUptoQuarterOfRcl': "No. Death and Injury Reports Up to Quarter of Recall"}
 
 Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 'Influenced By', "Recall Size", "Recall Scope", "No. NHTSA Campaign Numbers", "No. Distinct Manufacturers of Recalled Products", "No. Product Damage Reports Up to Quarter of Recall", "No. Deaths Up to Quarter of Recall", "No. Injuries Up to Quarter of Recall", "No. Death and Injury Reports Up to Quarter of Recall"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie Chart", "Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
 
-if Selected_graph == "Pie Chart":
-  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
+if Selected_var == "Recall Type" or Selected_var == "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
         plt = PlotPie(Data, variable)
-    st.pyplot(plt) 
-  else:
-    st.write("Pie Chart works for categorical (and not numeric) variables. Histograms and Boxplots work for numeric (and not categorical) variables.")  
-
-elif Selected_graph == "Histogram":
-  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
-    st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")
-  else:
+        st.pyplot(plt)
+if Selected_var != "Recall Type" and Selected_var != "Influenced By":
+    Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
     for variable, label in Labels.items():
       if label == Selected_var:
-        plt = PlotHist(Data[variable], Labels[variable])
-    st.pyplot(plt)
-
-else:
-  if Selected_var == "Recall Type" or Selected_var == "Influenced By":
-    st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")
-  else:
-    for variable, label in Labels.items():
-      if label == Selected_var:
-        plt = PlotBox(Data[variable], Labels[variable])
-    st.pyplot(plt)
+         if Selected_graph == "Histogram":
+           plt = PlotHist(MyDF[variable], Labels[variable])
+           st.pyplot(plt)
+         elif Selected_graph == "Boxplot":
+           plt = PlotBox(MyDF[variable], Labels[variable])
+           st.pyplot(plt)
 
