@@ -62,9 +62,9 @@ Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help =
 for variable, label in Labels.items():
   if label == Selected_var:
      if Selected_graph == "Histogram":
-           plt = PlotHist(Data[variable], Labels[variable])
-           st.pyplot(plt)
-         elif Selected_graph == "Boxplot":
-           plt = PlotBox(Data[variable], Labels[variable])
-           st.pyplot(plt)
+        plt = PlotHist(Data[variable], Labels[variable])
+        st.pyplot(plt)
+      elif Selected_graph == "Boxplot":
+        plt = PlotBox(Data[variable], Labels[variable])
+        st.pyplot(plt)
 
