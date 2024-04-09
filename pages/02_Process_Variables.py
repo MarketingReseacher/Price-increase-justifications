@@ -67,7 +67,7 @@ for variable, label in Labels.items():
      st.markdown(table, unsafe_allow_html=True)
      st.write("  \n\n")
      st.write("  \n\n")
-     Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+     Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
      height = st.slider("Graph height", 1, 10, 3)
      width = st.slider("Graph width", 1, 10, 5)
      if Selected_graph == "Histogram":
