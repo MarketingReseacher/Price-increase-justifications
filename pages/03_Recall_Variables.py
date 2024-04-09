@@ -37,7 +37,7 @@ def PlotPie(df, var):
     def labeling(val):
       return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
-    df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 8}, ax=ax1)
+    df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 5}, ax=ax1)
     label = Labels[var]
     ax1.set_title(f'Pie Chart of {label}')
     return fig
@@ -49,7 +49,7 @@ Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie Chart", "Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
 
 if Selected_graph == "Pie Chart":
-  if Selected_var == "Recall Type":
+  if Selected_var == "Recall Type" or "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
         plt = PlotPie(Data, variable)
