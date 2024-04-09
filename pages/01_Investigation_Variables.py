@@ -69,7 +69,7 @@ if Selected_var != "Investigation Type":
     for variable, label in Labels.items():
       if label == Selected_var:
          if Selected_graph == "Histogram":
-           Sum = pd.DataFrame({"Mean" : MyDF[variable].mean()})
+           Sum = pd.DataFrame({"Mean" : MyDF.loc[:, variable].mean()})
            st.write(Sum.head(1))
            plt = PlotHist(MyDF[variable], Labels[variable])
            st.pyplot(plt)
