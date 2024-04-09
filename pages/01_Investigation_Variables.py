@@ -61,6 +61,8 @@ Labels = {"InvestigationType": "Investigation Type", "Population": "Population",
 
 
 if Selected_var == "Investigation Type":
+  height = st.slider("Graph height", 1, 10, 4)
+  width = st.slider("Graph width", 1, 10, 6)
   plt = PlotPie(MyDF, 'InvestigationType')
   st.pyplot(plt) 
 if Selected_var != "Investigation Type":
