@@ -52,7 +52,7 @@ if Selected_graph == "Pie Chart":
   if Selected_var == "Recall Type" or "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
-        plt = PlotPie(Data, Labels[variable])
+        plt = PlotPie(Data, variable)
     st.pyplot(plt) 
   else:
     st.write("For numerical variables, please choose histogram or boxplot as graph type.") 
