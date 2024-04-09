@@ -67,7 +67,7 @@ if Selected_graph == "Pie":
     st.write("For a histogram or boxplot, please choose a numerical variable.") 
 
 if Selected_graph == "Histogram":
-    if Selected_var == "InvestigationType":
+    if Selected_var == "Investigation Type":
         st.write("For a histogram or boxplot, please choose a numerical variable.")     
     elif Selected_var == "No. Complaints Reported to NHTSA":
         plt = PlotHist(MyDF["NoComplaintsReportedNHTSA"], Labels["NoComplaintsReportedNHTSA"])
@@ -130,7 +130,7 @@ if Selected_graph == "Histogram":
 
 
 if Selected_graph == "Boxplot":
-    if Selected_var == "InvestigationType":
+    if Selected_var == "Investigation Type":
         st.write("For a histogram or boxplot, please choose a numerical variable.")     
     elif Selected_var == "No. Complaints Reported to NHTSA":
         plt = PlotBox(MyDF["NoComplaintsReportedNHTSA"], Labels["NoComplaintsReportedNHTSA"])
