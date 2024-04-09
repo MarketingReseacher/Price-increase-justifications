@@ -64,7 +64,7 @@ for variable, label in Labels.items():
      if Selected_graph == "Histogram":
         plt = PlotHist(Data[variable], Labels[variable])
         st.pyplot(plt)
-      elif Selected_graph == "Boxplot":
+     elif Selected_graph == "Boxplot":
         plt = PlotBox(Data[variable], Labels[variable])
         st.pyplot(plt)
 
