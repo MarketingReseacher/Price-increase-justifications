@@ -69,7 +69,7 @@ if Selected_var == "Investigation Type":
   plt = PlotPie(MyDF, 'InvestigationType')
   st.pyplot(plt) 
 if Selected_var != "Investigation Type":
-    Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+    Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
     for variable, label in Labels.items():
       if label == Selected_var:
          if Selected_graph == "Histogram":
