@@ -75,7 +75,7 @@ if Selected_var != "Investigation Type":
          if Selected_graph == "Histogram":
            plt = PlotHist(MyDF[variable], Labels[variable])
            st.pyplot(plt)
-         elif if Selected_graph == "Boxplot":
+         elif Selected_graph == "Boxplot":
            plt = PlotBox(MyDF[variable], Labels[variable])
            st.pyplot(plt)
 
