@@ -52,6 +52,8 @@ Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 
 if Selected_var == "Recall Type" or Selected_var == "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
+        height = st.slider("Graph height", 1, 10, 4)
+        width = st.slider("Graph width", 1, 10, 6)
         plt = PlotPie(Data, variable)
         st.pyplot(plt)
 if Selected_var != "Recall Type" and Selected_var != "Influenced By":
