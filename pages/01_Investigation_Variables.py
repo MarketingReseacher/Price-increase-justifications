@@ -71,7 +71,7 @@ if Selected_var != "Investigation Type":
       if label == Selected_var:
          columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
          Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
-         table = HTML(Sum.to_html(index=False))
+         table = Sum.to_html(index=False)
          st.markdown(table, unsafe_allow_html=True)
          if Selected_graph == "Histogram":
            plt = PlotHist(MyDF[variable], Labels[variable])
