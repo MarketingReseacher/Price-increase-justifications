@@ -38,8 +38,9 @@ def PlotHist(x, var):
 def PlotBox(x, var):
     fig, ax = plt.subplots()
     x = x.dropna()
+    label = Labels[var]
     plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {var}', size=12)
+    plt.title(f'Boxplot of {label}', size=12)
     plt.ylabel(var, size=12, style= "italic")
     fig.set_figheight(6)
     fig.set_figwidth(8)
@@ -61,7 +62,7 @@ else:
   
 if Selected_graph == "Pie":
   if Selected_var == "Investigation Type":
-    plt = PlotPie(MyDF, 'Investigation Type')
+    plt = PlotPie(MyDF, 'InvestigationType')
     st.pyplot(plt) 
   else:
     st.write("For numerical variables, please choose histogram or boxplot as graph type.") 
