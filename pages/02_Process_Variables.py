@@ -28,26 +28,22 @@ def GetColors(x):
 
 
 def PlotHist(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     Color = GetColors(var)    
     plt.hist(x,  color=Color)
     plt.title(f'Histogram of {var}', size=12)
     plt.xlabel(var, size=10, style= "italic")
     plt.ylabel("Frequency", size=12)
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
     return fig
 
 
 
 def PlotBox(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     x = x.dropna()
     plt.boxplot(x,  patch_artist=True)
     plt.title(f'Boxplot of {var}', size=12)
     plt.ylabel(var, size=12, style= "italic")
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
     quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
     ax.set_yticks(quantiles)
     ax.tick_params(axis='y', labelsize=6)
@@ -58,6 +54,9 @@ Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Openin
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
 Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+height = st.slider("Graph height", 1, 10, 3)
+width = st.slider("Graph width", 1, 10, 5)
+
 
 for variable, label in Labels.items():
   if label == Selected_var:
