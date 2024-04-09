@@ -37,7 +37,7 @@ def PlotPie(df, var):
     def labeling(val):
       return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
-    df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 6}, ax=ax1, pctdistance=1.4, rotatelabels=True)
+    df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 5}, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845'], ax=ax1, pctdistance=1.5)
     label = Labels[var]
     ax1.set_title(f'Pie Chart of {label}')
     return fig
