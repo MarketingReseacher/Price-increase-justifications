@@ -20,30 +20,26 @@ Closed = Data.query("Data != 'Opened'")
 def PlotPie(df, var):
     def labeling(val):
       return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
-    fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
+    fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
     df.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 5}, ax=ax1, labeldistance =1.1)
     label = Labels[var]
     ax1.set_title(f'Pie Chart of {label}')
     return fig
 
 def PlotHist(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     plt.hist(x)
     plt.title(f'Histogram of {var}', size=12)
     plt.xlabel(var, size=10, style= "italic")
     plt.ylabel("Frequency", size=12)
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
     return fig
 
 def PlotBox(x, var):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(width, height))
     x = x.dropna()
     plt.boxplot(x,  patch_artist=True)
     plt.title(f'Boxplot of {var}', size=12)
     plt.ylabel(var, size=12, style= "italic")
-    fig.set_figheight(6)
-    fig.set_figwidth(8)
     quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
     ax.set_yticks(quantiles)
     ax.tick_params(axis='y', labelsize=6)
@@ -52,6 +48,9 @@ def PlotBox(x, var):
 Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. Injury Incidents Reported to NHTSA", "No. Injuries Reported to NHTSA", "No Fatality Incidents Reported to NHTSA", "No. Fatalities Reported to NHTSA", "No. Other Types Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. Injury Incidents Reported to Manufacturer",  "No. Injuries Reported to the Manufacturer", "No Fatality Incidents Reported to the Manufacturer", "No. Fatalities Reported to the Manufacturer", "No. Other Types Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. Injury Incidents Reported",  "No. Injuries Reported", "No Fatality Incidents Reported", "No. Fatalities Reported", "No. Other Types Failures Reported", "Problem Definition Sentiment", "Summary Sentiment", "No. Product Damage Reports Up to Quarter Investigation", "No. Deaths Up to Quarter Investigation", "No. Injuries Up to Quarter Investigation", "No. Injury and Death Reports Up to Quarter Investigation"], help = "Select the variable you want to see a visual representation of")
 Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"], help = "Select the data source.")
 
+
+width = st.slider("plot width", 1, 25, 3)
+height = st.slider("plot height", 1, 25, 1)
 
 if Selected_Data == "Opened Investigations":
   MyDF = Opened
@@ -62,8 +61,6 @@ else:
   
 Labels = {"InvestigationType": "Investigation Type", "Population": "Population", "NoComplaintsReportedNHTSA": "No. Complaints Reported to NHTSA", "NoCrashesFiresReportedNHTSA": "No. Crashes and Fires Reported to NHTSA", "NoInjuryIncidentsReportedNHTSA": "No. Injury Incidents Reported to NHTSA", "NoInjuriesReportedNHTSA": "No. Injuries Reported to NHTSA", "NoFatalityIncidentsReportedNHTSA": "No Fatality Incidents Reported to NHTSA", "NoFatalitiesReportedNHTSA": "No. Fatalities Reported to NHTSA", "NoOtherFailuresReportedNHTSA": "No. Other Types Failures Reported to NHTSA", "NoComplaintsReportedMfr": "No. Complaints Reported to the Manufacturer", "NoCrashesFiresReportedMfr": "No. Crashes and Fires Reported to the Manufacturer", "NoInjuryIncidentsReportedMfr": "No. Injury Incidents Reported to the Manufacturer", "NoInjuriesReportedMfr": "No. Injuries Reported to the Manufacturer", "NoFatalityIncidentsReportedMfr": "No Fatality Incidents Reported to the Manufacturer", "NoFatalitiesReportedMfr": "No. Fatalities Reported to the Manufacturer", "NoOtherFailuresReportedMfr": "No. Other Types Failures Reported to the Manufacturer", "NoComplaintsReported": "No. Complaints Reported", "NoCrashesFiresReported": "No. Crashes and Fires Reported", "NoInjuryIncidentsReported": "No. Injury Incidents Reported", "NoInjuriesReported": "No. Injuries Reported", "NoFatalityIncidentsReported": "No Fatality Incidents Reported", "NoFatalitiesReported": "No. Fatalities Reported", "NoOtherFailuresReported": "No. Other Types Failures Reported", "PDSentiment": "Problem Definition Sentiment", "SummarySentiment": "Summary Sentiment", "NoPDUptoQuarter": "No. Product Damage Reports Up to Quarter Investigation", "NoDIUptoQuarter": "No. Deaths Up to Quarter Investigation", "NoIIUptoQuarter": "No. Injuries Up to Quarter Investigation", "NoIDUptoQuarter": "No. Injury and Death Reports Up to Quarter Investigation" }
 
-
-  
 
 if Selected_var == "Investigation Type":
   plt = PlotPie(MyDF, 'InvestigationType')
