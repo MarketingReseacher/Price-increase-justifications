@@ -26,28 +26,14 @@ def GetColors(x):
         Color = "#FFC000"
     return Color
 
-def GetLabels(x):  
-    if x == "FirstComplaintToInvOpening":
-        Label = "First Complaint to Investigation Opening"
-    elif x == "InvOpeningToClosing":
-        Label = "Investigation Opening to Closing"
-    elif x == "InvClosingToRecall":
-        Label = "Investigation Closing to Recall"
-    elif x == "MfrAwarenessToRecall":
-        Label = "Manufacturer Awareness to Recall"
-    else:
-        Label = "Recall to Owner Notification Date"
-    return Label
 
 def PlotHist(x, var):
 
     fig, ax = plt.subplots()
-    Label = GetLabels(var)
-    Color = GetColors(var)
-    
+    Color = GetColors(var)    
     plt.hist(x,  color=Color)
-    plt.title(f'Histogram of {Label}', size=12)
-    plt.xlabel(Label, size=10, style= "italic")
+    plt.title(f'Histogram of {var}', size=12)
+    plt.xlabel(var, size=10, style= "italic")
     plt.ylabel("Frequency", size=12)
     fig.set_figheight(6)
     fig.set_figwidth(8)
@@ -58,44 +44,28 @@ def PlotHist(x, var):
 def PlotBox(x, var):
     fig, ax = plt.subplots()
     x = x.dropna()
-    Label = GetLabels(var)
-    Color = GetColors(var)
-    
     plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {Label}', size=12)
-    plt.ylabel(Label, size=12, style= "italic")
+    plt.title(f'Boxplot of {var}', size=12)
+    plt.ylabel(var, size=12, style= "italic")
     fig.set_figheight(6)
     fig.set_figwidth(8)
-
     return fig
     
 
-
+Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Opening",  'InvOpeningToClosing': "Investigation Opening to Closing", 'InvClosingToRecall': "Investigation Closing to Recall", 'MfrAwarenessToRecall': "Manufacturer Awareness to Recall", 'RecallToOwnerNotification': "Recall to Owner Notification Date"}
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
+Selected_graph = st.sidebar.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
 
 if Selected_graph == "Histogram":
-  if Selected_var == "First Complaint to Investigation Opening":
-    plt = PlotHist(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
-  elif Selected_var == "Investigation Opening to Closing":
-    plt = PlotHist(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
-  elif Selected_var == "Investigation Closing to Recall":
-    plt = PlotHist(Data['InvClosingToRecall'], 'InvClosingToRecall')
-  elif Selected_var == "Manufacturer Awareness to Recall":
-    plt = PlotHist(Data['MfrAwarenessToRecall'], 'MfrAwarenessToRecall')
-  else:
-    plt = PlotHist(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
-  st.pyplot(plt)  
+  for variable, label in Labels.items():
+    if label == Selected_var:
+      plt = PlotHist(Data[variable], Labels[variable])
+  st.pyplot(plt)
+
 
 else:
-  if Selected_var == "First Complaint to Investigation Opening":
-    plt = PlotBox(Data['FirstComplaintToInvOpening'], 'FirstComplaintToInvOpening')
-  elif Selected_var == "Investigation Opening to Closing":
-    plt = PlotBox(Data['InvOpeningToClosing'], 'InvOpeningToClosing')
-  elif Selected_var == "Investigation Closing to Recall":
-    plt = PlotBox(Data['InvClosingToRecall'], 'InvClosingToRecall')
-  else:
-    plt = PlotBox(Data['RecallToOwnerNotification'], 'RecallToOwnerNotification')
-  st.pyplot(plt)  
-
+  for variable, label in Labels.items():
+    if label == Selected_var:
+      plt = PlotBox(Data[variable], Labels[variable])
+  st.pyplot(plt)
