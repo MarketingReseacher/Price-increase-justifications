@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+from IPython.display import HTML
 
 st.sidebar.markdown("# Investigation Variables")
 
@@ -70,8 +71,7 @@ if Selected_var != "Investigation Type":
       if label == Selected_var:
          columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
          Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
-         Sum.style.hide()
-         st.write(Sum[columns].head())
+         st.write(HTML(Sum.to_html(index=False)))
          if Selected_graph == "Histogram":
            plt = PlotHist(MyDF[variable], Labels[variable])
            st.pyplot(plt)
