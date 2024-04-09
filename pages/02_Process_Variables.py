@@ -14,13 +14,13 @@ def ReadData():
 Data = ReadData()
 
 def GetColors(x):  
-    if x == "FirstComplaintToInvOpening":
+    if x == "First Complaint to Investigation Opening":
         Color = "#8FAADC"
-    elif x == "InvOpeningToClosing":
+    elif x == "Investigation Opening to Closing":
         Color = "#7030A0"
-    elif x == "InvClosingToRecall":
+    elif x == "Investigation Closing to Recall":
         Color = "#C00000"
-    elif x == "MfrAwarenessToRecall":
+    elif x == "Manufacturer Awareness to Recall":
         Color = "#3b8254"  
     else:
         Color = "#FFC000"
@@ -28,7 +28,6 @@ def GetColors(x):
 
 
 def PlotHist(x, var):
-
     fig, ax = plt.subplots()
     Color = GetColors(var)    
     plt.hist(x,  color=Color)
