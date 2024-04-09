@@ -58,11 +58,11 @@ if Selected_graph == "Pie Chart":
         plt = PlotPie(Data, variable)
     st.pyplot(plt) 
   else:
-    st.write("Choose a categorical variable, or Histogram or Boxplot as graph type.") 
+    st.write("Pie Chart works for categorical (and not numeric) variables. Histograms and Boxplots work for numeric (and not categorical) variables.")  
 
 elif Selected_graph == "Histogram":
   if Selected_var == "Recall Type" or Selected_var == "Influenced By":
-    st.write("Choose a numerical variable, or Pie Chart as graph type.")
+    st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")
   else:
     for variable, label in Labels.items():
       if label == Selected_var:
@@ -71,7 +71,7 @@ elif Selected_graph == "Histogram":
 
 else:
   if Selected_var == "Recall Type" or Selected_var == "Influenced By":
-    st.write("Choose a numerical variable, or Pie Chart as graph type.")
+    st.write("Histograms and Boxplots work for numeric (and not categorical) variables. Pie Chart works for categorical (and not numeric) variables.")
   else:
     for variable, label in Labels.items():
       if label == Selected_var:
