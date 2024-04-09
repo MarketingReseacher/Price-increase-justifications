@@ -49,7 +49,7 @@ Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 
 Selected_graph = st.sidebar.selectbox("Select a graph", ["Pie Chart", "Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables, and Pie Chart for categorical variables.")
 
 if Selected_graph == "Pie Chart":
-  if Selected_var == "Recall Type" or "Influenced By":
+  if Selected_var == "Recall Type":
     for variable, label in Labels.items():
       if label == Selected_var:
         plt = PlotPie(Data, variable)
