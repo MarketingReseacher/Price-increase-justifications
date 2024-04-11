@@ -47,18 +47,28 @@ def PlotPie(df, var):
 Labels = {'RecallType': 'Recall Type', 'InfluencedBy': 'Influenced By', 'RecallSize': "Recall Size", 'RecallScope': "Recall Scope", 'NoNHTSACampaignNumbers': "No. NHTSA Campaign Numbers", 'NoManufacturers': "No. Distinct Manufacturers of Recalled Products", 'NoPDUptoQuarterOfRcl': "No. Product Damage Reports Up to Quarter of Recall", 'NoDIUptoQuarterOfRcl': "No. Deaths Up to Quarter of Recall", 'NoIIUptoQuarterOfRcl': "No. of Injuries Up to Quarter of Recall", 'NoIDUptoQuarterOfRcl': "No. Death and Injury Reports Up to Quarter of Recall"}
 
 Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 'Influenced By', "Recall Size", "Recall Scope", "No. NHTSA Campaign Numbers", "No. Distinct Manufacturers of Recalled Products", "No. Product Damage Reports Up to Quarter of Recall", "No. Deaths Up to Quarter of Recall", "No. Injuries Up to Quarter of Recall", "No. Death and Injury Reports Up to Quarter of Recall"], help = "Select the variable you want to see a visual representation of")
-height = st.slider("Graph height", 1, 10, 4)
-width = st.slider("Graph width", 1, 10, 6)
+
 
 if Selected_var == "Recall Type" or Selected_var == "Influenced By":
     for variable, label in Labels.items():
       if label == Selected_var:
+        height = st.slider("Graph height", 1, 10, 4)
+        width = st.slider("Graph width", 1, 10, 6)
         plt = PlotPie(Data, variable)
         st.pyplot(plt)
 if Selected_var != "Recall Type" and Selected_var != "Influenced By":
-    Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
     for variable, label in Labels.items():
       if label == Selected_var:
+         columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
+         Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
+         table = Sum.to_html(index=False, justify="center")
+         st.markdown("##### Table of Summary Statistics")
+         st.markdown(table, unsafe_allow_html=True)
+         st.write("  \n\n")
+         st.write("  \n\n")
+         Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+         height = st.slider("Graph height", 1, 10, 3)
+         width = st.slider("Graph width", 1, 10, 5)
          if Selected_graph == "Histogram":
            plt = PlotHist(Data[variable], Labels[variable])
            st.pyplot(plt)

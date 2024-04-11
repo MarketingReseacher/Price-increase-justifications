@@ -55,13 +55,21 @@ def PlotBox(x, var):
 Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Opening",  'InvOpeningToClosing': "Investigation Opening to Closing", 'InvClosingToRecall': "Investigation Closing to Recall", 'MfrAwarenessToRecall': "Manufacturer Awareness to Recall", 'RecallToOwnerNotification': "Recall to Owner Notification Date"}
 
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
-Selected_graph = st.selectbox("Select a graph", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
-height = st.slider("Graph height", 1, 10, 3)
-width = st.slider("Graph width", 1, 10, 5)
+
 
 
 for variable, label in Labels.items():
   if label == Selected_var:
+     columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
+     Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
+     table = Sum.to_html(index=False, justify="center")
+     st.markdown("##### Table of Summary Statistics")
+     st.markdown(table, unsafe_allow_html=True)
+     st.write("  \n\n")
+     st.write("  \n\n")
+     Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+     height = st.slider("Graph height", 1, 10, 3)
+     width = st.slider("Graph width", 1, 10, 5)
      if Selected_graph == "Histogram":
         plt = PlotHist(Data[variable], Labels[variable])
         st.pyplot(plt)
