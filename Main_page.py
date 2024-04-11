@@ -7,6 +7,6 @@ st.write("This website is open-access (i.e., free) and seeks to enable researche
 st.write("You can visit the **Investigations Variables** page to obtain graphical representations of the variables related to the opening or closing of investigations.")
 st.write("Visit the **Process Variables** page for graphs of our process-time variables.")
 st.write("Visit the **Recall Variables** page to obtain graphs of the variables pertaining to the outcomes of investigations (i.e., product recalls).")
-st.write("Lastly, visit the **Data Set Description and Data Dictionary** page to preview and download a table that outlines the data type/format, computation method and formula, source, and examples for all the variables included in our data sets.")
+st.write("Lastly, visit the **Data Set Description and Data Dictionary** page for an overview of our data retrieval and data set construction procedure, and to preview and download our data dictionary table.")
 
 st.sidebar.markdown("# Main page")
