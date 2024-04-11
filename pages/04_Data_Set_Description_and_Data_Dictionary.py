@@ -10,7 +10,7 @@ def ReadData():
   Data = pd.read_csv('Dictionary.csv')
   return Data
 
-st.image("Picture1.png", caption="Our data retrieval and data set construction procedure")
+st.image("Picture1.jpg", caption="Our data retrieval and data set construction procedure")
 
 Data = ReadData()
 st.write(Data.head(10))
