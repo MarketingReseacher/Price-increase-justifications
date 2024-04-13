@@ -49,7 +49,7 @@ def PlotTime(data, label, variable, year):
     Times = data.groupby([year]).mean().reset_index()
     print(Times[variable])
     plt.plot(Times[year], Times[variable], linewidth=1, color="#6eb580")
-    plt.title(f'Time trend of {label}', size=8)
+    plt.title(f'Time Trend of {label}', size=8)
     plt.xlabel(label, size=6, style= "italic")
     plt.ylabel("Frequency", size=6)
     ax.tick_params(axis='y', labelsize=6)
