@@ -100,7 +100,7 @@ if Selected_var != "Investigation Type":
            plt = PlotBox(MyDF[variable], Labels[variable])
            st.pyplot(plt)
          elif Selected_graph == "Time Trend":
-           plt = PlotTime(MyDF[[variable, Years[variable]]], Labels[variable], variable, Years[Selected_Data])
+           plt = PlotTime(MyDF[[variable, Years[Selected_Data]]], Labels[variable], variable, Years[Selected_Data])
            st.pyplot(plt)
 
 
