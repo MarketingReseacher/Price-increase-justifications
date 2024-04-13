@@ -42,21 +42,36 @@ def PlotPie(df, var):
     label = Labels[var]
     ax1.set_title(f'Pie Chart of {label}', size=8)
     return fig
+
+def PlotTime(data, label, variable, year):
+    fig, ax = plt.subplots(figsize=(width, height))
+    data = data.dropna()
+    Times = data.groupby([year]).mean().reset_index()
+    print(Times[variable])
+    plt.plot(Times[year], Times[variable])
+    plt.title(f'Time trend of {label}', size=8)
+    plt.xlabel(label, size=6, style= "italic")
+    plt.ylabel("Frequency", size=6)
+    ax.tick_params(axis='y', labelsize=6)
+    ax.tick_params(axis='x', labelsize=6)
+    return fig
     
 
-Labels = {'RecallType': 'Recall Type', 'InfluencedBy': 'Influenced By', 'RecallSize': "Recall Size", 'RecallScope': "Recall Scope", 'NoNHTSACampaignNumbers': "No. NHTSA Campaign Numbers", 'NoManufacturers': "No. Distinct Manufacturers of Recalled Products", 'NoPDUptoQuarterOfRcl': "No. Product Damage Reports Up to Quarter of Recall", 'NoDIUptoQuarterOfRcl': "No. Deaths Up to Quarter of Recall", 'NoIIUptoQuarterOfRcl': "No. of Injuries Up to Quarter of Recall", 'NoIDUptoQuarterOfRcl': "No. Death and Injury Reports Up to Quarter of Recall"}
+Labels = {'RecallType': 'Recall Type', 'InfluencedBy': 'Influenced By', 'RecallSize': "Recall Size", 'RecallScope': "Recall Scope", 'NoNHTSACampaignNumbers': "No. NHTSA Campaign Numbers", 'NoManufacturers': "No. Distinct Manufacturers of Recalled Products", 'NoPDUptoQuarterOfRcl': "No. Product Damage Reports Up to Quarter of Recall", 'NoDIUptoQuarterOfRcl': "No. Deaths Up to Quarter of Recall", 'NoIIUptoQuarterOfRcl': "No. of Injuries Up to Quarter of Recall", 'NoIDUptoQuarterOfRcl': "No. Death and Injury Reports Up to Quarter of Recall", "SupplierMentioned": "Supplier Mentioned"}
+Years = {'RecallSize': "RecallYear", 'RecallScope': "RecallYear", 'NoNHTSACampaignNumbers': "RecallYear",  'NoManufacturers': "RecallYear",  'NoPDUptoQuarterOfRcl': "RecallYear", 'NoDIUptoQuarterOfRcl': "RecallYear", 'NoIIUptoQuarterOfRcl': "RecallYear", 'NoIDUptoQuarterOfRcl': "RecallYear"}
 
-Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 'Influenced By', "Recall Size", "Recall Scope", "No. NHTSA Campaign Numbers", "No. Distinct Manufacturers of Recalled Products", "No. Product Damage Reports Up to Quarter of Recall", "No. Deaths Up to Quarter of Recall", "No. Injuries Up to Quarter of Recall", "No. Death and Injury Reports Up to Quarter of Recall"], help = "Select the variable you want to see a visual representation of")
+Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 'Influenced By', "Recall Size", "Recall Scope", "No. NHTSA Campaign Numbers", "No. Distinct Manufacturers of Recalled Products", "No. Product Damage Reports Up to Quarter of Recall", "No. Deaths Up to Quarter of Recall", "No. Injuries Up to Quarter of Recall", "No. Death and Injury Reports Up to Quarter of Recall", ], help = "Select the variable you want to see a visual representation of")
 
 
-if Selected_var == "Recall Type" or Selected_var == "Influenced By":
+if Selected_var == "Recall Type" or Selected_var == "Influenced By" or Selected_var == "Supplier Mentioned":
     for variable, label in Labels.items():
       if label == Selected_var:
         height = st.slider("Graph height", 1, 10, 4)
         width = st.slider("Graph width", 1, 10, 6)
         plt = PlotPie(Data, variable)
         st.pyplot(plt)
-if Selected_var != "Recall Type" and Selected_var != "Influenced By":
+        
+if Selected_var != "Recall Type" and Selected_var != "Influenced By" and Selected_var != "Supplier Mentioned":
     for variable, label in Labels.items():
       if label == Selected_var:
          columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
@@ -66,7 +81,7 @@ if Selected_var != "Recall Type" and Selected_var != "Influenced By":
          st.markdown(table, unsafe_allow_html=True)
          st.write("  \n\n")
          st.write("  \n\n")
-         Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot"], help = "Select Histogram or Boxplot for numerical variables.")
+         Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot", "Time Trend"], help = "Select 'Histogram' or 'Boxplot' to examine the statistical distribution of the variabe, and select 'Time Trend' to see the annual trend of the variable.")
          height = st.slider("Graph height", 1, 10, 3)
          width = st.slider("Graph width", 1, 10, 5)
          if Selected_graph == "Histogram":
@@ -75,4 +90,6 @@ if Selected_var != "Recall Type" and Selected_var != "Influenced By":
          elif Selected_graph == "Boxplot":
            plt = PlotBox(Data[variable], Labels[variable])
            st.pyplot(plt)
+         elif Selected_graph == "Time Trend":
+           PlotTime(Data[[variable, Years[variable]]], Labels[variable], variable, Years[variable])
 
