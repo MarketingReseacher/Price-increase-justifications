@@ -48,7 +48,7 @@ def PlotTime(data, label, variable, year):
     data = data.dropna()
     Times = data.groupby([year]).mean().reset_index()
     print(Times[variable])
-    plt.plot(Times[year], Times[variable], 'g+', linewidth=1, color="#95dea7")
+    plt.plot(Times[year], Times[variable], linewidth=1, color="#95dea7")
     plt.title(f'Time trend of {label}', size=8)
     plt.xlabel(label, size=6, style= "italic")
     plt.ylabel("Frequency", size=6)
