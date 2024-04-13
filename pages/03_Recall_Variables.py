@@ -91,5 +91,6 @@ if Selected_var != "Recall Type" and Selected_var != "Influenced By" and Selecte
            plt = PlotBox(Data[variable], Labels[variable])
            st.pyplot(plt)
          elif Selected_graph == "Time Trend":
-           PlotTime(Data[[variable, Years[variable]]], Labels[variable], variable, Years[variable])
+           plt = PlotTime(Data[[variable, Years[variable]]], Labels[variable], variable, Years[variable])
+           st.pyplot(plt)
 
