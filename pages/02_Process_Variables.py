@@ -66,7 +66,7 @@ def PlotTime(data, label, variable, year):
     
 
 Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Opening",  'InvOpeningToClosing': "Investigation Opening to Closing", 'InvClosingToRecall': "Investigation Closing to Recall", 'MfrAwarenessToRecall': "Manufacturer Awareness to Recall", 'RecallToOwnerNotification': "Recall to Owner Notification Date"}
-Years = {''FirstComplaintToInvOpening': "OpeningYear",  'InvOpeningToClosing': "ClosingYear", 'InvClosingToRecall': "ClosingYear", 'MfrAwarenessToRecall': "RecallYear", 'RecallToOwnerNotification': "RecallYear"}
+Years = {'FirstComplaintToInvOpening': "OpeningYear",  'InvOpeningToClosing': "ClosingYear", 'InvClosingToRecall': "ClosingYear", 'MfrAwarenessToRecall': "RecallYear", 'RecallToOwnerNotification': "RecallYear"}
 Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
 
 
