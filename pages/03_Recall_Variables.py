@@ -35,6 +35,7 @@ def PlotBox(x, var):
     return fig
 
 def PlotPie(df, var):
+    df = df.dropna(subset=var)
     def labeling(val):
       return f'{val / 100 * len(df):.0f}'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
