@@ -36,7 +36,7 @@ def PlotBox(x, var):
 
 def PlotPie(df, var):
     def labeling(val):
-      return f'{val / 100 * len(df):.0f}\n{val:.0f}%'
+      return f'{val / 100 * len(df):.0f}'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
     df.groupby(var).size().plot(kind='pie', autopct=labeling, textprops={'fontsize': 6}, colors=["#8FAADC", "#7030A0", "#C00000", "#FFC000"], ax=ax1, labeldistance =1.3, pctdistance=1.7)
     label = Labels[var]
