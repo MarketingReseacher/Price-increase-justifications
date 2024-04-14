@@ -66,6 +66,14 @@ Selected_var = st.sidebar.selectbox("Select a recall variable", ['Recall Type', 
 if Selected_var == "Recall Type" or Selected_var == "Influenced By" or Selected_var == "Supplier Mentioned":
     for variable, label in Labels.items():
       if label == Selected_var:
+        st.markdown("##### Frequency Table")
+        a = pd.crosstab(index=MyDF[variable], columns='Number of Observations', colnames = [Labels[variable]] )
+        b = round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
+        c = pd.merge(a,b, on=variable)
+        table = c.to_html(index_names=False, justify="center")
+        st.markdown(table, unsafe_allow_html=True)
+        st.write("  \n\n")
+        st.write("  \n\n")
         height = st.slider("Graph height", 1, 10, 4)
         width = st.slider("Graph width", 1, 10, 6)
         plt = PlotPie(Data, variable)
