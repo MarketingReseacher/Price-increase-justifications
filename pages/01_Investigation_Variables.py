@@ -78,7 +78,7 @@ if Selected_var == "Investigation Type":
     for variable, label in Labels.items():
       if label == Selected_var:
         st.markdown("##### Frequency Table")
-        a = round(pd.crosstab(index=MyDF[variable], columns='Number of Observations', colnames = [Labels[variable]] )* 100, 2)
+        a = pd.crosstab(index=MyDF[variable], columns='Number of Observations', colnames = [Labels[variable]] )
         b = round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
         c = pd.merge(a,b, on=variable)
         table = c.to_html(index_names=False, justify="center")
