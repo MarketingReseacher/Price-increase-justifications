@@ -75,7 +75,7 @@ Labels = {"InvestigationType": "Investigation Type", "Population": "Population",
 Years = {'Opened Investigations': "OpenedYear", 'Closed Investigations': "ClosedYear", 'Opened and Closed Investigations': "ClosedYear"}
 
 if Selected_var == "Investigation Type":
-  sum = (round(pd.crosstab(index=Data[column], columns='% observations', normalize='columns')*100, 2))
+  sum = (round(pd.crosstab(index=MyDF[Selected_var], columns='% observations', normalize='columns')*100, 2))
   table = Sum.to_html(index=False, justify="center")
   st.markdown("##### Frequency Table")
   st.markdown(table, unsafe_allow_html=True)
