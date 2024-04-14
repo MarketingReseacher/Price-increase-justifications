@@ -79,7 +79,6 @@ if Selected_var == "Investigation Type":
       if label == Selected_var:
         st.markdown("##### Frequency Table")
         st.write(round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns')*100, 2))
-        st.markdown(table, unsafe_allow_html=True)
         st.write("  \n\n")
         st.write("  \n\n")
         height = st.slider("Graph height", 1, 10, 4)
