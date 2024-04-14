@@ -75,16 +75,18 @@ Labels = {"InvestigationType": "Investigation Type", "Population": "Population",
 Years = {'Opened Investigations': "OpenedYear", 'Closed Investigations': "ClosedYear", 'Opened and Closed Investigations': "ClosedYear"}
 
 if Selected_var == "Investigation Type":
-  sum = (round(pd.crosstab(index=MyDF[Labels[Selected_var]], columns='% observations', normalize='columns')*100, 2))
-  table = Sum.to_html(index=False, justify="center")
-  st.markdown("##### Frequency Table")
-  st.markdown(table, unsafe_allow_html=True)
-  st.write("  \n\n")
-  st.write("  \n\n")
-  height = st.slider("Graph height", 1, 10, 4)
-  width = st.slider("Graph width", 1, 10, 6)
-  plt = PlotPie(MyDF, 'InvestigationType')
-  st.pyplot(plt) 
+  for variable, label in Labels.items():
+    if label == Selected_var:
+      sum = (round(pd.crosstab(index=MyDF[Labels[variable]], columns='% observations', normalize='columns')*100, 2))
+      table = Sum.to_html(index=False, justify="center")
+      st.markdown("##### Frequency Table")
+      st.markdown(table, unsafe_allow_html=True)
+      st.write("  \n\n")
+      st.write("  \n\n")
+      height = st.slider("Graph height", 1, 10, 4)
+      width = st.slider("Graph width", 1, 10, 6)
+      plt = PlotPie(MyDF, 'InvestigationType')
+      st.pyplot(plt) 
   
 if Selected_var != "Investigation Type":
     for variable, label in Labels.items():
