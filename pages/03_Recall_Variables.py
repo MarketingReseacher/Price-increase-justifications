@@ -67,8 +67,8 @@ if Selected_var == "Recall Type" or Selected_var == "Influenced By" or Selected_
     for variable, label in Labels.items():
       if label == Selected_var:
         st.markdown("##### Frequency Table")
-        a = pd.crosstab(index=MyDF[variable], columns='Number of Observations', colnames = [Labels[variable]] )
-        b = round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
+        a = pd.crosstab(index=Data[variable], columns='Number of Observations', colnames = [Labels[variable]] )
+        b = round(pd.crosstab(index=Data[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
         c = pd.merge(a,b, on=variable)
         table = c.to_html(index_names=False, justify="center")
         st.markdown(table, unsafe_allow_html=True)
