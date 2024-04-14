@@ -19,7 +19,7 @@ Closed = Data.query("Data != 'Opened'")
 
 
 def PlotPie(df, var):
-    df = df.dropna(var)
+    df = df.dropna()
     def labeling(val):
       return f'{val / 100 * len(df):.0f}'
     fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
