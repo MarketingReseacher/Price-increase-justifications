@@ -79,7 +79,7 @@ if Selected_var == "Investigation Type":
       if label == Selected_var:
         st.markdown("##### Frequency Table")
         Sum = round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
-        table = Sum.to_html(header=False, justify="center")
+        table = Sum.to_html(index_names=False, justify="center")
         st.markdown(table, unsafe_allow_html=True)
         st.write("  \n\n")
         st.write("  \n\n")
