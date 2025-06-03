@@ -4,7 +4,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from IPython.display import HTML
 
-st.sidebar.markdown("# Investigation Variables")
+st.sidebar.markdown("# Browsing Letters")
 
 
 @st.cache_resource
