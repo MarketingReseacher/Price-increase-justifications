@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 
-st.sidebar.markdown("# Process Variables")
+st.sidebar.markdown("# Descriptive Analysis")
 
 
 @st.cache_resource
