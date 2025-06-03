@@ -9,13 +9,16 @@ st.sidebar.markdown("# Browsing Letters")
 
 @st.cache_resource
 def ReadData():
-  Data = pd.read_csv('Invs.csv')
+  Data = pd.read_csv('Letters.csv')
   return Data
 
 Data = ReadData()
 
-Opened = Data.query("Data == 'Opened'")
-Closed = Data.query("Data != 'Opened'")
+Cost = Data.query("Me == 'Cost'")
+Quality = Data.query("Me == 'Quality'")
+Market = Data.query("Me == 'Market'")
+Nojustification = Data.query("Me == 'No-justification'")
+Combination = Data.query("Me != 'Cost' and Me != 'Quality' and Me != 'Market' and Me != 'No-justification' and Me != 'Other' ")
 
 
 def PlotPie(df, var):
@@ -61,14 +64,20 @@ def PlotTime(data, label, variable, year):
     return fig
   
 
-Selected_var = st.sidebar.selectbox("Select a variable", ["Investigation Type", "Population", "No. Complaints Reported to NHTSA", "No. Crashes and Fires Reported to NHTSA", "No. Injury Incidents Reported to NHTSA", "No. Injuries Reported to NHTSA", "No Fatality Incidents Reported to NHTSA", "No. Fatalities Reported to NHTSA", "No. Other Types Failures Reported to NHTSA", "No. Complaints Reported to the Manufacturer", "No. Crashes and Fires Reported to Manufacturer", "No. Injury Incidents Reported to Manufacturer",  "No. Injuries Reported to the Manufacturer", "No Fatality Incidents Reported to the Manufacturer", "No. Fatalities Reported to the Manufacturer", "No. Other Types Failures Reported to the Manufacturer", "No. Complaints Reported", "No. Crashes and Fires Reported", "No. Injury Incidents Reported",  "No. Injuries Reported", "No Fatality Incidents Reported", "No. Fatalities Reported", "No. Other Types Failures Reported", "Problem Definition Sentiment", "Summary Sentiment", "No. Product Damage Reports Up to Quarter Investigation", "No. Deaths Up to Quarter Investigation", "No. Injuries Up to Quarter Investigation", "No. Injury and Death Reports Up to Quarter Investigation"], help = "Select the variable you want to see a visual representation of")
-Selected_Data = st.sidebar.selectbox("Select data", ["Opened Investigations", "Closed Investigations", "Opened and Closed Investigations"], help = "Select the data source.")
+Selected_var = st.sidebar.selectbox("Select a variable", ["Firm", "Date")
+Selected_Type = st.sidebar.selectbox("Select justification type", ["Cost", "Market", "Quality", "No-justification", "Combinations", "All"], help = "Select the justification type.")
 
 
-if Selected_Data == "Opened Investigations":
-  MyDF = Opened
-elif Selected_Data == "Closed Investigations":
-  MyDF = Closed
+if Selected_Type == "Cost":
+  MyDF = Cost
+elif Selected_Type == "Market":
+  MyDF = Market
+elif Selected_Type == "Quality":
+  MyDF = Quality
+elif Selected_Type == "No-justification":
+  MyDF = Nojustification
+elif Selected_Type == "Combinations":
+  MyDF = Combinations
 else:
   MyDF = Data
   
