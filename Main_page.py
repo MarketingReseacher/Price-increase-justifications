@@ -1,12 +1,11 @@
 import streamlit as st
 
 st.markdown("## Welcome")
-st.write("The paucity of data on governmental regulatory agencies’ investigation of product safety defects has restricted academics', managers', and public policymakers' knowledge of (1) the determinants of a regulator’s decision to open an investigation, (2) the process the regulator follows between opening and closing of an investigation, and (3) the outcomes of the investigation when it is closed.")
-st.write("We remove this barrier by providing two Microsoft Excel Worksheet data files, one capturing data for the investigations opened and the other for the investigations closed. The data include numeric and textual fields, allowing researchers to examine regulatory investigations of product defects. Specifically, the data set covers all investigations that the National Highway Traffic Safety Administration (NHTSA)—the U.S. regulator for automobile safety—opened and closed against 194 manufacturers between January 1, 2009, and May 31, 2021.")
-st.write("This website is open-access (i.e., free) and seeks to enable researchers and managers to examine the characteristics of our data easily and interactively.")
-st.write("You can visit the **Investigations Variables** page to obtain tabular and graphical representations of the variables related to the opening or closing of investigations.")
-st.write("Visit the **Process Variables** page for tables and graphs of our process-time variables.")
-st.write("Visit the **Recall Variables** page to obtain tables and graphs of the variables pertaining to the outcomes of investigations (i.e., product recalls).")
-st.write("Lastly, visit the **Data Set Description and Data Dictionary** page for an overview of our data retrieval and data set construction procedure, and to preview and download our data dictionary table.")
-
+st.write("The purpose of this website is to provide easy access to a corpus of 300+ actual price increase letters collected by our research team.")
+st.write("We conducted a thorough search of Google, Reddit, and Factiva, to find real price increase letters shared by firms. We used terms such as “price increase,” “price hike,” “raising price,” “rising price,” and “new price,” as keywords in our search.")
+st.write("Our primary goal in doing this was to understand how firms justify their price increases in practice, and improve the ecological validity of our research.")
+st.write("This website is open-access and seeks to enable researchers and managers to examine our collected corpus of price increase letters easily and interactively.")
+st.write("Visit the **Browsing Letters** page to browse through the collected price increase letters by firm, date, or justification type.")
+st.write("You can also visit the **Descriptive Analysis** page to obtain relevant tabular and graphical representations.")
 st.sidebar.markdown("# Main page")
+
