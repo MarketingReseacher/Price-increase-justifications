@@ -40,6 +40,6 @@ Filtered = Filtered[Filtered["Firm"].isin(Selected_Firms) & Filtered["Year"].isi
 
 # Show results
 st.write(f"### Showing {len(Filtered)} letters for justification: {Selected_Type}")
-st.dataframe(Filtered[["Date", "Firm", "JustificationType", "Letter"]].reset_index(drop=True).head(100))
+st.dataframe(Filtered[["Date", "Firm", "JustificationType", "Letter"]].reset_index(drop=True).head(400))
 
     
