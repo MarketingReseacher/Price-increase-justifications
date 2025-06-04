@@ -81,7 +81,7 @@ elif Selected_Type == "Combinations":
 else:
   MyDF = Data
   
-Labels = {"InvestigationType": "Investigation Type", "Population": "Population", "NoComplaintsReportedNHTSA": "No. Complaints Reported to NHTSA", "NoCrashesFiresReportedNHTSA": "No. Crashes and Fires Reported to NHTSA", "NoInjuryIncidentsReportedNHTSA": "No. Injury Incidents Reported to NHTSA", "NoInjuriesReportedNHTSA": "No. Injuries Reported to NHTSA", "NoFatalityIncidentsReportedNHTSA": "No Fatality Incidents Reported to NHTSA", "NoFatalitiesReportedNHTSA": "No. Fatalities Reported to NHTSA", "NoOtherFailuresReportedNHTSA": "No. Other Types Failures Reported to NHTSA", "NoComplaintsReportedMfr": "No. Complaints Reported to the Manufacturer", "NoCrashesFiresReportedMfr": "No. Crashes and Fires Reported to the Manufacturer", "NoInjuryIncidentsReportedMfr": "No. Injury Incidents Reported to the Manufacturer", "NoInjuriesReportedMfr": "No. Injuries Reported to the Manufacturer", "NoFatalityIncidentsReportedMfr": "No Fatality Incidents Reported to the Manufacturer", "NoFatalitiesReportedMfr": "No. Fatalities Reported to the Manufacturer", "NoOtherFailuresReportedMfr": "No. Other Types Failures Reported to the Manufacturer", "NoComplaintsReported": "No. Complaints Reported", "NoCrashesFiresReported": "No. Crashes and Fires Reported", "NoInjuryIncidentsReported": "No. Injury Incidents Reported", "NoInjuriesReported": "No. Injuries Reported", "NoFatalityIncidentsReported": "No Fatality Incidents Reported", "NoFatalitiesReported": "No. Fatalities Reported", "NoOtherFailuresReported": "No. Other Types Failures Reported", "PDSentiment": "Problem Definition Sentiment", "SummarySentiment": "Summary Sentiment", "NoPDUptoQuarter": "No. Product Damage Reports Up to Quarter Investigation", "NoDIUptoQuarter": "No. Deaths Up to Quarter Investigation", "NoIIUptoQuarter": "No. Injuries Up to Quarter Investigation", "NoIDUptoQuarter": "No. Injury and Death Reports Up to Quarter Investigation" }
+Labels = {"Me": "Justification Type", "Date": "Date", "Firm": "Firm"}
 Years = {'Opened Investigations': "OpenedYear", 'Closed Investigations': "ClosedYear", 'Opened and Closed Investigations': "ClosedYear"}
 
 if Selected_var == "Investigation Type":
@@ -100,7 +100,7 @@ if Selected_var == "Investigation Type":
         plt = PlotPie(MyDF, 'InvestigationType')
         st.pyplot(plt) 
   
-if Selected_var != "Investigation Type":
+if Selected_var == "Year":
     for variable, label in Labels.items():
       if label == Selected_var:
          columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
