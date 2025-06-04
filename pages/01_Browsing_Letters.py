@@ -53,7 +53,14 @@ if keyword:
 # Display options
 show_letters = st.checkbox("Show full letter text", value=True)
 show_author_labels = st.checkbox("Show Authors' Label", value=False)
-sort_by = st.selectbox("Sort by", ["Date", "Firm", "JustificationType"], index=0)
+show_concreteness = st.checkbox("Show Concreteness", value=False)
+show_length = st.checkbox("Show Length", value=False)
+
+sort_by = st.selectbox(
+    "Sort by", 
+    ["Date", "Firm", "JustificationType", "Concreteness", "Length"], 
+    index=0
+)
 
 Filtered = Filtered.sort_values(by=sort_by)
 
@@ -61,6 +68,10 @@ Filtered = Filtered.sort_values(by=sort_by)
 columns_to_show = ["Date", "Firm", "JustificationType"]
 if show_author_labels:
     columns_to_show.append("JustificationType (Authors' Label)")
+if show_concreteness:
+    columns_to_show.append("Concreteness")
+if show_length:
+    columns_to_show.append("Length")
 if show_letters:
     columns_to_show.append("Letter")
 
