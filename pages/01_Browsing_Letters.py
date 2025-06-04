@@ -52,7 +52,7 @@ if keyword:
 
 # Display options
 show_letters = st.checkbox("Show full letter text", value=True)
-show_author_labels = st.checkbox("Show Author Label", value=False)
+show_author_labels = st.checkbox("Show Authors' Label", value=False)
 sort_by = st.selectbox("Sort by", ["Date", "Firm", "JustificationType"], index=0)
 
 Filtered = Filtered.sort_values(by=sort_by)
