@@ -9,16 +9,20 @@ st.sidebar.markdown("# Browsing Letters")
 
 @st.cache_resource
 def ReadData():
-  Data = pd.read_csv('Letters.csv')
+  Data = pd.read_csv('Justifications.csv')
   return Data
 
 Data = ReadData()
 
-Cost = Data.query("Me == 'Cost'")
-Quality = Data.query("Me == 'Quality'")
-Market = Data.query("Me == 'Market'")
-Nojustification = Data.query("Me == 'No-justification'")
-Combination = Data.query("Me != 'Cost' and Me != 'Quality' and Me != 'Market' and Me != 'No-justification' and Me != 'Other' ")
+Data['Date'] = pd.to_datetime(Data['Date'])
+Data["Year"] = Data['Date'].dt.year
+
+Cost = Data.query("JustificationType == 'Cost'")
+Quality = Data.query("JustificationType == 'Quality'")
+Market = Data.query("JustificationType == 'Market'")
+Nojustification = Data.query("JustificationType == 'No-justification'")
+Combination = Data.query("JustificationType != 'Cost' and Me != 'Quality' and Me != 'Market' and Me != 'No-justification' and Me != 'Other' ")
+
 
 def PlotPie(df, var):
     df = df.dropna(subset=var)
@@ -34,7 +38,7 @@ def PlotTime(data, label):
     fig, ax = plt.subplots(figsize=(width, height))
     data = data.dropna()
     Times = data.groupby("Year").mode().reset_index()
-    plt.plot(Times[year], Times["], linewidth=1, color="#6eb580")
+    plt.plot(Times["Year"], Times["JustificationType"], linewidth=1, color="#6eb580")
     plt.title(f'Time Trend of {label}', size=8)
     plt.xlabel(label, size=6, style= "italic")
     plt.ylabel("Frequency", size=6)
@@ -43,7 +47,7 @@ def PlotTime(data, label):
     return fig
   
 
-Selected_var = st.sidebar.selectbox("Select a variable", ["Firm", "Date")
+Selected_var = st.sidebar.selectbox("Select a variable", ["Firm", "Date"])
 Selected_Type = st.sidebar.selectbox("Select justification type", ["Cost", "Market", "Quality", "No-justification", "Combinations", "All"], help = "Select the justification type.")
 
 
@@ -60,7 +64,7 @@ elif Selected_Type == "Combinations":
 else:
   MyDF = Data
   
-Labels = {"Me": "Justification Type", "Date": "Date", "Firm": "Firm"}
+Labels = {"JustificationType": "Justification Type", "Date": "Date", "Firm": "Firm"}
 
 if Selected_var == "Investigation Type":
     for variable, label in Labels.items():
@@ -84,7 +88,7 @@ if Selected_var == "Year":
          Mode = Data.loc[:, variable].mode()
          height = st.slider("Graph height", 1, 10, 4)
          width = st.slider("Graph width", 1, 10, 6)
-         plt = PlotTime(MyDF[[variable, Years[Selected_Data]]], Labels[variable], variable, Years[Selected_Data])
+         plt = PlotTime(MyDF, Labels["JustificationType"])
          st.pyplot(plt)
 
 
