@@ -20,7 +20,6 @@ Market = Data.query("Me == 'Market'")
 Nojustification = Data.query("Me == 'No-justification'")
 Combination = Data.query("Me != 'Cost' and Me != 'Quality' and Me != 'Market' and Me != 'No-justification' and Me != 'Other' ")
 
-
 def PlotPie(df, var):
     df = df.dropna(subset=var)
     def labeling(val):
@@ -31,31 +30,11 @@ def PlotPie(df, var):
     ax1.set_title(f'Pie Chart of {label}', size=8)
     return fig
 
-def PlotHist(x, var):
-    fig, ax = plt.subplots(figsize=(width, height))
-    plt.hist(x)
-    plt.title(f'Histogram of {var}', size=12)
-    plt.xlabel(var, size=10, style= "italic")
-    plt.ylabel("Frequency", size=12)
-    return fig
-
-def PlotBox(x, var):
-    fig, ax = plt.subplots(figsize=(width, height))
-    x = x.dropna()
-    plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {var}', size=12)
-    plt.ylabel(var, size=12, style= "italic")
-    quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
-    ax.set_yticks(quantiles)
-    ax.tick_params(axis='y', labelsize=6)
-    return fig
-
-def PlotTime(data, label, variable, year):
+def PlotTime(data, label):
     fig, ax = plt.subplots(figsize=(width, height))
     data = data.dropna()
-    Times = data.groupby([year]).mean().reset_index()
-    print(Times[variable])
-    plt.plot(Times[year], Times[variable], linewidth=1, color="#6eb580")
+    Times = data.groupby("Year").mode().reset_index()
+    plt.plot(Times[year], Times["], linewidth=1, color="#6eb580")
     plt.title(f'Time Trend of {label}', size=8)
     plt.xlabel(label, size=6, style= "italic")
     plt.ylabel("Frequency", size=6)
@@ -82,7 +61,6 @@ else:
   MyDF = Data
   
 Labels = {"Me": "Justification Type", "Date": "Date", "Firm": "Firm"}
-Years = {'Opened Investigations': "OpenedYear", 'Closed Investigations': "ClosedYear", 'Opened and Closed Investigations': "ClosedYear"}
 
 if Selected_var == "Investigation Type":
     for variable, label in Labels.items():
@@ -103,25 +81,11 @@ if Selected_var == "Investigation Type":
 if Selected_var == "Year":
     for variable, label in Labels.items():
       if label == Selected_var:
-         columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
-         Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
-         table = Sum.to_html(index=False, justify="center")
-         st.markdown("##### Table of Summary Statistics")
-         st.markdown(table, unsafe_allow_html=True)
-         st.write("  \n\n")
-         st.write("  \n\n")
-         Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot", "Time Trend"], help = "Select 'Histogram' or 'Boxplot' to examine the statistical distribution of the variabe, and select 'Time Trend' to see the annual trend of the variable.")
+         Mode = Data.loc[:, variable].mode()
          height = st.slider("Graph height", 1, 10, 4)
          width = st.slider("Graph width", 1, 10, 6)
-         if Selected_graph == "Histogram":
-           plt = PlotHist(MyDF[variable], Labels[variable])
-           st.pyplot(plt)
-         elif Selected_graph == "Boxplot":
-           plt = PlotBox(MyDF[variable], Labels[variable])
-           st.pyplot(plt)
-         elif Selected_graph == "Time Trend":
-           plt = PlotTime(MyDF[[variable, Years[Selected_Data]]], Labels[variable], variable, Years[Selected_Data])
-           st.pyplot(plt)
+         plt = PlotTime(MyDF[[variable, Years[Selected_Data]]], Labels[variable], variable, Years[Selected_Data])
+         st.pyplot(plt)
 
 
     
