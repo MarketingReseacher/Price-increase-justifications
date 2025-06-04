@@ -21,7 +21,7 @@ Cost = Data.query("JustificationType == 'Cost'")
 Quality = Data.query("JustificationType == 'Quality'")
 Market = Data.query("JustificationType == 'Market'")
 Nojustification = Data.query("JustificationType == 'No-justification'")
-Combination = Data.query("JustificationType != 'Cost' and Me != 'Quality' and Me != 'Market' and Me != 'No-justification' and Me != 'Other' ")
+Combination = Data.query("JustificationType != 'Cost' and JustificationType != 'Quality' and JustificationType != 'Market' and JustificationType != 'No-justification' and JustificationType != 'Other' ")
 
 
 def PlotPie(df, var):
