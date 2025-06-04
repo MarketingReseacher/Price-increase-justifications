@@ -17,13 +17,6 @@ Data = ReadData()
 Data['Date'] = pd.to_datetime(Data['Date'])
 Data["Year"] = Data['Date'].dt.year
 
-Cost = Data.query("JustificationType == 'Cost'")
-Quality = Data.query("JustificationType == 'Quality'")
-Market = Data.query("JustificationType == 'Market'")
-Nojustification = Data.query("JustificationType == 'No-justification'")
-Combination = Data.query("JustificationType != 'Cost' and JustificationType != 'Quality' and JustificationType != 'Market' and JustificationType != 'No-justification' and JustificationType != 'Other' ")
-
-
 def PlotPie(df, var):
     df = df.dropna(subset=var)
     def labeling(val):
@@ -48,22 +41,9 @@ def PlotTime(data, label):
   
 
 Selected_var = st.sidebar.selectbox("Select a variable", ["Firm", "Date"])
-Selected_Type = st.sidebar.selectbox("Select justification type", ["Cost", "Market", "Quality", "No-justification", "Combinations", "All"], help = "Select the justification type.")
+Selected_stat = st.sidebar.selectbox("Select a variable", ["Firm", "Date"])
 
-
-if Selected_Type == "Cost":
-  MyDF = Cost
-elif Selected_Type == "Market":
-  MyDF = Market
-elif Selected_Type == "Quality":
-  MyDF = Quality
-elif Selected_Type == "No-justification":
-  MyDF = Nojustification
-elif Selected_Type == "Combinations":
-  MyDF = Combinations
-else:
-  MyDF = Data
-  
+ 
 Labels = {"JustificationType": "Justification Type", "Date": "Date", "Firm": "Firm"}
 
 if Selected_var == "Investigation Type":
