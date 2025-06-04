@@ -17,29 +17,38 @@ Data = ReadData()
 Selected_Type = st.sidebar.selectbox(
     "Select justification type",
     ["All", "Cost", "Market", "Quality", "No-justification", "Combinations"],
-    help="Select the justification type."
+    help="Filter by LLM-assigned justification label."
 )
 
-# Filter data based on justification type
+# Filter by justification type
 if Selected_Type == "All":
     Filtered = Data
 elif Selected_Type == "Combinations":
-    Filtered = Data.query("JustificationType not in ['Cost', 'Quality', 'Market', 'No-justification', 'Other']")
+    Filtered = Data.query("`JustificationType (LLM Label)` not in ['Cost', 'Quality', 'Market', 'No-justification', 'Other']")
 else:
-    Filtered = Data[Data["JustificationType"] == Selected_Type]
+    Filtered = Data[Data["JustificationType (LLM Label)"] == Selected_Type]
 
-# Firm and Year filters based on current justification type
-available_firms = sorted(Filtered["Firm"].dropna().unique())
+# Dynamic sidebar filters based on available data
 available_years = sorted(Filtered["Year"].dropna().unique())
+available_sectors = sorted(Filtered["Sector"].dropna().unique())
+available_subscription = sorted(Filtered["Subscription"].dropna().unique())
 
-Selected_Firms = st.sidebar.multiselect("Filter by firm(s)", options=available_firms, default=available_firms)
 Selected_Years = st.sidebar.multiselect("Filter by year(s)", options=available_years, default=available_years)
+Selected_Sectors = st.sidebar.multiselect("Filter by sector(s)", options=available_sectors, default=available_sectors)
+Selected_Sub = st.sidebar.multiselect("Subscription-based?", options=available_subscription, default=available_subscription)
 
-# Apply firm and year filters
-Filtered = Filtered[Filtered["Firm"].isin(Selected_Firms) & Filtered["Year"].isin(Selected_Years)]
+# Apply filters
+Filtered = Filtered[
+    (Filtered["Year"].isin(Selected_Years)) &
+    (Filtered["Sector"].isin(Selected_Sectors)) &
+    (Filtered["Subscription"].isin(Selected_Sub))
+]
 
-# Show results
+# Display results
 st.write(f"### Showing {len(Filtered)} letters for justification: {Selected_Type}")
-st.dataframe(Filtered[["Date", "Firm", "JustificationType", "Letter"]].reset_index(drop=True).head(400))
-
+st.dataframe(
+    Filtered[["Date", "Firm", "Product/service", "JustificationType (LLM Label)", "Letter"]]
+    .reset_index(drop=True)
+    .head(400)
+)
     
