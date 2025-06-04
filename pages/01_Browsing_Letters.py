@@ -78,3 +78,12 @@ if show_letters:
 # Display
 st.write(f"### Showing {len(Filtered)} letters for justification: {Selected_Type}")
 st.dataframe(Filtered[columns_to_show].reset_index(drop=True).head(400))
+
+# Export button
+csv = Filtered[columns_to_show].to_csv(index=False)
+st.download_button(
+    label="📥 Export displayed data to CSV",
+    data=csv,
+    file_name="filtered_letters.csv",
+    mime="text/csv"
+)
