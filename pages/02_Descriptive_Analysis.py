@@ -2,94 +2,92 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+from IPython.display import HTML
 
-st.sidebar.markdown("# Descriptive Analysis")
+st.sidebar.markdown("# Browsing Letters")
 
 
 @st.cache_resource
 def ReadData():
-  Data = pd.read_csv('Outcomes.csv')
+  Data = pd.read_csv('Justifications.csv')
   return Data
 
 Data = ReadData()
 
-def GetColors(x):  
-    if x == "First Complaint to Investigation Opening":
-        Color = "#8FAADC"
-    elif x == "Investigation Opening to Closing":
-        Color = "#7030A0"
-    elif x == "Investigation Closing to Recall":
-        Color = "#C00000"
-    elif x == "Manufacturer Awareness to Recall":
-        Color = "#3b8254"  
-    else:
-        Color = "#FFC000"
-    return Color
+Data['Date'] = pd.to_datetime(Data['Date'])
+Data["Year"] = Data['Date'].dt.year
+
+Cost = Data.query("JustificationType == 'Cost'")
+Quality = Data.query("JustificationType == 'Quality'")
+Market = Data.query("JustificationType == 'Market'")
+Nojustification = Data.query("JustificationType == 'No-justification'")
+Combination = Data.query("JustificationType != 'Cost' and JustificationType != 'Quality' and JustificationType != 'Market' and JustificationType != 'No-justification' and JustificationType != 'Other' ")
 
 
-def PlotHist(x, var):
-    fig, ax = plt.subplots(figsize=(width, height))
-    Color = GetColors(var)    
-    plt.hist(x,  color=Color)
-    plt.title(f'Histogram of {var}', size=8)
-    plt.xlabel(var, size=6, style= "italic")
-    plt.ylabel("Frequency", size=6)
-    ax.tick_params(axis='y', labelsize=6)
-    ax.tick_params(axis='x', labelsize=6)
+def PlotPie(df, var):
+    df = df.dropna(subset=var)
+    def labeling(val):
+      return f'{val / 100 * len(df):.0f}'
+    fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
+    df.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 6}, ax=ax1, labeldistance =1.05)
+    label = Labels[var]
+    ax1.set_title(f'Pie Chart of {label}', size=8)
     return fig
 
-
-
-def PlotBox(x, var):
-    fig, ax = plt.subplots(figsize=(width, height))
-    x = x.dropna()
-    plt.boxplot(x,  patch_artist=True)
-    plt.title(f'Boxplot of {var}', size=8)
-    plt.ylabel(var, size=6, style= "italic")
-    quantiles = np.quantile(x, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
-    ax.set_yticks(quantiles)
-    ax.tick_params(axis='y', labelsize=6)
-    return fig
-
-def PlotTime(data, label, variable, year):
+def PlotTime(data, label):
     fig, ax = plt.subplots(figsize=(width, height))
     data = data.dropna()
-    Times = data.groupby([year]).mean().reset_index()
-    print(Times[variable])
-    plt.plot(Times[year], Times[variable], linewidth=1, color="#6eb580")
+    Times = data.groupby("Year").mode().reset_index()
+    plt.plot(Times["Year"], Times["JustificationType"], linewidth=1, color="#6eb580")
     plt.title(f'Time Trend of {label}', size=8)
     plt.xlabel(label, size=6, style= "italic")
     plt.ylabel("Frequency", size=6)
     ax.tick_params(axis='y', labelsize=6)
     ax.tick_params(axis='x', labelsize=6)
     return fig
-    
+  
 
-Labels = {'FirstComplaintToInvOpening': "First Complaint to Investigation Opening",  'InvOpeningToClosing': "Investigation Opening to Closing", 'InvClosingToRecall': "Investigation Closing to Recall", 'MfrAwarenessToRecall': "Manufacturer Awareness to Recall", 'RecallToOwnerNotification': "Recall to Owner Notification Date"}
-Years = {'FirstComplaintToInvOpening': "OpenedYear",  'InvOpeningToClosing': "ClosedYear", 'InvClosingToRecall': "ClosedYear", 'MfrAwarenessToRecall': "RecallYear", 'RecallToOwnerNotification': "RecallYear"}
-Selected_var = st.sidebar.selectbox("Select a process variable", ["First Complaint to Investigation Opening", "Investigation Opening to Closing", "Investigation Closing to Recall", "Manufacturer Awareness to Recall", "Recall to Owner Notification Date"], help = "Select the variable you want to see a visual representation of")
-
+Selected_var = st.sidebar.selectbox("Select a variable", ["Firm", "Date"])
+Selected_Type = st.sidebar.selectbox("Select justification type", ["Cost", "Market", "Quality", "No-justification", "Combinations", "All"], help = "Select the justification type.")
 
 
-for variable, label in Labels.items():
-  if label == Selected_var:
-     columns=['Mean', 'Median', 'Standard Deviation', 'Min', 'Max']
-     Sum = pd.DataFrame([[round(Data.loc[:, variable].mean(), 2), round(Data.loc[:, variable].median(), 2), round(Data.loc[:, variable].std(), 2), round(Data.loc[:, variable].min(), 2), round(Data.loc[:, variable].max(), 2)]], columns=columns)
-     table = Sum.to_html(index=False, justify="center")
-     st.markdown("##### Table of Summary Statistics")
-     st.markdown(table, unsafe_allow_html=True)
-     st.write("  \n\n")
-     st.write("  \n\n")
-     Selected_graph = st.selectbox("Select a graph type", ["Histogram", "Boxplot", "Time Trend"], help = "Select 'Histogram' or 'Boxplot' to examine the statistical distribution of the variabe, and select 'Time Trend' to see the annual trend of the variable.")
-     height = st.slider("Graph height", 1, 10, 3)
-     width = st.slider("Graph width", 1, 10, 5)
-     if Selected_graph == "Histogram":
-        plt = PlotHist(Data[variable], Labels[variable])
-        st.pyplot(plt)
-     elif Selected_graph == "Boxplot":
-        plt = PlotBox(Data[variable], Labels[variable])
-        st.pyplot(plt)
-     elif Selected_graph == "Time Trend":
-        plt = PlotTime(Data[[variable, Years[variable]]], Labels[variable], variable, Years[variable])
-        st.pyplot(plt)
+if Selected_Type == "Cost":
+  MyDF = Cost
+elif Selected_Type == "Market":
+  MyDF = Market
+elif Selected_Type == "Quality":
+  MyDF = Quality
+elif Selected_Type == "No-justification":
+  MyDF = Nojustification
+elif Selected_Type == "Combinations":
+  MyDF = Combinations
+else:
+  MyDF = Data
+  
+Labels = {"JustificationType": "Justification Type", "Date": "Date", "Firm": "Firm"}
+
+if Selected_var == "Investigation Type":
+    for variable, label in Labels.items():
+      if label == Selected_var:
+        st.markdown("##### Frequency Table")
+        a = pd.crosstab(index=MyDF[variable], columns='Number of Observations', colnames = [Labels[variable]] )
+        b = round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
+        c = pd.merge(a,b, on=variable)
+        table = c.to_html(index_names=False, justify="center")
+        st.markdown(table, unsafe_allow_html=True)
+        st.write("  \n\n")
+        st.write("  \n\n")
+        height = st.slider("Graph height", 1, 10, 4)
+        width = st.slider("Graph width", 1, 10, 6)
+        plt = PlotPie(MyDF, 'InvestigationType')
+        st.pyplot(plt) 
+  
+if Selected_var == "Year":
+    for variable, label in Labels.items():
+      if label == Selected_var:
+         Mode = Data.loc[:, variable].mode()
+         height = st.slider("Graph height", 1, 10, 4)
+         width = st.slider("Graph width", 1, 10, 6)
+         plt = PlotTime(MyDF, Labels["JustificationType"])
+         st.pyplot(plt)
 
