@@ -28,22 +28,22 @@ Selected_Type = st.sidebar.selectbox("Select justification type", ["Cost", "Mark
 
 if Selected_Type == "Cost":
   MyDF = Cost
-  st.write(MyDF.head(20))
+  st.write(MyDF.head(100))
 elif Selected_Type == "Market":
   MyDF = Market
-  st.write(MyDF.head(20))
+  st.write(MyDF.head(100))
 elif Selected_Type == "Quality":
   MyDF = Quality
-  st.write(MyDF.head(20))
+  st.write(MyDF.head(100))
 elif Selected_Type == "No-justification":
   MyDF = Nojustification
-  st.write(MyDF.head(20))
+  st.write(MyDF.head(100))
 elif Selected_Type == "Combinations":
   MyDF = Combinations
-  st.write(MyDF.head(20))
+  st.write(MyDF.head(100))
 else:
   MyDF = Data
-  st.write(MyDF.head(20))
+  st.write(MyDF.head(100))
 
 
     
