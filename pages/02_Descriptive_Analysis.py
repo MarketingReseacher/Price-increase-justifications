@@ -49,7 +49,7 @@ if analysis_type == "By Year":
     filtered_df = df[df['Year'] == selected_year]
 
 elif analysis_type == "By Sector Category":
-    grouping_variable = "Sector_Category"
+    grouping_variable = "Sector"
     selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector_Category'].dropna().unique()))
     filtered_df = df[df['Sector_Category'] == selected_sector]
 
