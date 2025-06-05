@@ -11,7 +11,7 @@ def load_data():
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df['Year'] = df['Date'].dt.year
     df['Subscription'] = df['Subscription'].astype(str)
-    
+
     # Create new Sector_Category variable
     def categorize_sector(sector_code):
         try:
@@ -26,7 +26,6 @@ def load_data():
             return "Unknown"
 
     df['Sector'] = df['NAICS2'].apply(categorize_sector)
-    
     return df.dropna(subset=['JustificationType'])
 
 df = load_data()
@@ -48,7 +47,7 @@ if analysis_type == "By Year":
     selected_year = st.sidebar.selectbox("Select Year", sorted(df['Year'].dropna().unique()))
     filtered_df = df[df['Year'] == selected_year]
 
-elif analysis_type == "By Sector Category":
+elif analysis_type == "By Sector":
     grouping_variable = "Sector"
     selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector'].dropna().unique()))
     filtered_df = df[df['Sector'] == selected_sector]
@@ -58,9 +57,9 @@ elif analysis_type == "By Subscription":
     selected_subscription = st.sidebar.selectbox("Select Subscription", sorted(df['Subscription'].dropna().unique()))
     filtered_df = df[df['Subscription'] == selected_subscription]
 
-# Chi-square toggle (only shown if grouped)
+# Chi-square toggle (only for grouped analysis)
 show_chi2 = False
-if grouping_variable:
+if analysis_type in ["By Year", "By Sector", "By Subscription"]:
     show_chi2 = st.sidebar.checkbox(f"Show Chi-Square: Justification vs. {grouping_variable}")
 
 # Graph sizing
