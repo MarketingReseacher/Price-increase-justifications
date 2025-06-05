@@ -93,9 +93,10 @@ avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']]
 
 fig2, ax2 = plt.subplots(figsize=(graph_width, graph_height))
 avg_stats.plot(kind='bar', ax=ax2, color=colors[:2])
-ax2.set_ylabel("Average Value")
+ax2.set_ylabel("Average Value", fontsize=8)
 ax2.tick_params(axis='x', labelsize=6)
 ax2.tick_params(axis='y', labelsize=6)
+ax2.legend(fontsize=6)
 st.pyplot(fig2)
 
 # Chi-Square Test
