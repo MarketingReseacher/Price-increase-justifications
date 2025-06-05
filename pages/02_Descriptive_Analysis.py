@@ -14,7 +14,8 @@ def load_data():
 
 df = load_data()
 
-st.title("Descriptive Analysis")
+st.sidebar.markdown("# Descriptive Analysis")
+
 
 # Sidebar selection for analysis type
 analysis_type = st.sidebar.selectbox(
@@ -46,11 +47,16 @@ show_chi2 = False
 if grouping_variable:
     show_chi2 = st.sidebar.checkbox(f"Show Chi-Square: Justification vs. {grouping_variable}")
 
+# Graph size sliders
+st.sidebar.markdown("### Graph Sizing")
+graph_width = st.sidebar.slider("Graph width (inches)", 4, 16, 8)
+graph_height = st.sidebar.slider("Graph height (inches)", 3, 12, 5)
+
 # Pie chart of justification types
 st.subheader("Distribution of Justification Types")
 just_counts = filtered_df['JustificationType'].value_counts().sort_values(ascending=False)
 
-fig1, ax1 = plt.subplots()
+fig1, ax1 = plt.subplots(figsize=(graph_width, graph_height))
 ax1.pie(
     just_counts,
     labels=[f"{i} ({v}, {v/sum(just_counts)*100:.1f}%)" for i, v in just_counts.items()],
@@ -64,7 +70,7 @@ st.pyplot(fig1)
 st.subheader("Average Length and Concreteness by Justification Type")
 avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']].mean().sort_values(by='Length', ascending=False)
 
-fig2, ax2 = plt.subplots()
+fig2, ax2 = plt.subplots(figsize=(graph_width, graph_height))
 avg_stats.plot(kind='bar', ax=ax2)
 ax2.set_ylabel("Average Value")
 st.pyplot(fig2)
