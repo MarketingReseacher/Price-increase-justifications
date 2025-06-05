@@ -9,8 +9,11 @@ from scipy.stats import chi2_contingency
 def load_data():
     df = pd.read_csv("JustificationsForStreamlit.csv")
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+
+    # Redefine Year with "Before 2020"
     df['Year'] = df['Date'].dt.year
-    df['Year'] = df['Year'].apply(lambda y: "Before 2020" if pd.notnull(y) and y < 2020 else y)
+    df['Year'] = df['Year'].apply(lambda x: "Before 2020" if pd.notna(x) and x < 2020 else str(int(x)) if pd.notna(x) else None)
+
     df['Subscription'] = df['Subscription'].astype(str)
 
     # Create new Sector_Category variable
@@ -27,6 +30,7 @@ def load_data():
             return "Unknown"
 
     df['Sector'] = df['NAICS2'].apply(categorize_sector)
+
     return df.dropna(subset=['JustificationType'])
 
 df = load_data()
@@ -45,7 +49,8 @@ filtered_df = df.copy()
 # Filter based on selection
 if analysis_type == "By Year":
     grouping_variable = "Year"
-    selected_year = st.sidebar.selectbox("Select Year", sorted(df['Year'].dropna().unique()))
+    year_options = sorted(df['Year'].dropna().unique(), key=lambda x: (x != "Before 2020", x))
+    selected_year = st.sidebar.selectbox("Select Year", year_options)
     filtered_df = df[df['Year'] == selected_year]
 
 elif analysis_type == "By Sector":
@@ -58,9 +63,9 @@ elif analysis_type == "By Subscription":
     selected_subscription = st.sidebar.selectbox("Select Subscription", sorted(df['Subscription'].dropna().unique()))
     filtered_df = df[df['Subscription'] == selected_subscription]
 
-# Chi-square toggle (only for grouped analysis)
+# Chi-square toggle (only shown if grouped)
 show_chi2 = False
-if analysis_type in ["By Year", "By Sector", "By Subscription"]:
+if grouping_variable:
     show_chi2 = st.sidebar.checkbox(f"Show Chi-Square: Justification vs. {grouping_variable}")
 
 # Graph sizing
