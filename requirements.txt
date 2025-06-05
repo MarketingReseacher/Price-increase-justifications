@@ -3,3 +3,6 @@ numpy
 pandas
 matplotlib
 IPython
+seaborn
+statsmodels
+scipy
