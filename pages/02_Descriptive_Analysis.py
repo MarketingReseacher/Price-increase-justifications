@@ -8,7 +8,7 @@ from scipy.stats import chi2_contingency
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("JustificationsForStreamlit - backup.csv")
+    df = pd.read_csv("JustificationsForStreamlit.csv")
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df['Year'] = df['Date'].dt.year
     df['Subscription'] = df['Subscription'].astype(str)
