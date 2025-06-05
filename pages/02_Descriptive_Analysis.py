@@ -10,6 +10,7 @@ def load_data():
     df = pd.read_csv("JustificationsForStreamlit.csv")
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df['Year'] = df['Date'].dt.year
+    df['Year'] = df['Year'].apply(lambda y: "Before 2020" if pd.notnull(y) and y < 2020 else y)
     df['Subscription'] = df['Subscription'].astype(str)
 
     # Create new Sector_Category variable
