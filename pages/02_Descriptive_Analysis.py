@@ -93,7 +93,7 @@ ax1.axis('equal')
 st.pyplot(fig1)
 
 # Bar chart
-st.subheader("Average Length and Concreteness by Justification Type")
+st.subheader("Average Justification Concreteness and Justification Length, by Justification Type")
 avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']].mean().sort_values(by='Length', ascending=False)
 
 fig2, ax2 = plt.subplots(figsize=(graph_width, graph_height))
