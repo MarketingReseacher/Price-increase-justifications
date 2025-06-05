@@ -13,7 +13,7 @@ def load_data():
 
 df = load_data()
 
-st.title("Descriptive Analysis of Price Justifications")
+st.title("Descriptive Analysis")
 
 # Sidebar: User selects what to analyze
 analysis_type = st.sidebar.selectbox(
@@ -36,24 +36,28 @@ elif analysis_type == "By Subscription":
     filtered_df = df[df['Subscription'] == sub]
 
 # Pie chart for justification type
-st.subheader("Justification Type Distribution")
+st.markdown("#### Justification Type Distribution")
 just_counts = filtered_df['JustificationType'].value_counts().sort_values(ascending=False)
 
-fig1, ax1 = plt.subplots()
-ax1.pie(just_counts,
-        labels=[f"{i} ({v}, {v/sum(just_counts)*100:.1f}%)" for i, v in just_counts.items()],
-        autopct='',
-        startangle=90)
+fig1, ax1 = plt.subplots(figsize=(4, 4))
+ax1.pie(
+    just_counts,
+    labels=[f"{i} ({v}, {v/sum(just_counts)*100:.1f}%)" for i, v in just_counts.items()],
+    labeldistance=1.1,
+    textprops={'fontsize': 6}
+)
 ax1.axis('equal')
 st.pyplot(fig1)
 
 # Bar chart for average concreteness and length
-st.subheader("Average Length and Concreteness by Justification Type")
+st.markdown("#### Avg. Length & Concreteness by Justification")
 avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']].mean().sort_values(by='Length', ascending=False)
 
-fig2, ax2 = plt.subplots()
-avg_stats[['Length', 'Concreteness']].plot(kind='bar', ax=ax2)
-plt.title("Average Length and Concreteness")
-plt.ylabel("Average Value")
-plt.xticks(rotation=45)
+fig2, ax2 = plt.subplots(figsize=(5, 2.5))
+avg_stats[['Length', 'Concreteness']].plot(kind='bar', ax=ax2, width=0.6)
+ax2.set_title("Avg. Length and Concreteness", fontsize=10)
+ax2.set_ylabel("Average Value", fontsize=8)
+ax2.tick_params(axis='x', labelrotation=45, labelsize=7)
+ax2.tick_params(axis='y', labelsize=7)
+ax2.legend(fontsize=7)
 st.pyplot(fig2)
