@@ -16,7 +16,7 @@ def load_data():
 
 df = load_data()
 
-st.title("Descriptive Analysis")
+st.sidebar.markdown("# Descriptive Analysis")
 
 # Sidebar: Analysis Type
 analysis_type = st.sidebar.selectbox(
@@ -27,7 +27,7 @@ analysis_type = st.sidebar.selectbox(
 grouping_variable = None
 filtered_df = df.copy()
 
-# Filtering by user selection
+# Filter by user selection
 if analysis_type == "By Year":
     grouping_variable = "Year"
     selected_year = st.sidebar.selectbox("Select Year", sorted(df['Year'].dropna().unique()))
@@ -43,20 +43,19 @@ elif analysis_type == "By Subscription":
     selected_subscription = st.sidebar.selectbox("Select Subscription", sorted(df['Subscription'].dropna().unique()))
     filtered_df = df[df['Subscription'] == selected_subscription]
 
-# Chi-Square toggle
+# Chi-square toggle (only shown if grouped)
 show_chi2 = False
 if grouping_variable:
     show_chi2 = st.sidebar.checkbox(f"Show Chi-Square: Justification vs. {grouping_variable}")
 
 # Graph sizing
 st.sidebar.markdown("### Graph Sizing")
-graph_width = st.sidebar.slider("Graph width (inches)", 4, 16, 8)
-graph_height = st.sidebar.slider("Graph height (inches)", 3, 12, 5)
+graph_width = st.sidebar.slider("Graph width (inches)", 4, 12, 6)
+graph_height = st.sidebar.slider("Graph height (inches)", 4, 12, 6)
 
-# Random color palette
-palettes = ['pastel', 'Set2', 'muted', 'husl', 'hls']
-palette_name = random.choice(palettes)
-colors = sns.color_palette(palette_name, filtered_df['JustificationType'].nunique(), desat=.7)
+# Consistent color palette
+palette = 'pastel'
+colors = sns.color_palette(palette, filtered_df['JustificationType'].nunique(), desat=.7)
 
 # Pie chart
 st.subheader("Distribution of Justification Types")
@@ -89,4 +88,4 @@ if show_chi2:
     chi2, p, dof, expected = chi2_contingency(contingency_table)
     st.write(f"Chi-square statistic: **{chi2:.2f}**")
     st.write(f"Degrees of freedom: **{dof}**")
-    st.write(f"p-value: **{p:.4f}**")
+    st.write(f"p-value: **{p:.2f}**")
