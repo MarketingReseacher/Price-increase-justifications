@@ -25,7 +25,7 @@ def load_data():
         except:
             return "Unknown"
 
-    df['Sector_Category'] = df['Sector'].apply(categorize_sector)
+    df['Sector'] = df['NAICS2'].apply(categorize_sector)
     
     return df.dropna(subset=['JustificationType'])
 
@@ -50,8 +50,8 @@ if analysis_type == "By Year":
 
 elif analysis_type == "By Sector Category":
     grouping_variable = "Sector"
-    selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector_Category'].dropna().unique()))
-    filtered_df = df[df['Sector_Category'] == selected_sector]
+    selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector'].dropna().unique()))
+    filtered_df = df[df['Sector'] == selected_sector]
 
 elif analysis_type == "By Subscription":
     grouping_variable = "Subscription"
