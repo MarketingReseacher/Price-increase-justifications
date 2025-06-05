@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import streamlit as st
 from scipy.stats import chi2_contingency
 
@@ -23,21 +22,29 @@ analysis_type = st.sidebar.selectbox(
     ["Overall", "By Year", "By Sector", "By Subscription"]
 )
 
-# Optional: show Chi-Square test
-show_chi2 = st.sidebar.checkbox("Show Chi-Square Test")
-
-# Filtered data
+grouping_variable = None
 filtered_df = df.copy()
 
+# Sidebar filters based on analysis type
 if analysis_type == "By Year":
-    year = st.sidebar.selectbox("Select Year", sorted(df['Year'].dropna().unique()))
-    filtered_df = df[df['Year'] == year]
+    grouping_variable = "Year"
+    selected_year = st.sidebar.selectbox("Select Year", sorted(df['Year'].dropna().unique()))
+    filtered_df = df[df['Year'] == selected_year]
+
 elif analysis_type == "By Sector":
-    sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector'].dropna().unique()))
-    filtered_df = df[df['Sector'] == sector]
+    grouping_variable = "Sector"
+    selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector'].dropna().unique()))
+    filtered_df = df[df['Sector'] == selected_sector]
+
 elif analysis_type == "By Subscription":
-    sub = st.sidebar.selectbox("Select Subscription", sorted(df['Subscription'].dropna().unique()))
-    filtered_df = df[df['Subscription'] == sub]
+    grouping_variable = "Subscription"
+    selected_subscription = st.sidebar.selectbox("Select Subscription", sorted(df['Subscription'].dropna().unique()))
+    filtered_df = df[df['Subscription'] == selected_subscription]
+
+# Chi-Square toggle only shown if analysis_type != Overall
+show_chi2 = False
+if grouping_variable:
+    show_chi2 = st.sidebar.checkbox(f"Show Chi-Square: Justification vs. {grouping_variable}")
 
 # Pie chart of justification types
 st.subheader("Distribution of Justification Types")
@@ -53,21 +60,20 @@ ax1.pie(
 ax1.axis('equal')
 st.pyplot(fig1)
 
-# Bar chart of average length and concreteness
+# Bar chart: Average Length and Concreteness by Justification Type
 st.subheader("Average Length and Concreteness by Justification Type")
 avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']].mean().sort_values(by='Length', ascending=False)
 
 fig2, ax2 = plt.subplots()
-avg_stats[['Length', 'Concreteness']].plot(kind='bar', ax=ax2)
-ax2.set_title("Average Length and Concreteness")
+avg_stats.plot(kind='bar', ax=ax2)
 ax2.set_ylabel("Average Value")
 st.pyplot(fig2)
 
-# Chi-Square Test (optional)
+# Chi-Square Test output
 if show_chi2:
-    st.subheader("Chi-Square Test Results")
-    for var in ["Sector", "Year", "Subscription"]:
-        st.markdown(f"**Justification Type vs. {var}**")
-        contingency_table = pd.crosstab(df['JustificationType'], df[var])
-        chi2, p, dof, expected = chi2_contingency(contingency_table)
-        st.write(f"Chi-square statistic: {chi2:.2f}, p-value: {p:.4f}, degrees of freedom: {dof}")
+    st.subheader(f"Chi-Square Test: Justification Type vs. {grouping_variable}")
+    contingency_table = pd.crosstab(df['JustificationType'], df[grouping_variable])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    st.write(f"Chi-square statistic: **{chi2:.2f}**")
+    st.write(f"Degrees of freedom: **{dof}**")
+    st.write(f"p-value: **{p:.4f}**")
