@@ -78,7 +78,6 @@ palette = 'Set2'
 colors = sns.color_palette(palette, filtered_df['JustificationType'].nunique(), desat=.7)
 
 # Pie chart
-st.subheader("Distribution of Justification Types")
 just_counts = filtered_df['JustificationType'].value_counts().sort_values(ascending=False)
 
 fig1, ax1 = plt.subplots(figsize=(graph_width, graph_height))
@@ -89,15 +88,16 @@ ax1.pie(
     labeldistance=1.1,
     textprops={'fontsize': 6}
 )
+ax1.title("Distribution of Justification Types", size=8)
 ax1.axis('equal')
 st.pyplot(fig1)
 
 # Bar chart
-st.subheader("Average Justification Concreteness and Justification Length, by Justification Type")
 avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']].mean().sort_values(by='Length', ascending=False)
 
 fig2, ax2 = plt.subplots(figsize=(graph_width, graph_height))
 avg_stats.plot(kind='bar', ax=ax2, color=colors[:2])
+ax2.title("Average Justification Concreteness and Justification Length, by Justification Type", size=8)
 ax2.set_ylabel("Average Value", fontsize=8)
 ax2.tick_params(axis='x', labelsize=6)
 ax2.tick_params(axis='y', labelsize=6)
