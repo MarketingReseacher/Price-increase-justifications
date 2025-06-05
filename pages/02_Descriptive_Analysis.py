@@ -50,8 +50,8 @@ if grouping_variable:
 
 # Graph sizing
 st.sidebar.markdown("### Graph Sizing")
-graph_width = st.sidebar.slider("Graph width (inches)", 4, 12, 6)
-graph_height = st.sidebar.slider("Graph height (inches)", 4, 12, 6)
+graph_width = st.sidebar.slider("Graph width (inches)", 2, 10, 4)
+graph_height = st.sidebar.slider("Graph height (inches)", 2, 10, 4)
 
 # Consistent color palette
 palette = 'pastel'
@@ -67,7 +67,7 @@ ax1.pie(
     labels=[f"{i} ({v}, {v/sum(just_counts)*100:.1f}%)" for i, v in just_counts.items()],
     colors=colors,
     labeldistance=1.1,
-    textprops={'fontsize': 9}
+    textprops={'fontsize': 6}
 )
 ax1.axis('equal')
 st.pyplot(fig1)
