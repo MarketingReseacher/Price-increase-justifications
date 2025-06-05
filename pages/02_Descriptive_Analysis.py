@@ -46,9 +46,9 @@ for dim in ['Year', 'Sector', 'Subscription']:
 st.subheader("Multinomial Logistic Regression (DV: JustificationType)")
 df_model = df.copy()
 df_model['JustificationType'] = df_model['JustificationType'].astype('category')
-df_model['JustificationType'].cat.set_categories(
+df_model['JustificationType'] = df_model['JustificationType'].cat.set_categories(
     ['No-justification'] + [c for c in df_model['JustificationType'].cat.categories if c != 'No-justification'],
-    ordered=True, inplace=True
+    ordered=True
 )
 X = pd.get_dummies(df_model[['Concreteness', 'Length', 'Sector', 'Subscription', 'Year']], drop_first=True)
 X = sm.add_constant(X)
