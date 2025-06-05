@@ -1,73 +1,67 @@
-import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-from IPython.display import HTML
+import seaborn as sns
+import statsmodels.formula.api as smf
+import statsmodels.api as sm
+from scipy.stats import chi2_contingency
 
-st.sidebar.markdown("# Browsing Letters")
+# Load data
+@st.cache_data
+def load_data():
+    df = pd.read_csv('JustificationsForStreamlit.csv')
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df['Year'] = df['Date'].dt.year
+    df = df.dropna(subset=['JustificationType', 'Concreteness', 'Length'])
+    return df
 
+df = load_data()
 
-@st.cache_resource
-def ReadData():
-  Data = pd.read_csv('Justifications.csv')
-  return Data
+st.title("Justification Analysis")
 
-Data = ReadData()
+# Pie chart by overall distribution
+st.subheader("Justification Type Distribution")
+fig1, ax1 = plt.subplots()
+counts = df['JustificationType'].value_counts()
+labels = counts.index
+sizes = counts.values
+ax1.pie(sizes, labels=[f"{l} ({s} | {s/sum(sizes)*100:.1f}%)" for l, s in zip(labels, sizes)], autopct='', startangle=90)
+st.pyplot(fig1)
 
-Data['Date'] = pd.to_datetime(Data['Date'])
-Data["Year"] = Data['Date'].dt.year
+# Mode by year
+st.subheader("Most Common Justification Type by Year")
+mode_year = df.groupby('Year')['JustificationType'].agg(lambda x: x.mode()[0]).reset_index()
+st.dataframe(mode_year)
 
-def PlotPie(df, var):
-    df = df.dropna(subset=var)
-    def labeling(val):
-      return f'{val / 100 * len(df):.0f}'
-    fig, (ax1) = plt.subplots(ncols=1, figsize=(width, height))
-    df.groupby(var).size().plot(kind='pie', autopct=labeling, colors=["#C00000", '#FF9999', '#00CCCC', '#49D845', '#CCCC00', '#808080'], textprops={'fontsize': 6}, ax=ax1, labeldistance =1.05)
-    label = Labels[var]
-    ax1.set_title(f'Pie Chart of {label}', size=8)
-    return fig
+# Chi-square tests
+st.subheader("Chi-Square Tests")
 
-def PlotTime(data, label):
-    fig, ax = plt.subplots(figsize=(width, height))
-    data = data.dropna()
-    Times = data.groupby("Year").mode().reset_index()
-    plt.plot(Times["Year"], Times["JustificationType"], linewidth=1, color="#6eb580")
-    plt.title(f'Time Trend of {label}', size=8)
-    plt.xlabel(label, size=6, style= "italic")
-    plt.ylabel("Frequency", size=6)
-    ax.tick_params(axis='y', labelsize=6)
-    ax.tick_params(axis='x', labelsize=6)
-    return fig
-  
+for dim in ['Year', 'Sector', 'Subscription']:
+    ctab = pd.crosstab(df[dim], df['JustificationType'])
+    chi2, p, _, _ = chi2_contingency(ctab)
+    st.write(f"**{dim} vs Justification Type**: p-value = {p:.4f}")
 
-Selected_var = st.sidebar.selectbox("Select a variable", ["Firm", "Date"])
-Selected_stat = st.sidebar.selectbox("Select a variable", ["Firm", "Date"])
+# Regression 1: Concreteness ~ Length + controls
+st.subheader("Regression: Concreteness ~ Length + Controls")
+reg1 = smf.ols("Concreteness ~ Length + C(Sector) + C(Subscription) + C(Year)", data=df).fit()
+st.text(reg1.summary())
 
- 
-Labels = {"JustificationType": "Justification Type", "Date": "Date", "Firm": "Firm"}
+# Regression 2: Length ~ Concreteness + controls
+st.subheader("Regression: Length ~ Concreteness + Controls")
+reg2 = smf.ols("Length ~ Concreteness + C(Sector) + C(Subscription) + C(Year)", data=df).fit()
+st.text(reg2.summary())
 
-if Selected_var == "Investigation Type":
-    for variable, label in Labels.items():
-      if label == Selected_var:
-        st.markdown("##### Frequency Table")
-        a = pd.crosstab(index=MyDF[variable], columns='Number of Observations', colnames = [Labels[variable]] )
-        b = round(pd.crosstab(index=MyDF[variable], columns='% of Observations', normalize='columns', colnames = [Labels[variable]] )* 100, 2)
-        c = pd.merge(a,b, on=variable)
-        table = c.to_html(index_names=False, justify="center")
-        st.markdown(table, unsafe_allow_html=True)
-        st.write("  \n\n")
-        st.write("  \n\n")
-        height = st.slider("Graph height", 1, 10, 4)
-        width = st.slider("Graph width", 1, 10, 6)
-        plt = PlotPie(MyDF, 'InvestigationType')
-        st.pyplot(plt) 
-  
-if Selected_var == "Year":
-    for variable, label in Labels.items():
-      if label == Selected_var:
-         Mode = Data.loc[:, variable].mode()
-         height = st.slider("Graph height", 1, 10, 4)
-         width = st.slider("Graph width", 1, 10, 6)
-         plt = PlotTime(MyDF, Labels["JustificationType"])
-         st.pyplot(plt)
-
+# Multinomial Logit: JustificationType as DV
+st.subheader("Multinomial Logistic Regression (DV: JustificationType)")
+df_model = df.copy()
+df_model['JustificationType'] = df_model['JustificationType'].astype('category')
+df_model['JustificationType'].cat.set_categories(
+    ['No-justification'] + [c for c in df_model['JustificationType'].cat.categories if c != 'No-justification'],
+    ordered=True, inplace=True
+)
+X = pd.get_dummies(df_model[['Concreteness', 'Length', 'Sector', 'Subscription', 'Year']], drop_first=True)
+X = sm.add_constant(X)
+y = df_model['JustificationType']
+mnlogit_model = sm.MNLogit(y, X)
+mnlogit_result = mnlogit_model.fit()
+st.text(mnlogit_result.summary())
