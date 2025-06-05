@@ -9,7 +9,22 @@ def ReadData():
     Data = pd.read_csv('JustificationsForStreamlit.csv')
     Data['Date'] = pd.to_datetime(Data['Date'], errors='coerce')
     Data['Year'] = Data['Date'].dt.year
-    return Data
+    
+    def categorize_sector(sector_code):
+        try:
+            first_digit = int(str(sector_code)[:1])
+            if 1 <= first_digit <= 3:
+                return "Manufacturing"
+            elif 4 <= first_digit <= 5:
+                return "Trade"
+            else:
+                return "Services"
+        except:
+            return "Unknown"
+
+    Data['Sector'] = Data['NAICS2'].apply(categorize_sector)
+    
+    return Data.dropna(subset=['JustificationType'])
 
 Data = ReadData()
 
