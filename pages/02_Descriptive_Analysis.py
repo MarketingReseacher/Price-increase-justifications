@@ -53,8 +53,8 @@ graph_width = st.sidebar.slider("Graph width (inches)", 4, 12, 4)
 graph_height = st.sidebar.slider("Graph height (inches)", 3, 12, 3)
 
 # Consistent color palette
-palette = 'pastel'
-colors = sns.color_palette(palette, filtered_df['JustificationType'].nunique(), desat=.7)
+palette = 'Set2'
+colors = sns.color_palette(palette, filtered_df['JustificationType'].nunique(), desat=.8)
 
 # Pie chart
 st.subheader("Distribution of Justification Types")
