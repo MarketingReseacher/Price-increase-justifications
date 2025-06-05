@@ -3,8 +3,7 @@ import streamlit as st
 
 st.write("We used the following prompt and Gemini 2.0 Flash's API to label each price increase letters with a justification")
 
-st.write("The model-human agreement, defined as the ratio of label disagreements to total labels, was 93.4%")
-
+st.write("The **model-human agreement**, defined as the ratio of label disagreements to total labels, was **93.4%**")
 
 st.write("You are an assistant that reads company price-increase announcements and classifies the justification for the price increase using exactly one of the following nine labels:")
 
