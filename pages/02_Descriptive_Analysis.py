@@ -36,7 +36,7 @@ st.sidebar.markdown("# Descriptive Analysis")
 # Sidebar: Analysis Type
 analysis_type = st.sidebar.selectbox(
     "Choose Analysis Type",
-    ["Overall", "By Year", "By Sector Category", "By Subscription"]
+    ["Overall", "By Year", "By Sector", "By Subscription"]
 )
 
 grouping_variable = None
@@ -50,7 +50,7 @@ if analysis_type == "By Year":
 
 elif analysis_type == "By Sector Category":
     grouping_variable = "Sector_Category"
-    selected_sector = st.sidebar.selectbox("Select Sector Category", sorted(df['Sector_Category'].dropna().unique()))
+    selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector_Category'].dropna().unique()))
     filtered_df = df[df['Sector_Category'] == selected_sector]
 
 elif analysis_type == "By Subscription":
