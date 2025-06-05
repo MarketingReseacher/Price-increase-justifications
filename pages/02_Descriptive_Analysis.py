@@ -50,8 +50,8 @@ if grouping_variable:
 
 # Graph sizing
 st.sidebar.markdown("### Graph Sizing")
-graph_width = st.sidebar.slider("Graph width (inches)", 2, 10, 4)
-graph_height = st.sidebar.slider("Graph height (inches)", 2, 10, 4)
+graph_width = st.sidebar.slider("Graph width (inches)", 4, 12, 4)
+graph_height = st.sidebar.slider("Graph height (inches)", 3, 12, 3)
 
 # Consistent color palette
 palette = 'pastel'
