@@ -6,6 +6,6 @@ st.write("We conducted a thorough search of Google, Reddit, and Factiva, to find
 st.write("Our primary goal in doing this was to understand how firms justify their price increases in practice, and improve the ecological validity of our research.")
 st.write("This website is open-access and seeks to enable researchers and managers to examine our collected corpus of price increase letters easily and interactively.")
 st.write("Visit the **Browsing Letters** page to browse through the collected price increase letters by firm, date, or justification type.")
-st.write("You can also visit the **Descriptive Analysis** page to obtain relevant tabular and graphical representations.")
+st.write("You can also visit the **Descriptive Analysis** page to see relevant graphical representations.")
 st.sidebar.markdown("# Main page")
 
