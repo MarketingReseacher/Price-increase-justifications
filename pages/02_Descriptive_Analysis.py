@@ -1,58 +1,78 @@
 import pandas as pd
+import numpy as np
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
-import statsmodels.formula.api as smf
 import statsmodels.api as sm
-from scipy.stats import chi2_contingency
+from scipy.stats import chisquare
 
-# Load data
+# Load and preprocess data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('JustificationsForStreamlit.csv')
+    df = pd.read_csv("JustificationsForStreamlit - backup.csv")
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df['Year'] = df['Date'].dt.year
-    df = df.dropna(subset=['JustificationType', 'Concreteness', 'Length'])
-    return df
+    df['Subscription'] = df['Subscription'].astype(str)
+    return df.dropna(subset=['JustificationType'])
 
 df = load_data()
 
-st.title("Justification Analysis")
+st.title("Descriptive Analysis of Price Justifications")
 
-# Pie chart by overall distribution
+# --- FILTERS ---
+st.sidebar.header("Filters")
+year_filter = st.sidebar.selectbox("Select year", ["All"] + sorted(df['Year'].dropna().astype(str).unique()))
+sector_filter = st.sidebar.selectbox("Select sector", ["All"] + sorted(df['Sector'].dropna().unique()))
+subscription_filter = st.sidebar.selectbox("Select subscription type", ["All"] + sorted(df['Subscription'].dropna().unique()))
+
+filtered_df = df.copy()
+if year_filter != "All":
+    filtered_df = filtered_df[filtered_df['Year'] == int(year_filter)]
+if sector_filter != "All":
+    filtered_df = filtered_df[filtered_df['Sector'] == sector_filter]
+if subscription_filter != "All":
+    filtered_df = filtered_df[filtered_df['Subscription'] == subscription_filter]
+
+# --- PIE CHART ---
 st.subheader("Justification Type Distribution")
-fig1, ax1 = plt.subplots()
-counts = df['JustificationType'].value_counts()
-labels = counts.index
-sizes = counts.values
-ax1.pie(sizes, labels=[f"{l} ({s} | {s/sum(sizes)*100:.1f}%)" for l, s in zip(labels, sizes)], autopct='', startangle=90)
-st.pyplot(fig1)
+just_counts = filtered_df['JustificationType'].value_counts().sort_values(ascending=False)
 
-# Mode by year
-st.subheader("Most Common Justification Type by Year")
-mode_year = df.groupby('Year')['JustificationType'].agg(lambda x: x.mode()[0]).reset_index()
-st.dataframe(mode_year)
+fig, ax = plt.subplots()
+ax.pie(just_counts,
+       labels=[f"{i} ({v}, {v/sum(just_counts)*100:.1f}%)" for i, v in just_counts.items()],
+       autopct='',
+       startangle=90)
+ax.axis('equal')
+st.pyplot(fig)
 
-# Chi-square tests
-st.subheader("Chi-Square Tests")
+# --- CHI-SQUARE TEST ---
+st.subheader("Chi-Square Test")
+if len(just_counts) > 1:
+    chisq = chisquare(just_counts)
+    st.write(f"**Chi-square statistic:** {chisq.statistic:.2f}")
+    st.write(f"**p-value:** {chisq.pvalue:.2f}")
+    st.write(f"**Mode justification type:** {just_counts.idxmax()}")
+else:
+    st.write("Not enough categories for chi-square test.")
 
-for dim in ['Year', 'Sector', 'Subscription']:
-    ctab = pd.crosstab(df[dim], df['JustificationType'])
-    chi2, p, _, _ = chi2_contingency(ctab)
-    st.write(f"**Justification Type per {dim}**: p-value = {p:.2f}")
+# --- MULTINOMIAL LOGIT ---
+st.subheader("Multinomial Logit Model")
 
-
-# Multinomial Logit: JustificationType as DV
-st.subheader("Multinomial Logistic Regression (DV: JustificationType)")
-df_model = df.copy()
+df_model = df.dropna(subset=['JustificationType', 'Length', 'Concreteness', 'Year'])
+valid_labels = ['Cost', 'Market', 'Quality', 'No-justification']
+df_model = df_model[df_model['JustificationType'].isin(valid_labels)]
 df_model['JustificationType'] = df_model['JustificationType'].astype('category')
-df_model['JustificationType'] = df_model['JustificationType'].cat.set_categories(
-    ['No-justification'] + [c for c in df_model['JustificationType'].cat.categories if c != 'No-justification'],
-    ordered=True
+df_model['JustificationType'] = df_model['JustificationType'].cat.reorder_categories(
+    ['No-justification', 'Cost', 'Market', 'Quality'], ordered=True
 )
-X = pd.get_dummies(df_model[['Concreteness', 'Length', 'Sector', 'Subscription', 'Year']], drop_first=True)
+
+y = df_model['JustificationType'].cat.codes
+X = df_model[['Length', 'Concreteness', 'Year']]
+X = pd.get_dummies(X.join(df_model[['Sector', 'Subscription']]), drop_first=True)
 X = sm.add_constant(X)
-y = df_model['JustificationType']
-mnlogit_model = sm.MNLogit(y, X)
-mnlogit_result = mnlogit_model.fit()
-st.text(mnlogit_result.summary())
+
+mnlogit = sm.MNLogit(y, X)
+result = mnlogit.fit(disp=False)
+
+st.text("Multinomial Logit Results (reference: No-justification)")
+st.text(result.summary())
