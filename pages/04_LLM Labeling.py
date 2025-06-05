@@ -6,7 +6,7 @@ st.write("You are an assistant that reads company price-increase announcements a
 st.write("1. Cost")
 st.write("2. Quality")
 st.write("3. Market")
-st.write(("4. No-justification") 
+st.write("4. No-justification") 
 st.write("5. Other")  
 st.write("6. Cost, quality")
 st.write("7. Cost, market") 
