@@ -39,17 +39,8 @@ st.subheader("Chi-Square Tests")
 for dim in ['Year', 'Sector', 'Subscription']:
     ctab = pd.crosstab(df[dim], df['JustificationType'])
     chi2, p, _, _ = chi2_contingency(ctab)
-    st.write(f"**{dim} vs Justification Type**: p-value = {p:.4f}")
+    st.write(f"**Justification Type per {dim}**: p-value = {p:.2f}")
 
-# Regression 1: Concreteness ~ Length + controls
-st.subheader("Regression: Concreteness ~ Length + Controls")
-reg1 = smf.ols("Concreteness ~ Length + C(Sector) + C(Subscription) + C(Year)", data=df).fit()
-st.text(reg1.summary())
-
-# Regression 2: Length ~ Concreteness + controls
-st.subheader("Regression: Length ~ Concreteness + Controls")
-reg2 = smf.ols("Length ~ Concreteness + C(Sector) + C(Subscription) + C(Year)", data=df).fit()
-st.text(reg2.summary())
 
 # Multinomial Logit: JustificationType as DV
 st.subheader("Multinomial Logistic Regression (DV: JustificationType)")
