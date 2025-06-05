@@ -88,7 +88,7 @@ ax1.pie(
     labeldistance=1.1,
     textprops={'fontsize': 6}
 )
-ax1.title("Distribution of Justification Types", size=8)
+ax1.set_title("Distribution of Justification Types", size=8)
 ax1.axis('equal')
 st.pyplot(fig1)
 
