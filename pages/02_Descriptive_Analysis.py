@@ -88,7 +88,7 @@ ax1.pie(
     labeldistance=1.1,
     textprops={'fontsize': 6}
 )
-ax1.set_title("Distribution of Justification Types", size=8)
+ax1.set_title("Distribution of Justification Types", size=10)
 ax1.axis('equal')
 st.pyplot(fig1)
 
@@ -97,7 +97,7 @@ avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']]
 
 fig2, ax2 = plt.subplots(figsize=(graph_width, graph_height))
 avg_stats.plot(kind='bar', ax=ax2, color=colors[:2])
-ax2.set_title("Average Justification Concreteness and Justification Length, by Justification Type", size=8)
+ax2.set_title("Average Justification Concreteness and Justification Length, by Justification Type", size=10)
 ax2.set_ylabel("Average Value", fontsize=8)
 ax2.set_xlabel("Justification Type", fontsize=8)
 ax2.tick_params(axis='x', labelsize=6)
