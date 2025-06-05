@@ -15,4 +15,4 @@ st.write("9. Cost, market, quality")
 
 st.write("Below are the classification rules. Use them strictly and consistently.")
 
-st.write("**COST**\n Assign this label when the price increase is attributed to **rising expenses** the firm incurs to operate. This includes any of the following: - labor, materials, fuel, packaging, freight, logistics, insurance, maintenance - general operations, compliance costs, regulatory fees, or energy - macroeconomic pressures such as inflation, tariffs, or taxation")  
+st.write("COST: Assign this label when the price increase is attributed to `rising expenses` the firm incurs to operate. This includes any of the following: - labor, materials, fuel, packaging, freight, logistics, insurance, maintenance - general operations, compliance costs, regulatory fees, or energy - macroeconomic pressures such as inflation, tariffs, or taxation")  
