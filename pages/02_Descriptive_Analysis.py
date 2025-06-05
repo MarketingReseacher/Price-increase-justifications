@@ -4,13 +4,29 @@ import seaborn as sns
 import streamlit as st
 from scipy.stats import chi2_contingency
 
-# Load data
+# Load and prepare data
 @st.cache_data
 def load_data():
     df = pd.read_csv("JustificationsForStreamlit.csv")
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
     df['Year'] = df['Date'].dt.year
     df['Subscription'] = df['Subscription'].astype(str)
+    
+    # Create new Sector_Category variable
+    def categorize_sector(sector_code):
+        try:
+            first_digit = int(str(sector_code)[:1])
+            if 1 <= first_digit <= 3:
+                return "Manufacturing"
+            elif 4 <= first_digit <= 5:
+                return "Trade"
+            else:
+                return "Services"
+        except:
+            return "Unknown"
+
+    df['Sector_Category'] = df['Sector'].apply(categorize_sector)
+    
     return df.dropna(subset=['JustificationType'])
 
 df = load_data()
@@ -20,22 +36,22 @@ st.sidebar.markdown("# Descriptive Analysis")
 # Sidebar: Analysis Type
 analysis_type = st.sidebar.selectbox(
     "Choose Analysis Type",
-    ["Overall", "By Year", "By Sector", "By Subscription"]
+    ["Overall", "By Year", "By Sector Category", "By Subscription"]
 )
 
 grouping_variable = None
 filtered_df = df.copy()
 
-# Filter by user selection
+# Filter based on selection
 if analysis_type == "By Year":
     grouping_variable = "Year"
     selected_year = st.sidebar.selectbox("Select Year", sorted(df['Year'].dropna().unique()))
     filtered_df = df[df['Year'] == selected_year]
 
-elif analysis_type == "By Sector":
-    grouping_variable = "Sector"
-    selected_sector = st.sidebar.selectbox("Select Sector", sorted(df['Sector'].dropna().unique()))
-    filtered_df = df[df['Sector'] == selected_sector]
+elif analysis_type == "By Sector Category":
+    grouping_variable = "Sector_Category"
+    selected_sector = st.sidebar.selectbox("Select Sector Category", sorted(df['Sector_Category'].dropna().unique()))
+    filtered_df = df[df['Sector_Category'] == selected_sector]
 
 elif analysis_type == "By Subscription":
     grouping_variable = "Subscription"
@@ -54,7 +70,7 @@ graph_height = st.sidebar.slider("Graph height (inches)", 3, 12, 3)
 
 # Consistent color palette
 palette = 'Set2'
-colors = sns.color_palette(palette, filtered_df['JustificationType'].nunique(), desat=.8)
+colors = sns.color_palette(palette, filtered_df['JustificationType'].nunique(), desat=.7)
 
 # Pie chart
 st.subheader("Distribution of Justification Types")
@@ -77,10 +93,9 @@ avg_stats = filtered_df.groupby('JustificationType')[['Length', 'Concreteness']]
 
 fig2, ax2 = plt.subplots(figsize=(graph_width, graph_height))
 avg_stats.plot(kind='bar', ax=ax2, color=colors[:2])
-ax2.set_ylabel("Average Value", fontsize=8)
-ax2.set_xlabel("Justification Type", fontsize=8)
-ax2.tick_params(axis='both', labelsize=6)
-ax2.legend(fontsize=6)
+ax2.set_ylabel("Average Value")
+ax2.tick_params(axis='x', labelsize=6)
+ax2.tick_params(axis='y', labelsize=6)
 st.pyplot(fig2)
 
 # Chi-Square Test
