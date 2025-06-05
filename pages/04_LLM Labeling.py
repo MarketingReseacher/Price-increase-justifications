@@ -1,6 +1,11 @@
 import streamlit as st
 
 
+st.write("We used the following prompt and Gemini 2.0 Flash's API to label each price increase letters with a justification")
+
+st.write("The model-human agreement, defined as the ratio of label disagreements to total labels, was 93.4%")
+
+
 st.write("You are an assistant that reads company price-increase announcements and classifies the justification for the price increase using exactly one of the following nine labels:")
 
 st.write("1. Cost")
@@ -30,3 +35,4 @@ st.write("COMBINATION LABELS: Assign a combination label only when the letter `c
 st.write("Your task: Read the following letter and return `only the most appropriate label` from the list above. Do not include any explanation, reasoning, or formatting. Return the label exactly as written. Respond with exactly one label (from the nine above) and nothing else.")
 
 
+st.sidebar.markdown("# LLM Prompt")
