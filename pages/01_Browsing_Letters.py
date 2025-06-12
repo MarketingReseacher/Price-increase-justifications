@@ -67,22 +67,22 @@ if keyword:
 
 # Display options
 show_letters = st.checkbox("Show full letter text", value=True)
-show_author_labels = st.checkbox("Show Authors' Label", value=False)
+show_industry = st.checkbox("Show Industry", value=False)
 show_concreteness = st.checkbox("Show Concreteness", value=False)
 show_length = st.checkbox("Show Length", value=False)
 
 sort_by = st.selectbox(
     "Sort by", 
-    ["Date", "Firm", "JustificationType", "Concreteness", "Length"], 
+    ["Date", "JustificationType", "Concreteness", "Length", "Firm"], 
     index=0
 )
 
 Filtered = Filtered.sort_values(by=sort_by)
 
 # Columns to show
-columns_to_show = ["Date", "Firm", "JustificationType"]
-if show_author_labels:
-    columns_to_show.append("JustificationType (Authors' Label)")
+columns_to_show = ["Date", "Firm", "JustificationType", "JustificationType (Authors' Label)"]
+if show_industry:
+    columns_to_show.append("Industry")
 if show_concreteness:
     columns_to_show.append("Concreteness")
 if show_length:
