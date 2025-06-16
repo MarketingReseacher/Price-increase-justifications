@@ -20,6 +20,6 @@ st.write("OTHER: Assign this label if the justification does not fit cost, quali
 
 st.write("COMBINATION LABELS: Assign a combination label only when the letter **clearly presents more than one justification** type. If a letter includes both a rising operating cost (e.g., inflation) and added customer value (e.g., new features), assign **Cost, quality**. Do not assign **Cost, quality** simply because the letter says **we’ve invested heavily to provide a better experience.** Unless operational cost increases are also explicitly mentioned, this is Quality only. Do not assign combinations based on vague or emotional language; each component must be independently and explicitly present.")
 
-st.write("Your task: Read the following letter and return **only the most appropriate label** from the list above. Do not include any explanation, reasoning, or formatting. Return the label exactly as written. Respond with exactly one label (from the nine above) and nothing else.")
+st.write("Your task: Read the following letter and return only **the most appropriate label** from the list above. Do not include any explanation, reasoning, or formatting. Return the label exactly as written. Respond with exactly one label (from the nine above) and nothing else.")
 
 st.sidebar.markdown("# LLM Prompt")
