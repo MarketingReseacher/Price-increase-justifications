@@ -15,7 +15,7 @@ def ReadData():
             first_digit = int(str(sector_code)[:1])
             if 1 <= first_digit <= 3:
                 return "Manufacturing"
-            elif first_digit == 5:
+            elif first_digit == 4:
                 return "Trade"
             else:
                 return "Services"
